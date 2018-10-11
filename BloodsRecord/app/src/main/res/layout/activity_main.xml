@@ -7,9 +7,16 @@
     tools:context=".MainActivity">
 
     <FrameLayout
+<<<<<<< HEAD
         android:id="@+id/main_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+=======
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/main_view">
+    </FrameLayout>
+>>>>>>> master
 
     </FrameLayout>
 
