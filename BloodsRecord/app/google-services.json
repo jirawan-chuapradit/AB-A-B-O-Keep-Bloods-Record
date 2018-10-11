@@ -1,35 +1,27 @@
 {
   "project_info": {
-    "project_number": "609721846131",
-    "firebase_url": "https://bloodsrecord-36f43.firebaseio.com",
-    "project_id": "bloodsrecord-36f43",
-    "storage_bucket": "bloodsrecord-36f43.appspot.com"
+    "project_number": "56225758202",
+    "firebase_url": "https://bloodsrecord-886c1.firebaseio.com",
+    "project_id": "bloodsrecord-886c1",
+    "storage_bucket": "bloodsrecord-886c1.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:609721846131:android:19a225ec6450696e",
+        "mobilesdk_app_id": "1:56225758202:android:19a225ec6450696e",
         "android_client_info": {
           "package_name": "com.example.suttidasat.bloodsrecord"
         }
       },
       "oauth_client": [
         {
-          "client_id": "609721846131-5jvaok5st3m5ph204trdhtn0jevuimbr.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.suttidasat.bloodsrecord",
-            "certificate_hash": "97272d6cd2af3b1ee9f7703d892c9978c8564275"
-          }
-        },
-        {
-          "client_id": "609721846131-tutts7vqe2gc3ht2t7ergcmmn0266dgl.apps.googleusercontent.com",
+          "client_id": "56225758202-sre0p61egqjj5qpvc8u3aeodtuduhff7.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCN3XHobyz9TdNXJ6uw5ZzpMejDQ7SScJw"
+          "current_key": "AIzaSyAymif7pw09yC6TijQeoWg2Vpy3kI5cYSg"
         }
       ],
       "services": {
@@ -37,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "609721846131-tutts7vqe2gc3ht2t7ergcmmn0266dgl.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2
