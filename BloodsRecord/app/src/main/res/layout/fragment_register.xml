@@ -38,7 +38,7 @@
                 android:id="@+id/registerNationalID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"
+                android:inputType="text"
                 android:hint="1700400333222"
                 android:ems="10"
                 />
