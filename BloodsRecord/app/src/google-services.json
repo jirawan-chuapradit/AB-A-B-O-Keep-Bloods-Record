@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "56225758202",
+    "firebase_url": "https://bloodsrecord-886c1.firebaseio.com",
+    "project_id": "bloodsrecord-886c1",
+    "storage_bucket": "bloodsrecord-886c1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:56225758202:android:19a225ec6450696e",
+        "android_client_info": {
+          "package_name": "com.example.suttidasat.bloodsrecord"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "56225758202-sre0p61egqjj5qpvc8u3aeodtuduhff7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAymif7pw09yC6TijQeoWg2Vpy3kI5cYSg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
