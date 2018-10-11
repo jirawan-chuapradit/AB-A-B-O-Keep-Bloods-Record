@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "56225758202-4jh8jmcap8l8ue1oobjptucrrp90rdp4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.suttidasat.bloodsrecord",
+            "certificate_hash": "e471782afdfb335345e8954c524ec89606db7290"
+          }
+        },
+        {
           "client_id": "56225758202-sre0p61egqjj5qpvc8u3aeodtuduhff7.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "56225758202-sre0p61egqjj5qpvc8u3aeodtuduhff7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
