@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -17,20 +18,36 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class Login extends Fragment {
+public class LoginFragment extends Fragment {
 
     @Override
     public View onCreateView
             (@NonNull LayoutInflater inflater,
              @Nullable ViewGroup container,
              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.login, container, false);
+        return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         initLoginBtn();
+        initRegisterBtn();
+
+    }
+
+    private void initRegisterBtn() {
+        TextView _regBtn = (TextView) getView().findViewById(R.id.login_register_Btn);
+        _regBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view,new RegisterFragment())
+                        .commit();
+                Log.d("USER", "GOTO REGISTER");
+            }
+        });
     }
 
     void initLoginBtn() {

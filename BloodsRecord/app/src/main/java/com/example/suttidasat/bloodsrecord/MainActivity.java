@@ -10,18 +10,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-<<<<<<< HEAD
-        if(savedInstanceState == null){
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.main_view,new FragmentRegister())
-=======
 
         if(savedInstanceState == null){
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.main_view, new Login())
->>>>>>> master
+                    .replace(R.id.main_view, new LoginFragment())
                     .commit();
         }
     }

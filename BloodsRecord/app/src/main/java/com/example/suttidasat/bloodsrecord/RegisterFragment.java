@@ -18,12 +18,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class FragmentRegister extends Fragment {
+public class RegisterFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.register_fragment, container,false);
+        return inflater.inflate(R.layout.fragment_register, container,false);
     }
 
 
@@ -96,31 +96,31 @@ public class FragmentRegister extends Fragment {
                 Toast.makeText(getActivity(),"YOU HAS BEEN REGISTER PLEASE CONFIRM YOUR E-MAIL"
                         ,Toast.LENGTH_SHORT)
                         .show();
-//                getActivity().getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.main_view,new LoginFragment())
-//                        .commit();
 
-                // user sign out
-//                FirebaseAuth.getInstance().signOut();
-//                getActivity().getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.main_view, new LoginFragment())
-//                        .addToBackStack(null)
-//                        .commit();
-//                Log.d("USER", "YOU HAS BEEN SIGN OUT");
-//                Log.d("USER", "GOTO LOGIN");
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view,new LoginFragment())
+                        .commit();
+
+//                 user sign out
+                FirebaseAuth.getInstance().signOut();
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view, new LoginFragment())
+                        .addToBackStack(null)
+                        .commit();
+                Log.d("USER", "YOU HAS BEEN SIGN OUT");
+                Log.d("USER", "GOTO LOGIN");
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.d("SYSTEM", "ERRROR =" + e.getMessage());
+                Log.d("REGISTER", "ERRROR =" + e.getMessage());
                 Toast.makeText(getActivity(),"ERROR = " + e.getMessage()
                         ,Toast.LENGTH_SHORT)
                         .show();
             }
         });
     }
-
 
 }
