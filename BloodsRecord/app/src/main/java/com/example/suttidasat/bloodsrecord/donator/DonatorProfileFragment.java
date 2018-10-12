@@ -1,4 +1,4 @@
-package com.example.suttidasat.bloodsrecord;
+package com.example.suttidasat.bloodsrecord.donator;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,15 +8,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class ProfileFragment extends Fragment {
+import com.example.suttidasat.bloodsrecord.R;
+
+public class DonatorProfileFragment extends Fragment {
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_donator_profile,container,false);
+    }
 
     @Override
-    public View onCreateView
-            (@NonNull LayoutInflater inflater,
-             @Nullable ViewGroup container,
-             @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.profile, container, false);
-    }
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
     }
