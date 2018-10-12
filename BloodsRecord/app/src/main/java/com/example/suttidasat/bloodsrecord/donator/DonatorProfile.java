@@ -12,6 +12,15 @@ public class DonatorProfile {
     public DonatorProfile() {
     }
 
+    public DonatorProfile(String birth, String fName, String lName, String nationalID, String email, String bloodGroup) {
+        this.birth = birth;
+        this.fName = fName;
+        this.lName = lName;
+        this.nationalID = nationalID;
+        this.email = email;
+        this.bloodGroup = bloodGroup;
+    }
+
     public String getBirth() {
         return birth;
     }
@@ -60,12 +69,5 @@ public class DonatorProfile {
         this.bloodGroup = bloodGroup;
     }
 
-    public DonatorProfile(String birth, String fName, String lName, String nationalID, String email, String bloodGroup) {
-        this.birth = birth;
-        this.fName = fName;
-        this.lName = lName;
-        this.nationalID = nationalID;
-        this.email = email;
-        this.bloodGroup = bloodGroup;
-    }
+
 }
