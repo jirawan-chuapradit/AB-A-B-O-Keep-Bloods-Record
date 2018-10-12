@@ -41,9 +41,15 @@ public class RegisterFragment extends Fragment {
         fbAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
 
-       
-        registerBtn();
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .setTimestampsInSnapshotsEnabled(true)
+                .build();
+        firestore.setFirestoreSettings(settings);
 
+
+
+        registerBtn();
     }
 
     private void registerBtn() {
@@ -63,12 +69,12 @@ public class RegisterFragment extends Fragment {
                 EditText rePasswordEdt = getView().findViewById(R.id.registerRePassword);
 
                 //CONVERSE TO STRING
-                 final String firstnameStr = firstnameEdt.getText().toString();
-                 final String lastnameStr = lastnameEdt.getText().toString();
-                 final String birthStr = birthEdt.getText().toString();
-                 final String nationalIDStr = nationalIDEdt.getText().toString();
-                 final String bloodsStr = bloodsEdt.getText().toString();
-                 final String emailStr = emailEdt.getText().toString();
+                  final String firstnameStr = firstnameEdt.getText().toString();
+                  final String lastnameStr = lastnameEdt.getText().toString();
+                  final String birthStr = birthEdt.getText().toString();
+                  final String nationalIDStr = nationalIDEdt.getText().toString();
+                  final String bloodsStr = bloodsEdt.getText().toString();
+                  final String emailStr = emailEdt.getText().toString();
                 String passwordStr = passwordEdt.getText().toString();
                 String rePasswordStr = rePasswordEdt.getText().toString();
 
@@ -85,16 +91,17 @@ public class RegisterFragment extends Fragment {
                     fbAuth.createUserWithEmailAndPassword(emailStr,passwordStr).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
                         public void onSuccess(AuthResult authResult) {
-                            Log.d("REGISTER", "REGISTER SUCCESS");
-
                             String uid = fbAuth.getCurrentUser().getUid();
 
 //                            String birth, String fName, String lName, String nationalID, String email, String bloodGroup
                             DonatorProfile dp = new DonatorProfile(birthStr,firstnameStr,lastnameStr,nationalIDStr,emailStr
                             ,bloodsStr);
 
+                            Log.d("REGISTER", "REGISTER SUCCESS");
                             firestore.collection("bloodsRecord")
                                     .document(uid)
+                                    .collection("nationalID")
+                                    .document(nationalIDStr)
                                     .set(dp).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
