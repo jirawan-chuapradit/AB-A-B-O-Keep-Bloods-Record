@@ -1,12 +1,12 @@
-• collection("bloodsRecord")
-	•document(uid) มาจาก String uid = auth.getCurrentUser().getUid();
-		•collection("history")
+• collection("donateHistory")
+	•document(nationalID) // ค่าที่ จนท ค้นหา
+		• collection("History")
 			•document(date) รับมาจากวันที่บริจาคจริง
 				•data = วันที่ ......
 					ครั้งที่ .........
 
 --------------------------------------------------------
-• collection("bloodsRecord")
+• collection("user")
 	•document(uid) มาจาก String uid = auth.getCurrentUser().getUid();
 		•data = ชื่อ-นามสกุล ......
 			หมายเลขบัตรประชาชน .....
