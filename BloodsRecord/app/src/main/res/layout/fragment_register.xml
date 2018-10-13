@@ -26,13 +26,13 @@
                 />
 
             <EditText
-            android:id="@+id/registerLastname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:hint="lastname"
-            android:ems="10"
-            />
+                android:id="@+id/registerLastname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="lastname"
+                android:ems="10"
+                />
 
             <EditText
                 android:id="@+id/registerNationalID"
@@ -89,6 +89,17 @@
                 android:hint="25-01-1998"
                 android:ems="10"
                 />
+
+            <Button
+                android:id="@+id/chooseBtn"
+                android:text="Choose"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="200dp"
+                android:layout_height="200dp" />
 
             <Button
                 android:id="@+id/registerBtn"
