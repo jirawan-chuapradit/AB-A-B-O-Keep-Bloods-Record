@@ -30,10 +30,10 @@
 
 
             <Button
-                android:text="btn_sert_nationalID"
+                android:text="sert"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/login_btn"
+                android:id="@+id/btn_sert_nationalID"
                 />
 
 
