@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:hint="national ID"
                 android:layout_gravity="center"
-                android:id="@+id/nationalID"
+                android:id="@+id/sert_nationalID"
                 />
 
 
