@@ -33,9 +33,9 @@ public class SertNationalID extends Fragment {
         Button sertNa = getView().findViewById(R.id.btn_sert_nationalID);
         EditText uid = getView().findViewById(R.id.sert_nationalID);
 
-//        Intent intent = new Intent();
-//        intent.putExtra("EXTRA_SESSION_ID", sertNa);
-//        startActivity(intent);
+        Intent intent = new Intent();
+        intent.putExtra("EXTRA_SESSION_ID", String.valueOf(uid));
+        startActivity(intent);
 
         sertNa.setOnClickListener(new View.OnClickListener() {
             @Override
