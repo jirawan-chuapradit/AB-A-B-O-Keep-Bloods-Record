@@ -97,6 +97,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 />
+            <Button
+                android:id="@+id/login_btn"
+                android:layout_marginTop="10dp"
+                android:text="BACK TO LOGIN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

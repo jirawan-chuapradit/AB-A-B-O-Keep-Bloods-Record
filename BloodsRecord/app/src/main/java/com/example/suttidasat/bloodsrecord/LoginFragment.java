@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.suttidasat.bloodsrecord.donator.DonatorProfileFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
@@ -79,7 +80,7 @@ public class LoginFragment extends Fragment {
                                 public void onSuccess(AuthResult authResult) {
                                     getActivity().getSupportFragmentManager()
                                             .beginTransaction()
-                                            .replace(R.id.main_view, new ProfileFragment())
+                                            .replace(R.id.main_view, new DonatorProfileFragment())
                                             .commit();
 
                                 }

@@ -36,6 +36,15 @@
         tools:layout_editor_absoluteX="67dp"
         tools:layout_editor_absoluteY="228dp" />
 
+
+        <TextView
+            android:id="@+id/profileEmail"
+            android:layout_width="241dp"
+            android:layout_height="37dp"
+            android:text="example@email.com"
+            tools:layout_editor_absoluteX="67dp"
+            tools:layout_editor_absoluteY="228dp" />
+
     <TextView
         android:id="@+id/profileBirth"
         android:layout_width="239dp"
@@ -53,4 +62,5 @@
         tools:layout_editor_absoluteY="351dp" />
 
     </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>
