@@ -91,6 +91,17 @@
                 />
 
             <Button
+                android:id="@+id/chooseBtn"
+                android:text="Choose"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="200dp"
+                android:layout_height="200dp" />
+
+            <Button
                 android:id="@+id/registerBtn"
                 android:layout_marginTop="10dp"
                 android:text="REGISTER"
