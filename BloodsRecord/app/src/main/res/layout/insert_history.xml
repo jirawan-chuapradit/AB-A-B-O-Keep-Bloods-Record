@@ -29,7 +29,6 @@
             <TextView
                 android:id="@+id/sh_name_donater"
                 android:paddingTop="20dp"
-                android:text="name"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -37,7 +36,6 @@
             <TextView
                 android:id="@+id/sh_nid_donater"
                 android:paddingTop="20dp"
-                android:text="national id"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -45,7 +43,6 @@
             <TextView
                 android:id="@+id/sh_birth_donater"
                 android:paddingTop="20dp"
-                android:text="email"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -53,7 +50,6 @@
             <TextView
                 android:id="@+id/sh_email_donater"
                 android:paddingTop="20dp"
-                android:text="birth"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -61,7 +57,14 @@
             <TextView
                 android:id="@+id/sh_group_donater"
                 android:paddingTop="20dp"
-                android:text="group"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/sh_date_now"
+                android:paddingTop="20dp"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

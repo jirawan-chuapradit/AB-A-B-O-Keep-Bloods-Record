@@ -1,5 +1,7 @@
 package com.example.suttidasat.bloodsrecord;
 
+import android.icu.text.DateFormat;
+import java.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,13 +22,15 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.sql.Time;
+import java.util.Calendar;
 import java.util.List;
 
 public class InsertHistoryFragment extends Fragment {
 
     FirebaseFirestore firestore;
     DocumentReference booldsRecord;
-    private TextView profileName, profileNationalID, profileBirth,profileBlood, profileEmail;
+    private TextView profileName, profileNationalID, profileBirth,profileBlood, profileEmail,currentDate;
 
 
     @Nullable
@@ -58,6 +62,7 @@ public class InsertHistoryFragment extends Fragment {
         profileBirth = getView().findViewById(R.id.sh_birth_donater);
         profileBlood = getView().findViewById(R.id.sh_group_donater);
         profileEmail = getView().findViewById(R.id.sh_email_donater);
+        currentDate = getView().findViewById(R.id.sh_date_now);
 
         firestore.collection("bloodsRecord")
                 .whereEqualTo("nationalID","111")
@@ -67,6 +72,11 @@ public class InsertHistoryFragment extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         List<DocumentSnapshot> doc = task.getResult().getDocuments();
                         String name = doc.get(0).get("fName").toString() +""+ doc.get(0).get("lName").toString();
+
+                        Calendar calendar = Calendar.getInstance();
+                        SimpleDateFormat mdformat = new SimpleDateFormat("dd / MM / yyyy ");
+
+                        String strDate = "Current Date : " + mdformat.format(calendar.getTime());
 
                         String nationalID = doc.get(0).get("nationalID").toString();
                         String birth = doc.get(0).get("birth").toString();
@@ -78,6 +88,7 @@ public class InsertHistoryFragment extends Fragment {
                         profileBirth.setText("Birth date : " + birth);
                         profileBlood.setText("Blood Group : " + blood);
                         profileEmail.setText("E-mail : " + email);
+                        currentDate.setText("Date : " + strDate);
                     }
                 });
 
