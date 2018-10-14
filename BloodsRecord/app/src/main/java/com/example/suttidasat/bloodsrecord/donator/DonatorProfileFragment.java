@@ -1,5 +1,7 @@
 package com.example.suttidasat.bloodsrecord.donator;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class DonatorProfileFragment extends Fragment {
@@ -40,6 +44,8 @@ public class DonatorProfileFragment extends Fragment {
     DocumentReference booldsRecord;
 
     private TextView profileName, profileNationalID, profileBirth,profileBlood, profileEmail;
+    private ImageView profilePic;
+    private String uid;
 
 
     @Override
@@ -51,11 +57,13 @@ public class DonatorProfileFragment extends Fragment {
         fbAuth = FirebaseAuth.getInstance();
 
         //GET VALUDE FROM FIREBASE
-        String user = fbAuth.getCurrentUser().getUid();
+        uid = fbAuth.getCurrentUser().getUid();
 
 //        currentUserId = fbAuth.getCurrentUser().getUid();
         booldsRecord = firestore.collection("bloodsRecord")
-                .document(user);
+                .document(uid);
+
+//        showProfilePic();
 
         //get textView
          profileName =  getView().findViewById(R.id.profileName);
@@ -63,6 +71,9 @@ public class DonatorProfileFragment extends Fragment {
          profileBirth = getView().findViewById(R.id.profileBirth);
          profileBlood = getView().findViewById(R.id.profileBloodsG);
          profileEmail = getView().findViewById(R.id.profileEmail);
+         profilePic = getView().findViewById(R.id.profilePic);
+
+
 
         //GET DOCUMENT DATA
         booldsRecord.get()
@@ -86,6 +97,20 @@ public class DonatorProfileFragment extends Fragment {
                         profileBlood.setText("Blood Group : " + blood);
                         profileEmail.setText("E-mail : " + email);
 
+                        System.out.println("_________before____");
+
+                        File imgFile = new  File("/profileImage/"+uid+ ".jpg");
+                        System.out.println("_____________" + imgFile.toString());
+                        if(imgFile.exists()){
+                            System.out.println("______________mgFile.exists()____________");
+                            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+
+                            profilePic.setImageBitmap(myBitmap);
+
+                        }else{
+                            System.out.println("______________mgFile.not exists()____________");
+                        }
+
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -102,6 +127,9 @@ public class DonatorProfileFragment extends Fragment {
 
     }
 
+//    private void showProfilePic() {
+//
+//    }
 
 
 }
