@@ -15,9 +15,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.suttidasat.bloodsrecord.donator.DonatorProfileFragment;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SertNationalID extends Fragment {
+
+    DocumentReference danateHistory;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.sert_nationalid, container,false);
