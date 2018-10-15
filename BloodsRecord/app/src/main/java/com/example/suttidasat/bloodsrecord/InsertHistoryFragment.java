@@ -113,7 +113,13 @@ public class InsertHistoryFragment extends Fragment {
                         profileEmail.setText("E-mail : " + email);
                         currentDate.setText("Date : " + date);
                     }
-                });
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("Show Donator", "ERRROR =" + e.getMessage());
+                Toast.makeText(getContext(),"ERROR = "+e.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
