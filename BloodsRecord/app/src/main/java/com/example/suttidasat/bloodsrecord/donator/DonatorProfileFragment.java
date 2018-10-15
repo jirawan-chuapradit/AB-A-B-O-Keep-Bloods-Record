@@ -97,8 +97,6 @@ public class DonatorProfileFragment extends Fragment {
                         profileBlood.setText("Blood Group : " + blood);
                         profileEmail.setText("E-mail : " + email);
 
-                        System.out.println("_________before____");
-
                         File imgFile = new  File("/profileImage/"+uid+ ".jpg");
                         System.out.println("_____________" + imgFile.toString());
                         if(imgFile.exists()){

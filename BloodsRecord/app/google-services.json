@@ -31,6 +31,14 @@
           }
         },
         {
+          "client_id": "56225758202-1na1mcv56vafmeoeq5elcq9p000g8345.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.suttidasat.bloodsrecord",
+            "certificate_hash": "faadf0be780843c3ae045446118d683a9b0b0045"
+          }
+        },
+        {
           "client_id": "56225758202-sre0p61egqjj5qpvc8u3aeodtuduhff7.apps.googleusercontent.com",
           "client_type": 3
         }

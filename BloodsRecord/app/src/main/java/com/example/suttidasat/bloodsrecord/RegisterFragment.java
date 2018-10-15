@@ -16,18 +16,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.suttidasat.bloodsrecord.donator.DonatorProfile;
+import com.example.suttidasat.bloodsrecord.donator.UploadProfileImage;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -52,9 +56,13 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     private FirebaseAuth fbAuth;
     private FirebaseFirestore firestore;
 
+    private StorageReference mStorageRef;
+    private DatabaseReference mDatabaseRef;
+
     //Register value
     String firstnameStr,lastnameStr,birthStr,nationalIDStr
-            ,bloodsStr,emailStr,passwordStr,rePasswordStr,uid;
+            ,bloodsStr,emailStr,passwordStr,rePasswordStr
+            ,uid,imageName;
     //ImageView
     private ImageView imageView;
     //Buttons
@@ -66,7 +74,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     //a Uri object to store file path
     private Uri filePath;
 
-    private StorageReference mStorageRef;
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -74,7 +82,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         //Firebase
         fbAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
-        mStorageRef = FirebaseStorage.getInstance().getReference();
+        mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
 
         //getting views from layout
         loginBtn =  getView().findViewById(R.id.login_btn);
@@ -124,6 +133,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Log.d("REGISTER", "VALUE HAS BEEN SAVED IN FIREBASE");
+
+                             imageName = firstnameStr+"_"+uid;
                             uploadFile();
 
                             //FORCE USER SIGGOUT
@@ -175,7 +186,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         if(filePath != null) {
 
 
-            StorageReference riversRef = mStorageRef.child("image/profileImage/" +uid+".jpg");
+            StorageReference riversRef = mStorageRef.child(System.currentTimeMillis()
+            +"." + getFileExtension(filePath));
 
             riversRef.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -184,6 +196,11 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                             // Get a URL to the uploaded content
                             Log.d("REGISTER", "FILE UPLOADED");
                             Toast.makeText(getContext(),"File Up loaded",Toast.LENGTH_SHORT).show();
+
+                            UploadProfileImage upload = new UploadProfileImage(imageName.trim()
+                                    ,taskSnapshot.getMetadata().getReference().getDownloadUrl().toString());
+                            String uploadId = mDatabaseRef.push().getKey();
+                            mDatabaseRef.child(uploadId).setValue(upload);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -195,16 +212,23 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                         }
                     });
         }else{
-            Toast.makeText(getContext(),"ERROR = filePath is null",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),"No File selected",Toast.LENGTH_SHORT).show();
 
         }
+    }
+
+    private String getFileExtension(Uri filePath){
+        ContentResolver cR = getActivity().getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cR.getType(filePath));
     }
 
     //handling the image chooser activity result
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null) {
             filePath = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
