@@ -1,5 +1,6 @@
 package com.example.suttidasat.bloodsrecord;
 
+import android.content.Intent;
 import android.icu.text.DateFormat;
 import java.text.SimpleDateFormat;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -30,7 +32,7 @@ public class InsertHistoryFragment extends Fragment {
 
     FirebaseFirestore firestore;
     DocumentReference booldsRecord;
-    private TextView profileName, profileNationalID, profileBirth,profileBlood, profileEmail,currentDate;
+    private TextView  profileName,profileNationalID, profileBirth,profileBlood, profileEmail,currentDate;
 
 
     @Nullable
@@ -48,24 +50,24 @@ public class InsertHistoryFragment extends Fragment {
 
 
         insertHistory();
+        backBtn();
 
     }
     void insertHistory()
     {
-//        final String NID = getView().findViewById(R.id.nationalID).toString();
-
-        final String uid ;
 
 
-        profileName =  getView().findViewById(R.id.sh_name_donater);
+
+        profileName = getView().findViewById(R.id.sh_name_donater);
         profileNationalID = getView().findViewById(R.id.sh_nid_donater);
         profileBirth = getView().findViewById(R.id.sh_birth_donater);
         profileBlood = getView().findViewById(R.id.sh_group_donater);
         profileEmail = getView().findViewById(R.id.sh_email_donater);
         currentDate = getView().findViewById(R.id.sh_date_now);
 
+
         firestore.collection("bloodsRecord")
-                .whereEqualTo("nationalID","111")
+                .whereEqualTo("nationalID",NationaID.NID)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -74,7 +76,7 @@ public class InsertHistoryFragment extends Fragment {
                         String name = doc.get(0).get("fName").toString() +""+ doc.get(0).get("lName").toString();
 
                         Calendar calendar = Calendar.getInstance();
-                        SimpleDateFormat mdformat = new SimpleDateFormat("dd / MM / yyyy ");
+                        SimpleDateFormat mdformat = new SimpleDateFormat("dd - MM - yyyy ");
 
                         String strDate = "Current Date : " + mdformat.format(calendar.getTime());
 
@@ -93,6 +95,20 @@ public class InsertHistoryFragment extends Fragment {
                 });
 
 
+    }
+    void backBtn(){
+        Button back = getView().findViewById(R.id.btn_back_sertNID);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view, new SertNationalID())
+                        .commit();
+
+            }
+        });
     }
 
 }
