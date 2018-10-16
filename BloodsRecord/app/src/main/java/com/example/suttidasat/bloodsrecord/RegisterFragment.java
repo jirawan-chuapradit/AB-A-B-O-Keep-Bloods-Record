@@ -28,6 +28,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -52,41 +54,50 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     //Firebase
     private FirebaseAuth fbAuth;
     private FirebaseFirestore firestore;
+//    private FirebaseDatabase firebaseDatabase;
+    private FirebaseStorage firebaseStorage;
+    private StorageReference storageReference;
+
 
     //Register value
     String firstnameStr,lastnameStr,birthStr,nationalIDStr
             ,bloodsStr,emailStr,passwordStr,rePasswordStr,uid;
+
     //ImageView
-    private ImageView imageView;
+    private ImageView userProfileImage;
     //Buttons
     private Button chooseBtn,loginBtn,registerBtn;
 
     //a constant to track the file chooser intent
-    private static final int PICK_IMAGE_REQUEST = 234;
+    private static int PICK_IMAGE = 123;
 
     //a Uri object to store file path
     private Uri filePath;
 
-    private StorageReference mStorageRef;
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+
         //Firebase
         fbAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
-        mStorageRef = FirebaseStorage.getInstance().getReference();
+//        mStorageRef = FirebaseStorage.getInstance().getReference();
+        firebaseStorage = FirebaseStorage.getInstance();
+
+        storageReference = firebaseStorage.getReference();
+
 
         //getting views from layout
         loginBtn =  getView().findViewById(R.id.login_btn);
         registerBtn = getView().findViewById(R.id.registerBtn);
-        imageView = getView().findViewById(R.id.imageView);
-        chooseBtn = getView().findViewById(R.id.chooseBtn);
+        userProfileImage = getView().findViewById(R.id.userProfileImage);
 
         //attaching listener
-        chooseBtn.setOnClickListener(this);
         loginBtn.setOnClickListener(this);
         registerBtn.setOnClickListener(this);
+        userProfileImage.setOnClickListener(this);
     }
 
     private void login() {
@@ -109,44 +120,75 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         }else if(!rePasswordStr.equals(passwordStr)){
             Log.d("REGISTER", "PASSWORD IS NOT EQUALS REPASSWORD");
             Toast.makeText(getActivity(),"รหัสผ่านไม่ถูกต้อง",Toast.LENGTH_SHORT).show();
-        }else{
+        }else if(nationalIDStr.length() != 13){
+            Log.d("REGISTER", "กรุณาระบุเลขบัตรประชาชนให้ครบ");
+            Toast.makeText(getActivity(),"กรุณาระบุเลขบัตรประชาชนให้ครบ",Toast.LENGTH_SHORT).show();
+        }
+        else if (rePasswordStr.length() <= 5 || passwordStr.length() <= 5){
+            Log.d("REGISTER", "รหัสผ่านน้อยกว่า 6 ตัว");
+            Toast.makeText(getActivity(),"กรุณาระบุรหัสผ่านมากกว่า 5 ตัว",Toast.LENGTH_SHORT).show();
+        }
+        else{
             fbAuth.createUserWithEmailAndPassword(emailStr,passwordStr).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     uid = fbAuth.getCurrentUser().getUid();
-
-//                            String birth, String fName, String lName, String nationalID, String email, String bloodGroup
-                    DonatorProfile dp = new DonatorProfile(birthStr,firstnameStr,lastnameStr,nationalIDStr,emailStr
-                            ,bloodsStr);
-                    Log.d("REGISTER", "REGISTER SUCCESS");
-                    firestore.collection("bloodsRecord")
-                            .document(uid)
-                            .set(dp).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Log.d("REGISTER", "VALUE HAS BEEN SAVED IN FIREBASE");
-                            uploadFile();
-
-                            //FORCE USER SIGGOUT
-                            FirebaseAuth.getInstance().signOut();
-                            getActivity().getSupportFragmentManager()
-                                    .beginTransaction()
-                                    .replace(R.id.main_view, new LoginFragment())
-                                    .addToBackStack(null)
-                                    .commit();
-                            Log.d("USER", "YOU HAS BEEN SIGN OUT");
-                            Log.d("USER", "GOTO LOGIN");
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.d("REGISTER", "ERRROR =" + e.getMessage());
-                            Toast.makeText(getContext(),"ERROR = "+e.getMessage(),Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    sendUserData();
                 }
             });
         }
+    }
+
+    private void sendUserData() {
+        StorageReference imageReference = storageReference.child(uid).child("Images").child("Profile Pic");  //User id/Images/Profile Pic.jpg
+        UploadTask uploadTask = imageReference.putFile(filePath);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(
+                        getActivity(),
+                        "Upload failed!",
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                Toast.makeText(
+                        getActivity(),
+                        "Upload successful!",
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
+        });
+
+        DonatorProfile dp = new DonatorProfile(birthStr,firstnameStr,lastnameStr,nationalIDStr,emailStr
+                ,bloodsStr);
+        Log.d("REGISTER", "REGISTER SUCCESS");
+
+        firestore.collection("bloodsRecord")
+                .document(uid)
+                .set(dp).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d("REGISTER", "VALUE HAS BEEN SAVED IN FIREBASE");
+
+                //FORCE USER SIGGOUT
+                FirebaseAuth.getInstance().signOut();
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view, new LoginFragment())
+                        .addToBackStack(null)
+                        .commit();
+                Log.d("USER", "GOTO LOGIN");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("REGISTER", "ERRROR =" + e.getMessage());
+                Toast.makeText(getContext(),"ERROR = "+e.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void gatRegisterValue() {
@@ -160,6 +202,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         EditText passwordEdt = getView().findViewById(R.id.registerPassword);
         EditText rePasswordEdt = getView().findViewById(R.id.registerRePassword);
 
+
         //CONVERSE TO STRING
         firstnameStr = firstnameEdt.getText().toString();
         lastnameStr = lastnameEdt.getText().toString();
@@ -171,74 +214,41 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         rePasswordStr = rePasswordEdt.getText().toString();
     }
 
-    private void uploadFile(){
 
-        if(filePath != null) {
-
-
-            StorageReference riversRef = mStorageRef.child("image/profileImage/" +uid+".jpg");
-
-            riversRef.putFile(filePath)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            // Get a URL to the uploaded content
-                            Log.d("REGISTER", "FILE UPLOADED");
-                            Toast.makeText(getContext(),"File Up loaded",Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            Log.d("REGISTER", "ERROR = " + exception);
-                            Toast.makeText(getContext(),"ERROR = "+exception.getMessage(),Toast.LENGTH_SHORT).show();
-
-                        }
-                    });
-        }else{
-            Toast.makeText(getContext(),"ERROR = filePath is null",Toast.LENGTH_SHORT).show();
-
-        }
-    }
 
     //handling the image chooser activity result
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+        if(requestCode == PICK_IMAGE && resultCode == RESULT_OK && data.getData() != null){
             filePath = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
-                imageView.setImageBitmap(bitmap);
-
+                userProfileImage.setImageBitmap(bitmap);
             } catch (IOException e) {
-                Log.d("REGISTER", "ERROR = " + e.getMessage());
                 e.printStackTrace();
             }
-        }else {
-            Log.d("REGISTER", "ERROR = handling the image chooser activity result Fail");
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     //method to show file chooser
     private void showFileChooser(){
         Intent intent = new Intent();
-        intent.setType("image/profileImage/*");
+        intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
     }
 
     @Override
     public void onClick(View v) {
-        if(v == chooseBtn){
+        if(v == userProfileImage){
             //open file chooser
-            Log.d("REGISTER", "CLICK = CHOOSE");
+            Log.d("REGISTER", "CLICK = USER_PROFIRE_IMAGE");
             showFileChooser();
         }else if(v == loginBtn){
             //back to login
             Log.d("REGISTER", "CLICK = LOGIN");
             login();
-
         }else if(v == registerBtn){
             //register
             Log.d("REGISTER", "CLICK = REGISTER");
