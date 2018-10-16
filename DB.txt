@@ -2,9 +2,6 @@
 	ïdocument(nationalID) // §Ë“∑’Ë ®π∑ §ÈπÀ“
 		ï collection("History")
 			ïdocument(date) √—∫¡“®“°«—π∑’Ë∫√‘®“§®√‘ß
-				ïdata = «—π∑’Ë ......
-					§√—Èß∑’Ë .........
-
 --------------------------------------------------------
 ï collection("user")
 	ïdocument(uid) ¡“®“° String uid = auth.getCurrentUser().getUid();

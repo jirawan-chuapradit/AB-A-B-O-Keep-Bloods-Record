@@ -61,6 +61,12 @@
         tools:layout_editor_absoluteX="67dp"
         tools:layout_editor_absoluteY="351dp" />
 
+        <Button
+            android:id="@+id/btnChangePassword"
+            android:text="Changepassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

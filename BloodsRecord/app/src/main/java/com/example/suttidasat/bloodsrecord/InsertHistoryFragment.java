@@ -1,7 +1,10 @@
 package com.example.suttidasat.bloodsrecord;
 
+import android.content.Intent;
 import android.icu.text.DateFormat;
+
 import java.text.SimpleDateFormat;
+
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,11 +13,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.suttidasat.bloodsrecord.donator.DonatorHistory;
 import com.google.android.gms.tasks.OnCompleteListener;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -29,70 +37,172 @@ import java.util.List;
 public class InsertHistoryFragment extends Fragment {
 
     FirebaseFirestore firestore;
-    DocumentReference booldsRecord;
-    private TextView profileName, profileNationalID, profileBirth,profileBlood, profileEmail,currentDate;
+    DocumentReference donateHistory;
+    private TextView profileName, profileNationalID, profileBirth, profileBlood, profileEmail, currentDate, amount;
+    Calendar calendar = Calendar.getInstance();
+    SimpleDateFormat mdformat = new SimpleDateFormat("dd-MM-yyyy ");
+
+    final String date = mdformat.format(calendar.getTime());
 
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
-    {
-        return inflater.inflate(R.layout.insert_history, container,false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.insert_history, container, false);
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState)
-    {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         firestore = FirebaseFirestore.getInstance();
 
-
         insertHistory();
+        backBtn();
+        plusBtn();
 
     }
-    void insertHistory()
-    {
-//        final String NID = getView().findViewById(R.id.nationalID).toString();
 
-        final String uid ;
+    void insertHistory() {
 
 
-        profileName =  getView().findViewById(R.id.sh_name_donater);
+        profileName = getView().findViewById(R.id.sh_name_donater);
         profileNationalID = getView().findViewById(R.id.sh_nid_donater);
         profileBirth = getView().findViewById(R.id.sh_birth_donater);
         profileBlood = getView().findViewById(R.id.sh_group_donater);
         profileEmail = getView().findViewById(R.id.sh_email_donater);
+        amount = getView().findViewById(R.id.sh_amount);
         currentDate = getView().findViewById(R.id.sh_date_now);
 
+        firestore.collection("donateHistory")
+                .document(NationaID.NID)
+                .collection("history")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        amount.setText("Amount : " + queryDocumentSnapshots.size());
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("Show Donator", "ERRROR =" + e.getMessage());
+                Toast.makeText(getContext(),"ERROR = "+e.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
         firestore.collection("bloodsRecord")
-                .whereEqualTo("nationalID","111")
+                .whereEqualTo("nationalID", NationaID.NID)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         List<DocumentSnapshot> doc = task.getResult().getDocuments();
-                        String name = doc.get(0).get("fName").toString() +""+ doc.get(0).get("lName").toString();
+                        String name = doc.get(0).get("fName").toString() + "" + doc.get(0).get("lName").toString();
 
-                        Calendar calendar = Calendar.getInstance();
-                        SimpleDateFormat mdformat = new SimpleDateFormat("dd / MM / yyyy ");
-
-                        String strDate = "Current Date : " + mdformat.format(calendar.getTime());
 
                         String nationalID = doc.get(0).get("nationalID").toString();
                         String birth = doc.get(0).get("birth").toString();
                         String blood = doc.get(0).get("bloodGroup").toString();
                         String email = doc.get(0).get("email").toString();
 
-                        profileName.setText("First name : " +name);
+                        profileName.setText("First name : " + name);
                         profileNationalID.setText("National ID : " + nationalID);
                         profileBirth.setText("Birth date : " + birth);
                         profileBlood.setText("Blood Group : " + blood);
                         profileEmail.setText("E-mail : " + email);
-                        currentDate.setText("Date : " + strDate);
+                        currentDate.setText("Date : " + date);
                     }
-                });
-
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("Show Donator", "ERRROR =" + e.getMessage());
+                Toast.makeText(getContext(),"ERROR = "+e.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
+
+    void plusBtn() {
+        Button plus = getView().findViewById(R.id.btn_plus);
+        plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                donateHistory = firestore.collection("donateHistory")
+                        .document(NationaID.NID);
+                donateHistory.get()
+                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                                if (documentSnapshot.exists()) { //have
+                                    firestore.collection("donateHistory") /// get size (amount of donate)
+                                            .document(NationaID.NID)
+                                            .collection("history")
+                                            .get()
+                                            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                @Override
+                                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+                                                    DonatorHistory dh = new DonatorHistory(queryDocumentSnapshots.size()+1);
+                                                    firestore.collection("donateHistory")
+                                                            .document(NationaID.NID)
+                                                            .collection("history")
+                                                            .document(date)
+                                                            .set(dh)
+                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                @Override
+                                                                public void onSuccess(Void aVoid) {
+                                                                    Log.d("Insert", "Insert Success");
+                                                                }
+                                                            });
+
+                                                }
+                                            });
+
+                                } else { // never donate before
+                                    DonatorHistory dh = new DonatorHistory(1);
+                                    firestore.collection("donateHistory")
+                                            .document(NationaID.NID)
+                                            .collection("history")
+                                            .document(date)
+                                            .set(dh)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Log.d("Insert", "Insert First Time Success");
+                                                }
+                                            });
+
+                                }
+
+                            }
+
+                        });
+
+                Toast.makeText(getActivity(), "Insert History Success", Toast.LENGTH_SHORT).show();
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view, new SertNationalID())
+                        .commit();
+            }
+        });
+    }
+
+    void backBtn() {
+        Button back = getView().findViewById(R.id.btn_back_sertNID);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view, new SertNationalID())
+                        .commit();
+
+            }
+        });
+    }
+
 
 }

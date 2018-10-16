@@ -70,15 +70,29 @@
                 android:layout_height="wrap_content"
                 android:textSize="20dp" />
 
+            <TextView
+                android:id="@+id/sh_amount"
+                android:paddingTop="20dp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp" />
+
 
 
 
             <Button
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/btn_cal"
+                android:id="@+id/btn_plus"
                 android:text="Plus"                />
+            <Button
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_back_sertNID"
+                android:text="Back"                />
 
 
 
