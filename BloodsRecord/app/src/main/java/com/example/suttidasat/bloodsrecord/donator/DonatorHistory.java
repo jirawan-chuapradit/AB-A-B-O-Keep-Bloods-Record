@@ -1,7 +1,7 @@
 package com.example.suttidasat.bloodsrecord.donator;
 
 public class DonatorHistory  {
-//    private String date;
+    //    private String date;
     private int num;
 
     public DonatorHistory() {

@@ -45,6 +45,7 @@ public class DonatorProfileFragment extends Fragment {
     private FirebaseAuth fbAuth;
     private FirebaseFirestore firestore;
     private FirebaseStorage firebaseStorage;
+
     private DocumentReference booldsRecord;
 
     private TextView profileName, profileNationalID, profileBirth, profileBlood, profileEmail;
@@ -111,18 +112,6 @@ public class DonatorProfileFragment extends Fragment {
                         profileBlood.setText("Blood Group : " + blood);
                         profileEmail.setText("E-mail : " + email);
 
-                        File imgFile = new  File("/profileImage/"+uid+ ".jpg");
-                        System.out.println("_____________" + imgFile.toString());
-                        if(imgFile.exists()){
-                            System.out.println("______________mgFile.exists()____________");
-                            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-
-                            profilePic.setImageBitmap(myBitmap);
-
-                        }else{
-                            System.out.println("______________mgFile.not exists()____________");
-                        }
-
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -153,19 +142,6 @@ public class DonatorProfileFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-//    private void showProfilePic() {
-//
-//    }
-
-    //    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//
-//        switch (item.getItemId()){
-//            case android.R.id.home:
-//                onBackPressed();
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
 }
 
