@@ -1,54 +1,46 @@
 package com.example.suttidasat.bloodsrecord.donator;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.suttidasat.bloodsrecord.PicassoCircleTransformation;
 import com.example.suttidasat.bloodsrecord.R;
-import com.example.suttidasat.bloodsrecord.UpdatePasswordFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 
 public class DonatorProfileFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_donator_profile, container, false);
+        return inflater.inflate(R.layout.fragment_donator_profile,container,false);
     }
 
     //Firebase
+    FirebaseFirestore firestore;
+//    DatabaseReference profileUserRef;
+    FirebaseAuth fbAuth;
+    DocumentReference booldsRecord;
 
-    private FirebaseAuth fbAuth;
-    private FirebaseFirestore firestore;
-    private FirebaseStorage firebaseStorage;
+    private TextView profileName, profileNationalID, profileBirth,profileBlood, profileEmail;
 
-    private DocumentReference booldsRecord;
-
-    private TextView profileName, profileNationalID, profileBirth, profileBlood, profileEmail;
-    private Button changePassword;
-    private String uid;
-    private ImageView profileImage;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -57,54 +49,38 @@ public class DonatorProfileFragment extends Fragment {
         //Firebase
         firestore = FirebaseFirestore.getInstance();
         fbAuth = FirebaseAuth.getInstance();
-        firebaseStorage = FirebaseStorage.getInstance();
 
         //GET VALUDE FROM FIREBASE
-        uid = fbAuth.getCurrentUser().getUid();
+        String user = fbAuth.getCurrentUser().getUid();
 
+//        currentUserId = fbAuth.getCurrentUser().getUid();
         booldsRecord = firestore.collection("bloodsRecord")
-                .document(uid);
+                .document(user);
 
         //get textView
-        profileImage = getView().findViewById(R.id.profilePic);
-        profileName = getView().findViewById(R.id.profileName);
-        profileNationalID = getView().findViewById(R.id.profileNationalID);
-        profileBirth = getView().findViewById(R.id.profileBirth);
-        profileBlood = getView().findViewById(R.id.profileBloodsG);
-        profileEmail = getView().findViewById(R.id.profileEmail);
-        changePassword = getView().findViewById(R.id.btnChangePassword);
-
-
-
-
-        StorageReference storageReference = firebaseStorage.getReference();
-        storageReference.child(uid).child("Images/Profile Pic").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).fit().centerCrop()
-                        .placeholder(R.mipmap.ic_launcher)
-                        .error(R.mipmap.ic_launcher)
-                        .transform((Transformation) new PicassoCircleTransformation())
-                        .into(profileImage);
-            }
-        });
+         profileName =  getView().findViewById(R.id.profileName);
+         profileNationalID = getView().findViewById(R.id.profileNationalID);
+         profileBirth = getView().findViewById(R.id.profileBirth);
+         profileBlood = getView().findViewById(R.id.profileBloodsG);
+         profileEmail = getView().findViewById(R.id.profileEmail);
 
         //GET DOCUMENT DATA
         booldsRecord.get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
+//                        documentSnapshot.getData();
 
-                        Log.d("DONATOR PROFILE", "GET DOCUMENT DATA");
-
+                        Log.d("DONATOR PROFILE","GET DOCUMENT DATA");
                         DonatorProfile dp = documentSnapshot.toObject(DonatorProfile.class);
-                        String name = dp.getfName() + "  " + dp.getlName();
+
+                        String name = dp.getfName() + "  "+ dp.getlName();
                         String nationalID = dp.getNationalID();
                         String birth = dp.getBirth();
                         String blood = dp.getBloodGroup();
                         String email = dp.getEmail();
 
-                        profileName.setText("First name : " + name);
+                        profileName.setText("First name : " +name);
                         profileNationalID.setText("National ID : " + nationalID);
                         profileBirth.setText("Birth date : " + birth);
                         profileBlood.setText("Blood Group : " + blood);
@@ -114,42 +90,18 @@ public class DonatorProfileFragment extends Fragment {
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.d("DONATOR PROFILE", "ERROR = " + e.getMessage());
+                Log.d("DONATOR PROFILE","ERROR = " + e);
 
             }
         });
 
-        changePassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_view, new UpdatePasswordFragment())
-                        .commit();
-            }
-        });
+//        loadDonatorProfile();
+//        System.out.println("First name : "+dp.getfName());
+//        profileName.setText(dp.getfName());
+
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()){
-//            case android.R.id.home:
-//                onBackPressed();
-//        }
-        return super.onOptionsItemSelected(item);
-    }
 
-
-    //    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//
-//        switch (item.getItemId()){
-//            case android.R.id.home:
-//                onBackPressed();
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
 }
-
