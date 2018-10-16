@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +17,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.suttidasat.bloodsrecord.LoginFragment;
 import com.example.suttidasat.bloodsrecord.PicassoCircleTransformation;
 import com.example.suttidasat.bloodsrecord.R;
+import com.example.suttidasat.bloodsrecord.TimeLineFragment;
 import com.example.suttidasat.bloodsrecord.UpdatePasswordFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -53,6 +57,8 @@ public class DonatorProfileFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        setHasOptionsMenu(true);
 
         //Firebase
         firestore = FirebaseFirestore.getInstance();
@@ -132,24 +138,57 @@ public class DonatorProfileFragment extends Fragment {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()){
-//            case android.R.id.home:
-//                onBackPressed();
-//        }
-        return super.onOptionsItemSelected(item);
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu, menu);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.sigOut:{
 
-    //    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//
-//        switch (item.getItemId()){
-//            case android.R.id.home:
-//                onBackPressed();
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
+                FirebaseAuth.getInstance().signOut();
+
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view, new LoginFragment())
+                        .addToBackStack(null)
+                        .commit();
+                Log.d("USER", "GOTO LOGIN");
+                break;
+            }
+            case R.id.donatorProfile:{
+
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view,new DonatorProfileFragment())
+                        .commit();
+                Log.d("MENU", "GOTO DONATOR PROFILE");
+                break;
+            }
+            case R.id.donatHistory:{
+
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view,new DonatorProfileHistoryFragment())
+                        .commit();
+                Log.d("MENU", "GOTO DONATOR PROFILE HISTORY");
+                break;
+
+            }
+            case R.id.timeline:{
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view, new TimeLineFragment())
+                        .addToBackStack(null)
+                        .commit();
+                Log.d("USER", "GOTO Timeline");
+                break;
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
 }
 

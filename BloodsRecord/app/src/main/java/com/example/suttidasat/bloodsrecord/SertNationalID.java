@@ -8,6 +8,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -15,6 +18,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.suttidasat.bloodsrecord.donator.DonatorProfileFragment;
+import com.example.suttidasat.bloodsrecord.donator.DonatorProfileHistoryFragment;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -28,6 +33,9 @@ public class SertNationalID extends Fragment {
 
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        setHasOptionsMenu(true);
+
         btnSertNationalID();
 
     }
@@ -55,5 +63,58 @@ public class SertNationalID extends Fragment {
         });
 
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.sigOut:{
+
+                FirebaseAuth.getInstance().signOut();
+
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view, new LoginFragment())
+                        .addToBackStack(null)
+                        .commit();
+                Log.d("USER", "GOTO LOGIN");
+                break;
+            }
+            case R.id.donatorProfile:{
+
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view,new DonatorProfileFragment())
+                        .commit();
+                Log.d("MENU", "GOTO DONATOR PROFILE");
+                break;
+            }
+            case R.id.donatHistory:{
+
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view,new DonatorProfileHistoryFragment())
+                        .commit();
+                Log.d("MENU", "GOTO DONATOR PROFILE HISTORY");
+                break;
+
+            }
+            case R.id.timeline:{
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view, new TimeLineFragment())
+                        .addToBackStack(null)
+                        .commit();
+                Log.d("USER", "GOTO Timeline");
+                break;
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
