@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ScrollView
@@ -16,6 +14,13 @@
             android:orientation="vertical">
 
 
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+
+                android:layout_gravity="center"
+                />
 
             <EditText
                 android:inputType="text"
@@ -37,23 +42,15 @@
                 />
 
             <Button
-                android:text="login"
+                android:text="btn_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/login_btn"
                 />
 
-            <TextView
-                android:id="@+id/login_register_Btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Register New Account"
-                tools:layout_editor_absoluteX="46dp"
-                tools:layout_editor_absoluteY="501dp" />
+
 
         </LinearLayout>
     </ScrollView>
-
-
 
 </android.support.constraint.ConstraintLayout>
