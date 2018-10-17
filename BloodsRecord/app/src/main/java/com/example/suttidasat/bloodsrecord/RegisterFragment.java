@@ -128,6 +128,10 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             Log.d("REGISTER", "รหัสผ่านน้อยกว่า 6 ตัว");
             Toast.makeText(getActivity(),"กรุณาระบุรหัสผ่านมากกว่า 5 ตัว",Toast.LENGTH_SHORT).show();
         }
+        else if(filePath == null){
+            Log.d("REGISTER", "ไม่ได้เลือกรูปภาพ");
+            Toast.makeText(getActivity(),"กรุณาใส่รูปภาพ",Toast.LENGTH_SHORT).show();
+        }
         else{
             fbAuth.createUserWithEmailAndPassword(emailStr,passwordStr).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
@@ -141,6 +145,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
     private void sendUserData() {
         StorageReference imageReference = storageReference.child(uid).child("Images").child("Profile Pic");  //User id/Images/Profile Pic.jpg
+
         UploadTask uploadTask = imageReference.putFile(filePath);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
