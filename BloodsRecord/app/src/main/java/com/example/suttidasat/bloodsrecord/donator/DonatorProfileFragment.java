@@ -81,8 +81,6 @@ public class DonatorProfileFragment extends Fragment {
         changePassword = getView().findViewById(R.id.btnChangePassword);
 
 
-
-
         StorageReference storageReference = firebaseStorage.getReference();
         storageReference.child(uid).child("Images/Profile Pic").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override

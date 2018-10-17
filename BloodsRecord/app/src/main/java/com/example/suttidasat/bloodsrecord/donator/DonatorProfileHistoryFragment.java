@@ -24,7 +24,6 @@ public class DonatorProfileHistoryFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_donator_profile_history, container, false);
     }
 
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

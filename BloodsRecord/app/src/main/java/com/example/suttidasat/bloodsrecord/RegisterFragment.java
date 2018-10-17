@@ -14,9 +14,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -25,8 +22,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.suttidasat.bloodsrecord.donator.DonatorProfile;
-import com.example.suttidasat.bloodsrecord.donator.DonatorProfileFragment;
-import com.example.suttidasat.bloodsrecord.donator.DonatorProfileHistoryFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -83,7 +78,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
 
 
         //Firebase
@@ -261,7 +255,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             register();
         }
     }
-    
+
 }
 
 

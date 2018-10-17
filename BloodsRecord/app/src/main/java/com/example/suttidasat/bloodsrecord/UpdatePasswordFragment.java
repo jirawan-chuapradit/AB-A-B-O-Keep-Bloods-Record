@@ -16,7 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.suttidasat.bloodsrecord.donator.DonatorProfileFragment;
-import com.example.suttidasat.bloodsrecord.donator.DonatorProfileHistoryFragment;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -132,7 +132,7 @@ public class UpdatePasswordFragment extends Fragment {
 
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.main_view,new DonatorProfileHistoryFragment())
+                        .replace(R.id.main_view,new DonatorProfileFragment())
                         .commit();
                 Log.d("MENU", "GOTO DONATOR PROFILE HISTORY");
                 break;

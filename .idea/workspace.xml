@@ -19,7 +19,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="127" />
+    <option name="x" value="126" />
     <option name="y" value="21" />
     <option name="width" value="1761" />
     <option name="height" value="1032" />
@@ -29,10 +29,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="AndroidView" />
       <pane id="ProjectPane" />
+      <pane id="AndroidView" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -113,7 +113,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="85" y="14" width="1174" height="688" extended-state="0" />
+    <frame x="84" y="14" width="1174" height="688" extended-state="0" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="3" />

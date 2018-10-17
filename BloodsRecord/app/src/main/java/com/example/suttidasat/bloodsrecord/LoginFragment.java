@@ -16,8 +16,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.suttidasat.bloodsrecord.donator.DonatorProfileFragment;
-import com.example.suttidasat.bloodsrecord.donator.DonatorProfileHistoryFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
