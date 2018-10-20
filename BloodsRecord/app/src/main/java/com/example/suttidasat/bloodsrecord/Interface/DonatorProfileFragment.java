@@ -1,4 +1,4 @@
-package com.example.suttidasat.bloodsrecord.donator;
+package com.example.suttidasat.bloodsrecord.Interface;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,13 +15,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.suttidasat.bloodsrecord.LoginFragment;
-import com.example.suttidasat.bloodsrecord.PicassoCircleTransformation;
 import com.example.suttidasat.bloodsrecord.R;
-import com.example.suttidasat.bloodsrecord.TimeLineFragment;
-import com.example.suttidasat.bloodsrecord.UpdatePasswordFragment;
+import com.example.suttidasat.bloodsrecord.model.DonatorProfile;
+import com.example.suttidasat.bloodsrecord.model.PicassoCircleTransformation;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;

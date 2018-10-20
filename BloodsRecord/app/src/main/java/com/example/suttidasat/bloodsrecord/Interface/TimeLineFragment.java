@@ -1,4 +1,4 @@
-package com.example.suttidasat.bloodsrecord.donator;
+package com.example.suttidasat.bloodsrecord.Interface;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,16 +12,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.suttidasat.bloodsrecord.LoginFragment;
 import com.example.suttidasat.bloodsrecord.R;
-import com.example.suttidasat.bloodsrecord.TimeLineFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class DonatorProfileHistoryFragment extends Fragment {
+public class TimeLineFragment extends Fragment {
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_donator_profile_history, container, false);
+        return inflater.inflate(R.layout.fragment_timeline,container,false);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.example.suttidasat.bloodsrecord.donator;
+package com.example.suttidasat.bloodsrecord.model;
 
 public class DonatorProfile {
 

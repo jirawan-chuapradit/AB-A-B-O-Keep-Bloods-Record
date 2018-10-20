@@ -1,4 +1,4 @@
-package com.example.suttidasat.bloodsrecord;
+package com.example.suttidasat.bloodsrecord.Interface;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -6,9 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -16,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.suttidasat.bloodsrecord.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
@@ -90,7 +88,7 @@ public class LoginFragment extends Fragment {
                                     public void onSuccess(AuthResult authResult) {
                                         getActivity().getSupportFragmentManager()
                                                 .beginTransaction()
-                                                .replace(R.id.main_view, new TimeLineFragment())
+                                                .replace(R.id.main_view, new DisplayDateFragment())
                                                 .commit();
 
                                     }

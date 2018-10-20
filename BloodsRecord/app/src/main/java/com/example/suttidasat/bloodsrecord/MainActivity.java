@@ -3,6 +3,8 @@ package com.example.suttidasat.bloodsrecord;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.suttidasat.bloodsrecord.Interface.LoginFragment;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override

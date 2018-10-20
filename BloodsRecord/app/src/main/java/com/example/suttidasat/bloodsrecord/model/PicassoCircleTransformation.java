@@ -1,4 +1,4 @@
-package com.example.suttidasat.bloodsrecord;
+package com.example.suttidasat.bloodsrecord.model;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;

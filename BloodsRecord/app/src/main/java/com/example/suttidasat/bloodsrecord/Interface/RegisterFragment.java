@@ -1,8 +1,6 @@
-package com.example.suttidasat.bloodsrecord;
+package com.example.suttidasat.bloodsrecord.Interface;
 
 
-import android.app.ProgressDialog;
-import android.content.ContentResolver;
 import android.content.Intent;
 
 import android.graphics.Bitmap;
@@ -21,21 +19,19 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.suttidasat.bloodsrecord.donator.DonatorProfile;
+import com.example.suttidasat.bloodsrecord.R;
+import com.example.suttidasat.bloodsrecord.model.DonatorProfile;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.File;
 import java.io.IOException;
 
 import static android.app.Activity.RESULT_OK;
@@ -54,7 +50,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     //Firebase
     private FirebaseAuth fbAuth;
     private FirebaseFirestore firestore;
-    //    private FirebaseDatabase firebaseDatabase;
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
 
@@ -145,7 +140,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
     private void sendUserData() {
         StorageReference imageReference = storageReference.child(uid).child("Images").child("Profile Pic");  //User id/Images/Profile Pic.jpg
-
         UploadTask uploadTask = imageReference.putFile(filePath);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override

@@ -1,4 +1,4 @@
-package com.example.suttidasat.bloodsrecord;
+package com.example.suttidasat.bloodsrecord.model;
 
 public class NationaID {
     public static String NID = "";
