@@ -11,16 +11,14 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.suttidasat.bloodsrecord.R;
+import com.example.suttidasat.bloodsrecord.model.DateFormatCal;
 import com.example.suttidasat.bloodsrecord.model.DonatorProfile;
-import com.example.suttidasat.bloodsrecord.model.NationaID;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -78,6 +76,10 @@ public class DisplayDateFragment extends Fragment {
 //                        profileBirth.setText("Birth date : " + birth);
 //                        profileBlood.setText("Blood Group : " + blood);
 //                        profileEmail.setText("E-mail : " + email);
+
+
+
+
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -99,8 +101,11 @@ public class DisplayDateFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         List<DocumentSnapshot> doc = task.getResult().getDocuments();
-                        historyDate = doc.get(size).toString();
+                        historyDate = "01-01-2018";
+//                        historyDate = doc.get(size).toString();
                         System.out.println("Date : " + historyDate);
+                        DateFormatCal df = new DateFormatCal(historyDate);
+
 //                        String name = doc.get(0).get("fName").toString() + "" + doc.get(0).get("lName").toString();
 
 //                        List<DocumentSnapshot> doc = task.getResult().getDocuments();
