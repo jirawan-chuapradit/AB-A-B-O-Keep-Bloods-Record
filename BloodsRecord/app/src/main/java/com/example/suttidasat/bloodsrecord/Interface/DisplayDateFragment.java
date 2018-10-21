@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.suttidasat.bloodsrecord.R;
 import com.example.suttidasat.bloodsrecord.model.DateFormatCal;
+import com.example.suttidasat.bloodsrecord.model.DonatorHistory;
 import com.example.suttidasat.bloodsrecord.model.DonatorProfile;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -77,9 +78,6 @@ public class DisplayDateFragment extends Fragment {
 //                        profileBlood.setText("Blood Group : " + blood);
 //                        profileEmail.setText("E-mail : " + email);
 
-
-
-
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -91,24 +89,22 @@ public class DisplayDateFragment extends Fragment {
 
     }
 
-    private void getHistoryDate(String nationalID) {
-        //        //GET DOCUMENT DATA from booldsRecord find National ID
+    private void getHistoryDate(final String nationalID) {
+        //GET DOCUMENT DATA from booldsRecord find National ID
+            //getLastTime Donate
         firestore.collection("donateHistory")
                 .document(nationalID)
                 .collection("history")
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        List<DocumentSnapshot> doc = task.getResult().getDocuments();
-                        historyDate = "01-01-2018";
-//                        historyDate = doc.get(size).toString();
-                        System.out.println("Date : " + historyDate);
-                        DateFormatCal df = new DateFormatCal(historyDate);
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                         size = queryDocumentSnapshots.size();
+                         System.out.println("Time of Donate : " + size);
 
-//                        String name = doc.get(0).get("fName").toString() + "" + doc.get(0).get("lName").toString();
-
-//                        List<DocumentSnapshot> doc = task.getResult().getDocuments();
+                         //operation calculate difference date
+                         CalculateDiffDate();
+                       
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -117,5 +113,29 @@ public class DisplayDateFragment extends Fragment {
                 Toast.makeText(getContext(),"ERROR = "+e.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void CalculateDiffDate() {
+        firestore.collection("donateHistory")
+                .document(nationalID)
+                .collection("history")
+                .document(String.valueOf(size))
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        DonatorHistory dh = documentSnapshot.toObject(DonatorHistory.class);
+                        historyDate = dh.getDate();
+                        System.out.println("Date : " + historyDate);
+                        DateFormatCal df = new DateFormatCal(historyDate);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("Show Donator", "ERRROR =" + e.getMessage());
+                        Toast.makeText(getContext(),"ERROR = "+e.getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }
