@@ -140,11 +140,12 @@ public class InsertHistoryFragment extends Fragment {
                                                 @Override
                                                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
-                                                    DonatorHistory dh = new DonatorHistory(queryDocumentSnapshots.size()+1);
+                                                    DonatorHistory dh = new DonatorHistory(date);
+                                                    String num = Integer.toString(queryDocumentSnapshots.size()+1);
                                                     firestore.collection("donateHistory")
                                                             .document(NationaID.NID)
                                                             .collection("history")
-                                                            .document(date)
+                                                            .document(num)
                                                             .set(dh)
                                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                 @Override
@@ -157,11 +158,11 @@ public class InsertHistoryFragment extends Fragment {
                                             });
 
                                 } else { // never donate before
-                                    DonatorHistory dh = new DonatorHistory(1);
+                                    DonatorHistory dh = new DonatorHistory(date);
                                     firestore.collection("donateHistory")
                                             .document(NationaID.NID)
                                             .collection("history")
-                                            .document(date)
+                                            .document("1")
                                             .set(dh)
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
