@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Bloods Record</string>
+    <string name="btn">Search!</string>
+    <string name="topic">รายชื่อผู้บริจาคโลหิต</string>
+    <string name="picname">logo</string>
+    <string name="donatorbox">selected donator</string>
+    <string name="confirm">ยืนยัน</string>
 </resources>
