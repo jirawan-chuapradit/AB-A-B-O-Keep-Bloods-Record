@@ -56,9 +56,9 @@
             android:textColor="@color/colorPrimaryDark"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:text="@string/topic"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="226dp" />
-            <!--android:text="@string/topic"-->
 
 
         <EditText
@@ -80,10 +80,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@drawable/confirmed_border"
+            android:textColor="@color/whiteColor"
             android:textSize="20dp"
             android:text="ค้นหา"
              />
-        android:textColor="@color/whiteColor"
 
     </LinearLayout>
 
