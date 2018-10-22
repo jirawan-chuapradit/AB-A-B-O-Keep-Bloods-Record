@@ -31,8 +31,6 @@ public class SertNationalID extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         setHasOptionsMenu(true);
-
-
         btnSertNationalID();
 
     }
