@@ -1,4 +1,4 @@
-package com.example.suttidasat.bloodsrecord;
+package com.example.suttidasat.bloodsrecord.Interface;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.suttidasat.bloodsrecord.donator.DonatorProfileFragment;
+import com.example.suttidasat.bloodsrecord.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
@@ -36,6 +36,7 @@ public class LoginFragment extends Fragment {
 
         initLoginBtn();
         initRegisterBtn();
+
 
     }
 
@@ -89,7 +90,7 @@ public class LoginFragment extends Fragment {
                                     public void onSuccess(AuthResult authResult) {
                                         getActivity().getSupportFragmentManager()
                                                 .beginTransaction()
-                                                .replace(R.id.main_view, new DonatorProfileFragment())
+                                                .replace(R.id.main_view, new DisplayDateFragment())
                                                 .commit();
 
                                     }
@@ -109,4 +110,6 @@ public class LoginFragment extends Fragment {
 
 });
     }
+
+
 }

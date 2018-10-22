@@ -1,43 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorAccent">
 
-    <ScrollView
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:padding="35dp"
+        android:layout_height="58dp"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp"
+        />
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="331dp"
+        android:layout_height="451dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="116dp"
+            android:layout_height="114dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/logo"
+            tools:layout_editor_absoluteX="134dp"
+            tools:layout_editor_absoluteY="104dp" />
+        <!--android:contentDescription="@string/picname"-->
+
+        <TextView
+            android:id="@+id/textView"
             android:layout_width="match_parent"
+            android:layout_height="27dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="@string/topic"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="226dp" />
+
+
+        <EditText
+            android:id="@+id/sert_nationalID"
+            android:layout_width="325dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:hint="เลขบัตรประชาชนผู้บริจาคโลหิต"
+            android:background="@drawable/seachborder"
+            android:drawableLeft="@drawable/pic_seach"
+            tools:layout_editor_absoluteX="41dp"
+            tools:layout_editor_absoluteY="284dp" />
+
+
+        <Button
+            android:id="@+id/btn_sert_nationalID"
+            android:layout_width="131dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_gravity="center"
+            android:background="@drawable/confirmed_border"
+            android:textColor="@color/whiteColor"
+            android:textSize="20dp"
+            android:text="ค้นหา"
+             />
+
+    </LinearLayout>
 
 
-
-
-            <EditText
-                android:inputType="text"
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="national ID"
-                android:layout_gravity="center"
-                android:id="@+id/sert_nationalID"
-                />
-
-
-            <Button
-                android:text="sert"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/btn_sert_nationalID"
-                />
-
-
-
-        </LinearLayout>
-    </ScrollView>
 </android.support.constraint.ConstraintLayout>
