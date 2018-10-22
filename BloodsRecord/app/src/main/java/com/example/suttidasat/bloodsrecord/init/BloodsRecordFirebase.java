@@ -5,15 +5,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class BloodsRecordFirebase {
 
-    private DocumentReference bloodsRecordFirebase;
+    private DocumentReference documentReference;
     private FirebaseFirestore firestore;
     private String uid;
 
     public BloodsRecordFirebase() {
     }
 
-    public BloodsRecordFirebase(DocumentReference bloodsRecordFirebase, FirebaseFirestore firestore, String uid) {
-        this.bloodsRecordFirebase = bloodsRecordFirebase;
+    public BloodsRecordFirebase(DocumentReference documentReference, FirebaseFirestore firestore, String uid) {
+        this.documentReference = documentReference;
         this.firestore = firestore;
         this.uid = uid;
     }
@@ -35,14 +35,18 @@ public class BloodsRecordFirebase {
     }
 
     public DocumentReference getBloodsRecordFirebase() {
-        return bloodsRecordFirebase;
+        return documentReference;
     }
 
-    public void setBloodsRecordFirebase(DocumentReference bloodsRecordFirebase) {
-        this.bloodsRecordFirebase = bloodsRecordFirebase;
+    public DocumentReference getDocumentReference() {
+        return documentReference;
+    }
+
+    public void setDocumentReference(DocumentReference documentReference) {
+        this.documentReference = documentReference;
     }
 
     public void getConnection(){
-        bloodsRecordFirebase = firestore.collection("bloodsRecord").document(uid);
+        documentReference = firestore.collection("bloodsRecord").document(uid);
     }
 }

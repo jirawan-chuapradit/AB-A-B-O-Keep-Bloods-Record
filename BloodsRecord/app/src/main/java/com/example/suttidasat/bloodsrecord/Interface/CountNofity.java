@@ -71,7 +71,7 @@ public class CountNofity extends Fragment {
         bloodsRecordConnection.getConnection();
 
         //GET DOCUMENT DATA from booldsRecord find National ID
-        bloodsRecordConnection.getBloodsRecordFirebase().get()
+        bloodsRecordConnection.getDocumentReference().get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -222,7 +222,8 @@ public class CountNofity extends Fragment {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-
+                        Log.d("COUNT NOTIRY ", "ERRROR =" + e.getMessage());
+                        Toast.makeText(getContext(),"ERROR = "+e.getMessage(),Toast.LENGTH_SHORT).show();
                     }
                 });
     }

@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.suttidasat.bloodsrecord.R;
+import com.example.suttidasat.bloodsrecord.init.BloodsRecordFirebase;
 import com.example.suttidasat.bloodsrecord.model.DonatorProfile;
 import com.example.suttidasat.bloodsrecord.model.PicassoCircleTransformation;
 import com.example.suttidasat.bloodsrecord.model.UpdateNotify;
@@ -45,7 +46,7 @@ public class DonatorProfileFragment extends Fragment {
     private FirebaseFirestore firestore;
     private FirebaseStorage firebaseStorage;
 
-    private DocumentReference booldsRecord;
+    private DocumentReference documentReference;
 
     private TextView profileName, profileNationalID, profileBirth, profileBlood, profileEmail;
     private Button changePassword;
@@ -72,8 +73,6 @@ public class DonatorProfileFragment extends Fragment {
         //GET VALUDE FROM FIREBASE
         uid = fbAuth.getCurrentUser().getUid();
 
-        booldsRecord = firestore.collection("bloodsRecord")
-                .document(uid);
 
         //get textView
         profileImage = getView().findViewById(R.id.profilePic);
@@ -97,8 +96,11 @@ public class DonatorProfileFragment extends Fragment {
             }
         });
 
-        //GET DOCUMENT DATA
-        booldsRecord.get()
+        //Connect to bloodRecord
+        BloodsRecordFirebase bloodsRecordConnection = new BloodsRecordFirebase(
+                documentReference, firestore, uid);
+        bloodsRecordConnection.getConnection();
+        bloodsRecordConnection.getDocumentReference().get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -164,7 +166,6 @@ public class DonatorProfileFragment extends Fragment {
             case R.id.sigOut:{
 
                 FirebaseAuth.getInstance().signOut();
-
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.main_view, new LoginFragment())
@@ -174,7 +175,6 @@ public class DonatorProfileFragment extends Fragment {
                 break;
             }
             case R.id.donatorProfile:{
-
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.main_view,new DonatorProfileFragment())
