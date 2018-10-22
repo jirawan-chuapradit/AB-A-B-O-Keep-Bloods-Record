@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.suttidasat.bloodsrecord.R;
+import com.example.suttidasat.bloodsrecord.adapter.NotifyAdapter;
 import com.example.suttidasat.bloodsrecord.model.NotifyManange;
 import com.example.suttidasat.bloodsrecord.model.UpdateNotify;
 import com.google.firebase.auth.FirebaseAuth;
@@ -124,20 +125,10 @@ public class notifyFragment extends Fragment {
                 Log.d("MENU", "GOTO DONATOR PROFILE");
                 break;
             }
-            case R.id.donatHistory:{
-
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_view,new DonatorProfileHistoryFragment())
-                        .commit();
-                Log.d("MENU", "GOTO DONATOR PROFILE HISTORY");
-                break;
-
-            }
             case R.id.timeline:{
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.main_view, new TimeLineFragment())
+                        .replace(R.id.main_view, new CountNofity())
                         .addToBackStack(null)
                         .commit();
                 Log.d("USER", "GOTO Timeline");

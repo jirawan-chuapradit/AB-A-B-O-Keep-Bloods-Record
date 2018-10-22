@@ -3,12 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <!--<item-->
-    <!--android:id="@+id/action_cart"-->
-    <!--android:icon="@drawable/ic_action_cart"-->
-    <!--android:title="Cart"-->
-    <!--app:actionLayout="@layout/custom_action_item_layout"-->
-    <!--app:showAsAction="always"/>-->
 
     <item
         android:id="@+id/nofity_bell"
@@ -25,9 +19,6 @@
         android:id="@+id/donatorProfile"
         android:title="My Profile" />
 
-    <item
-        android:id="@+id/donatHistory"
-        android:title="My Donate History" />
 
     <item
         android:id="@+id/sigOut"
