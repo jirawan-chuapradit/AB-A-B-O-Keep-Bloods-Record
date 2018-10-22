@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.suttidasat.bloodsrecord.Interface.LoginFragment;
+import com.example.suttidasat.bloodsrecord.Interface.Notify;
 import com.example.suttidasat.bloodsrecord.Interface.SertNationalID;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         if(savedInstanceState == null){
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.main_view, new SertNationalID())
+                    .replace(R.id.main_view, new Notify())
                     .commit();
         }
     }

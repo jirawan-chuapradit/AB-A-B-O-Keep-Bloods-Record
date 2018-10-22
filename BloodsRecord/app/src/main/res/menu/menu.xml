@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
+    <!--<item-->
+    <!--android:id="@+id/action_cart"-->
+    <!--android:icon="@drawable/ic_action_cart"-->
+    <!--android:title="Cart"-->
+    <!--app:actionLayout="@layout/custom_action_item_layout"-->
+    <!--app:showAsAction="always"/>-->
+
+    <item
+        android:id="@+id/nofity_bell"
+        android:icon="@drawable/ic_notify_bell"
+        android:title="notifyBell"
+        app:actionLayout="@layout/custom_action_item_layout"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/timeline"
         android:title="Home" />
