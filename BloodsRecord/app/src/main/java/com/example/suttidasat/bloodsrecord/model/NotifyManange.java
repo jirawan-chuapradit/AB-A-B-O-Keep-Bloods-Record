@@ -37,4 +37,6 @@ public class NotifyManange {
     public void setTime(String time) {
         this.time = time;
     }
+
+
 }

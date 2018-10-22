@@ -47,7 +47,7 @@ public class UpdateNotify {
 
 
     public void countNotify(){
-        if (date == 83){
+        if (date == 123){
             countIncrease();
             type = "7days";
             System.out.println("count date > 83 && date < 90");

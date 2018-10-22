@@ -37,19 +37,22 @@ public class CountNofity extends Fragment {
     private FirebaseFirestore firestore;
     private DatabaseReference databaseReference;
 
-    private String uid,nationalID, historyDate,type,currentDate;
+    private String uid, nationalID, historyDate, type, currentDate,msg;
     private DocumentReference booldsRecord;
 
-    private int size,diffDate,mCartItemCount,sizeofContent;
+    private int size, diffDate, mCartItemCount, sizeofContent;
 
     private TextView textCartItemCount;
 
+    boolean existNotify = false;
+
     UpdateNotify un = new UpdateNotify();
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_timeline,container,false);
+        return inflater.inflate(R.layout.fragment_timeline, container, false);
     }
 
     @Override
@@ -77,7 +80,7 @@ public class CountNofity extends Fragment {
                         Log.d("DONATOR PROFILE", "GET DOCUMENT DATA");
                         DonatorProfile dp = documentSnapshot.toObject(DonatorProfile.class);
                         nationalID = dp.getNationalID();
-                        System.out.println("NATIONAL ID : "+nationalID);
+                        System.out.println("NATIONAL ID : " + nationalID);
 
                         getHistoryDate(nationalID);
 
@@ -93,7 +96,7 @@ public class CountNofity extends Fragment {
 
     private void getHistoryDate(final String nationalID) {
         //GET DOCUMENT DATA from booldsRecord find National ID
-            //getLastTime Donate
+        //getLastTime Donate
         firestore.collection("donateHistory")
                 .document(nationalID)
                 .collection("history")
@@ -101,18 +104,18 @@ public class CountNofity extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                         size = queryDocumentSnapshots.size();
-                         System.out.println("Time of Donate : " + size);
+                        size = queryDocumentSnapshots.size();
+                        System.out.println("Time of Donate : " + size);
 
-                         //operation calculate difference date
-                         CalculateDiffDate();
-                       
+                        //operation calculate difference date
+                        CalculateDiffDate();
+
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.d("Show Donator", "ERRROR =" + e.getMessage());
-                Toast.makeText(getContext(),"ERROR = "+e.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "ERROR = " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -135,16 +138,17 @@ public class CountNofity extends Fragment {
 
                         System.out.println("diffDate : " + diffDate);
 
-                         un.setDate(diffDate);
+                        un.setDate(diffDate);
                         mCartItemCount = un.getCount();
-                        if(mCartItemCount != 0){
+                        if (mCartItemCount != 0) {
                             type = un.getType();
 
-                            if(type.equals("7days")){
-                                type = "อีก 7 วัน จะถึงรอบบริจาคครั้งถัดไป";
-                            }else if(type.equals("today")){
-                                type = "สามารถบริจาคเลือดได้";
+                            if (type.equals("7days")) {
+                                msg = "อีก 7 วัน จะถึงรอบบริจาคครั้งถัดไป";
+                            } else if (type.equals("today")) {
+                                msg = "สามารถบริจาคเลือดได้";
                             }
+
                             setNotifyToFirebase(type);
                         }
                         System.out.println("mCartItemCount : " + mCartItemCount);
@@ -155,10 +159,11 @@ public class CountNofity extends Fragment {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.d("Show Donator", "ERRROR =" + e.getMessage());
-                        Toast.makeText(getContext(),"ERROR = "+e.getMessage(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "ERROR = " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
+
 
     private void setNotifyToFirebase(final String type) {
 
@@ -172,35 +177,64 @@ public class CountNofity extends Fragment {
                         sizeofContent = queryDocumentSnapshots.size();
                         System.out.println("size Of content : " + sizeofContent);
 
-                        NotifyManange nm = new NotifyManange(currentDate,type,"");
-                        firestore.collection("notificationContent")
-                                .document(uid)
-                                .collection("content")
-                                .document(String.valueOf(sizeofContent + 1))
-                                .set(nm).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-
-                                Log.d("DisplayFragment", "Notification has been saved!!!");
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.d("REGISTER", "ERRROR =" + e.getMessage());
-                                Toast.makeText(getContext(),"ERROR = "+e.getMessage(),Toast.LENGTH_SHORT).show();
-                            }
-                        });
-
+                        checkNotify(sizeofContent);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.d("Show Donator", "ERRROR =" + e.getMessage());
-                Toast.makeText(getContext(),"ERROR = "+e.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "ERROR = " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
 
+    }
+
+    private void checkNotify(final int sizeofContent) {
+        firestore.collection("notificationContent")
+                .document(uid)
+                .collection("content")
+                .document(String.valueOf(sizeofContent))
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        NotifyManange nm = documentSnapshot.toObject(NotifyManange.class);
+                        String notifyDate = nm.getDate();
+                        if (notifyDate.equals(currentDate)) {
+                            existNotify = true;
+                        }
+                        if (!existNotify) {
+//                            NotifyManange nm = new NotifyManange(currentDate, type, "");
+                            nm.setDate(currentDate);
+                            nm.setText(msg);
+                            firestore.collection("notificationContent")
+                                    .document(uid)
+                                    .collection("content")
+                                    .document(String.valueOf(sizeofContent + 1))
+                                    .set(nm).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+
+                                    Log.d("DisplayFragment", "Notification has been saved!!!");
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d("REGISTER", "ERRROR =" + e.getMessage());
+                                    Toast.makeText(getContext(), "ERROR = " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
     }
 
 
@@ -231,7 +265,7 @@ public class CountNofity extends Fragment {
                 // Do something
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.main_view,new notifyFragment())
+                        .replace(R.id.main_view, new notifyFragment())
                         .commit();
                 System.out.println("CLICK NOTIFY BELL");
                 un.setCount(0);
