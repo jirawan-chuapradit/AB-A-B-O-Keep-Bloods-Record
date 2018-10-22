@@ -9,7 +9,8 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="404dp"
+
+        android:layout_width="match_parent"
         android:layout_height="58dp"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
@@ -66,6 +67,7 @@
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_margin="20dp"
+            android:hint="เลขบัตรประชาชนผู้บริจาคโลหิต"
             android:background="@drawable/seachborder"
             android:drawableLeft="@drawable/pic_seach"
             tools:layout_editor_absoluteX="41dp"
@@ -78,7 +80,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@drawable/confirmed_border"
-            android:text="confirm"
+            android:textSize="20dp"
+            android:text="ค้นหา"
              />
         android:textColor="@color/whiteColor"
 
