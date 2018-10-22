@@ -90,7 +90,7 @@ public class LoginFragment extends Fragment {
                                     public void onSuccess(AuthResult authResult) {
                                         getActivity().getSupportFragmentManager()
                                                 .beginTransaction()
-                                                .replace(R.id.main_view, new DisplayDateFragment())
+                                                .replace(R.id.main_view, new DonatorProfileFragment())
                                                 .commit();
 
                                     }
