@@ -6,6 +6,7 @@ import android.os.Bundle;
 import com.example.suttidasat.bloodsrecord.Interface.LoginFragment;
 
 public class MainActivity extends AppCompatActivity {
+    ///nate here
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -32,8 +32,6 @@ public class SertNationalID extends Fragment {
 
         //menu
         setHasOptionsMenu(true);
-
-
         btnSertNationalID();
 
     }
