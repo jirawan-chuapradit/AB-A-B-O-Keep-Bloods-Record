@@ -32,6 +32,18 @@ public class LoginFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        if(FirebaseAuth.getInstance().getCurrentUser()!= null){
+
+            Log.d("USER", "USER ALREADY LOG IN");
+            Log.d("USER", "GOTO HomePage");
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_view,new CountNofity())
+                    .commit();
+            return;
+        }
+
+
         initLoginBtn();
         initRegisterBtn();
 
@@ -88,7 +100,7 @@ public class LoginFragment extends Fragment {
                                     public void onSuccess(AuthResult authResult) {
                                         getActivity().getSupportFragmentManager()
                                                 .beginTransaction()
-                                                .replace(R.id.main_view, new DisplayDateFragment())
+                                                .replace(R.id.main_view, new CountNofity())
                                                 .commit();
 
                                     }

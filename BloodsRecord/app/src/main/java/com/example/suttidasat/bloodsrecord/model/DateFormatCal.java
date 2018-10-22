@@ -9,8 +9,24 @@ import java.util.concurrent.TimeUnit;
 
 public class DateFormatCal {
 
-    String historyDate;
+    String historyDate,currentDate;
+    int diffDays;
 
+    public String getCurrentDate() {
+        return currentDate;
+    }
+
+    public void setCurrentDate(String currentDate) {
+        this.currentDate = currentDate;
+    }
+
+    public int getDiffDays() {
+        return diffDays;
+    }
+
+    public void setDiffDays(int diffDays) {
+        this.diffDays = diffDays;
+    }
 
     public DateFormatCal() {
     }
@@ -24,11 +40,12 @@ public class DateFormatCal {
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Date date = new Date();
         System.out.println(dateFormat.format(date)); //16-11-2018
+        setCurrentDate(dateFormat.format(date));
 
         try {
             Date date1 = dateFormat.parse(historyDate);
             long diffInMillies = Math.abs(date1.getTime() - date.getTime());
-            int diffDays = (int) (diffInMillies / (24 * 60 * 60 * 1000));
+            diffDays = (int) (diffInMillies / (24 * 60 * 60 * 1000));
             System.out.println("difference between days: " + diffDays);
 
         } catch (ParseException e) {
