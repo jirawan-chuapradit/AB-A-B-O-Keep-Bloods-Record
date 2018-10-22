@@ -36,10 +36,10 @@
             android:layout_width="116dp"
             android:layout_height="114dp"
             android:layout_gravity="center"
-            android:contentDescription="@string/picname"
             app:srcCompat="@drawable/logo"
             tools:layout_editor_absoluteX="134dp"
             tools:layout_editor_absoluteY="104dp" />
+        <!--android:contentDescription="@string/picname"-->
 
         <TextView
             android:id="@+id/textView"
@@ -49,39 +49,35 @@
             android:layout_marginTop="20dp"
             android:layout_marginBottom="10dp"
             android:gravity="center"
-            android:text="@string/topic"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="20sp"
             android:textStyle="bold"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="226dp" />
+            <!--android:text="@string/topic"-->
 
-        <SearchView
-            android:layout_width="303dp"
+
+        <EditText
+            android:id="@+id/sert_nationalID"
+            android:layout_width="325dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_margin="20dp"
             android:background="@drawable/seachborder"
+            android:drawableLeft="@drawable/pic_seach"
             tools:layout_editor_absoluteX="41dp"
             tools:layout_editor_absoluteY="284dp" />
 
-        <EditText
-            android:id="@+id/plain_text_input"
-            android:layout_width="311dp"
-            android:layout_height="82dp"
-            android:layout_gravity="center"
-            android:layout_margin="20dp"
-            android:background="@drawable/donator_box"
-            android:inputType="text" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btn_sert_nationalID"
             android:layout_width="131dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@drawable/confirmed_border"
-            android:text="@string/confirm"
-            android:textColor="@color/whiteColor" />
+            android:text="confirm"
+             />
+        android:textColor="@color/whiteColor"
 
     </LinearLayout>
 
