@@ -7,6 +7,7 @@ import com.example.suttidasat.bloodsrecord.Interface.LoginFragment;
 import com.example.suttidasat.bloodsrecord.Interface.SertNationalID;
 
 public class MainActivity extends AppCompatActivity {
+    ///nate here
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
