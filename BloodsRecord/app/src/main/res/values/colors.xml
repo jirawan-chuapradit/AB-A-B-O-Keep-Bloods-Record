@@ -2,10 +2,11 @@
 <resources>
 
 
-    <color name="colorPrimary">#dc5050</color>
+    <color name="colorPrimary">#d40000</color>
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#dededa</color>
     <color name="colorAccentDark">#ffa1a1</color>
-    <color name="whiteColor">#ffff</color>
-
+    <color name="whiteColor">#dededa</color>
+    <color name="login">#d40000</color>
+    <color name="register">#b9b7b7</color>
 </resources>
