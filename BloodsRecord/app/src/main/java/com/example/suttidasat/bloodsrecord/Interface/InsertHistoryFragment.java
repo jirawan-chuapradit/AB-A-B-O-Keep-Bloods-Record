@@ -8,6 +8,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -22,6 +25,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -50,6 +54,10 @@ public class InsertHistoryFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        //menu
+        setHasOptionsMenu(true);
+
         firestore = FirebaseFirestore.getInstance();
 
         insertHistory();
@@ -201,5 +209,39 @@ public class InsertHistoryFragment extends Fragment {
         });
     }
 
+
+    //menu
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_admin, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.sigOut:{
+
+                FirebaseAuth.getInstance().signOut();
+
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view, new LoginFragment())
+                        .addToBackStack(null)
+                        .commit();
+                Log.d("USER", "GOTO LOGIN");
+                break;
+            }
+            case R.id.sert_nationalID:{
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view,new SertNationalID())
+                        .commit();
+                Log.d("MENU", "GOTO SERT NATIONAL ID");
+                break;
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
 }

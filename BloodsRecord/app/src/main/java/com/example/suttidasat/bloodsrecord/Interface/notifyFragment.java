@@ -1,7 +1,6 @@
 package com.example.suttidasat.bloodsrecord.Interface;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
@@ -12,35 +11,77 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.suttidasat.bloodsrecord.R;
+import com.example.suttidasat.bloodsrecord.adapter.NotifyAdapter;
+import com.example.suttidasat.bloodsrecord.model.NotifyManange;
 import com.example.suttidasat.bloodsrecord.model.UpdateNotify;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
-public class TimeLineFragment extends Fragment {
+import java.util.ArrayList;
 
-    //menu
-    UpdateNotify un = new UpdateNotify();
+public class notifyFragment extends Fragment {
+
     private TextView textCartItemCount;
-    private int mCartItemCount;
+    private  int mCartItemCount;
+
+    UpdateNotify un = new UpdateNotify();
+
+    ArrayList<NotifyManange> notifyMananges = new ArrayList<>();
+
+    FirebaseFirestore firestore;
+    FirebaseAuth auth;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_timeline,container,false);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_notify,container,false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        //menu
+
         mCartItemCount = un.getCount();
         setHasOptionsMenu(true);
+
+
+        firestore = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
+
+        ListView notifyList = getView().findViewById(R.id.notify_list);
+        final NotifyAdapter notifyAdapter = new NotifyAdapter(
+               getActivity(),
+               R.layout.fragment_notify_item,
+               notifyMananges
+        );
+        notifyList.setAdapter(notifyAdapter);
+
+        //GET VALUDE FROM FIREBASE
+        String uid = auth.getCurrentUser().getUid();
+        firestore.collection("notificationContent")
+                .document(uid)
+                .collection("content")
+                .addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                        notifyMananges.clear();
+                        for (DocumentSnapshot d:queryDocumentSnapshots.getDocuments()){
+                            notifyMananges.add(d.toObject(NotifyManange.class));
+                        }
+                        notifyAdapter.notifyDataSetChanged();
+                    }
+                });
     }
 
 
-//menu
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu, menu);
@@ -57,6 +98,7 @@ public class TimeLineFragment extends Fragment {
                 onOptionsItemSelected(menuItem);
             }
         });
+
     }
 
     @Override
@@ -92,21 +134,12 @@ public class TimeLineFragment extends Fragment {
                 Log.d("USER", "GOTO Timeline");
                 break;
             }
-            case R.id.nofity_bell: {
-                // Do something
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_view, new notifyFragment())
-                        .commit();
-                System.out.println("CLICK NOTIFY BELL");
-                un.setCount(0);
-                setupBadge();
-                return true;
-            }
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+
     private void setupBadge() {
         if (textCartItemCount != null) {
             if (mCartItemCount == 0) {
@@ -121,5 +154,4 @@ public class TimeLineFragment extends Fragment {
             }
         }
     }
-
 }

@@ -30,6 +30,7 @@ public class SertNationalID extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        //menu
         setHasOptionsMenu(true);
         btnSertNationalID();
 
@@ -60,9 +61,10 @@ public class SertNationalID extends Fragment {
 
     }
 
+    //menu
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu, menu);
+        inflater.inflate(R.menu.menu_admin, menu);
     }
 
     @Override
@@ -80,32 +82,12 @@ public class SertNationalID extends Fragment {
                 Log.d("USER", "GOTO LOGIN");
                 break;
             }
-            case R.id.donatorProfile:{
-
+            case R.id.sert_nationalID:{
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.main_view,new DonatorProfileFragment())
+                        .replace(R.id.main_view,new SertNationalID())
                         .commit();
-                Log.d("MENU", "GOTO DONATOR PROFILE");
-                break;
-            }
-            case R.id.donatHistory:{
-
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_view,new DonatorProfileHistoryFragment())
-                        .commit();
-                Log.d("MENU", "GOTO DONATOR PROFILE HISTORY");
-                break;
-
-            }
-            case R.id.timeline:{
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_view, new TimeLineFragment())
-                        .addToBackStack(null)
-                        .commit();
-                Log.d("USER", "GOTO Timeline");
+                Log.d("MENU", "GOTO SERT NATIONAL ID");
                 break;
             }
         }

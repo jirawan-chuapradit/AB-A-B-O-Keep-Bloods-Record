@@ -78,9 +78,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         //Firebase
         fbAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
-//        mStorageRef = FirebaseStorage.getInstance().getReference();
         firebaseStorage = FirebaseStorage.getInstance();
-
         storageReference = firebaseStorage.getReference();
 
 

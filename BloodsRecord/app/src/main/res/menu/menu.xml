@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
+
+    <item
+        android:id="@+id/nofity_bell"
+        android:icon="@drawable/ic_notify_bell"
+        android:title="notifyBell"
+        app:actionLayout="@layout/custom_action_item_layout"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/timeline"
         android:title="Home" />
@@ -11,9 +19,6 @@
         android:id="@+id/donatorProfile"
         android:title="My Profile" />
 
-    <item
-        android:id="@+id/donatHistory"
-        android:title="My Donate History" />
 
     <item
         android:id="@+id/sigOut"

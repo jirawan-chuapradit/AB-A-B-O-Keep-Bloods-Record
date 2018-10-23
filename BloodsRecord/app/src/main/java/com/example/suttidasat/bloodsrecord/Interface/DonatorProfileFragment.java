@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,8 +18,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.suttidasat.bloodsrecord.R;
+import com.example.suttidasat.bloodsrecord.init.BloodsRecordFirebase;
 import com.example.suttidasat.bloodsrecord.model.DonatorProfile;
 import com.example.suttidasat.bloodsrecord.model.PicassoCircleTransformation;
+import com.example.suttidasat.bloodsrecord.model.UpdateNotify;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,22 +42,27 @@ public class DonatorProfileFragment extends Fragment {
     }
 
     //Firebase
-
     private FirebaseAuth fbAuth;
     private FirebaseFirestore firestore;
     private FirebaseStorage firebaseStorage;
 
-    private DocumentReference booldsRecord;
+    private DocumentReference documentReference;
 
     private TextView profileName, profileNationalID, profileBirth, profileBlood, profileEmail;
     private Button changePassword;
     private String uid;
     private ImageView profileImage;
 
+    //menu
+    UpdateNotify un = new UpdateNotify();
+    private TextView textCartItemCount;
+    private int mCartItemCount;
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+//menu
+        mCartItemCount = un.getCount();
         setHasOptionsMenu(true);
 
         //Firebase
@@ -65,8 +73,6 @@ public class DonatorProfileFragment extends Fragment {
         //GET VALUDE FROM FIREBASE
         uid = fbAuth.getCurrentUser().getUid();
 
-        booldsRecord = firestore.collection("bloodsRecord")
-                .document(uid);
 
         //get textView
         profileImage = getView().findViewById(R.id.profilePic);
@@ -90,8 +96,11 @@ public class DonatorProfileFragment extends Fragment {
             }
         });
 
-        //GET DOCUMENT DATA
-        booldsRecord.get()
+        //Connect to bloodRecord
+        BloodsRecordFirebase bloodsRecordConnection = new BloodsRecordFirebase(
+                documentReference, firestore, uid);
+        bloodsRecordConnection.getConnection();
+        bloodsRecordConnection.getDocumentReference().get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -132,9 +141,23 @@ public class DonatorProfileFragment extends Fragment {
 
     }
 
+    //menu
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu, menu);
+        final MenuItem menuItem = menu.findItem(R.id.nofity_bell);
+
+        View actionView = MenuItemCompat.getActionView(menuItem);
+        textCartItemCount = (TextView) actionView.findViewById(R.id.cart_badge);
+
+        setupBadge();
+
+        actionView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onOptionsItemSelected(menuItem);
+            }
+        });
     }
 
     @Override
@@ -143,7 +166,6 @@ public class DonatorProfileFragment extends Fragment {
             case R.id.sigOut:{
 
                 FirebaseAuth.getInstance().signOut();
-
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.main_view, new LoginFragment())
@@ -153,7 +175,6 @@ public class DonatorProfileFragment extends Fragment {
                 break;
             }
             case R.id.donatorProfile:{
-
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.main_view,new DonatorProfileFragment())
@@ -161,28 +182,43 @@ public class DonatorProfileFragment extends Fragment {
                 Log.d("MENU", "GOTO DONATOR PROFILE");
                 break;
             }
-            case R.id.donatHistory:{
-
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_view,new DonatorProfileHistoryFragment())
-                        .commit();
-                Log.d("MENU", "GOTO DONATOR PROFILE HISTORY");
-                break;
-
-            }
             case R.id.timeline:{
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.main_view, new TimeLineFragment())
+                        .replace(R.id.main_view, new CountNofity())
                         .addToBackStack(null)
                         .commit();
                 Log.d("USER", "GOTO Timeline");
                 break;
             }
+            case R.id.nofity_bell: {
+                // Do something
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view, new notifyFragment())
+                        .commit();
+                System.out.println("CLICK NOTIFY BELL");
+                un.setCount(0);
+                setupBadge();
+                return true;
+            }
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    private void setupBadge() {
+        if (textCartItemCount != null) {
+            if (mCartItemCount == 0) {
+                if (textCartItemCount.getVisibility() != View.GONE) {
+                    textCartItemCount.setVisibility(View.GONE);
+                }
+            } else {
+                textCartItemCount.setText(String.valueOf(Math.min(mCartItemCount, 99)));
+                if (textCartItemCount.getVisibility() != View.VISIBLE) {
+                    textCartItemCount.setVisibility(View.VISIBLE);
+                }
+            }
+        }
     }
 
 }

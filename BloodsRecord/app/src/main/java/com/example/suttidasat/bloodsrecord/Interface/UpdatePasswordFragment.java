@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -13,9 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.suttidasat.bloodsrecord.R;
+import com.example.suttidasat.bloodsrecord.model.UpdateNotify;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,16 +35,20 @@ public class UpdatePasswordFragment extends Fragment {
     private Button saveBtn;
     private EditText newPassword, reNewPassword;
     private FirebaseUser firebaseUser;
-    private FirebaseAuth firebaseAuth;
     private String userPasswordNew, userRePasswordNew;
 
 
-
+    //menu
+    UpdateNotify un = new UpdateNotify();
+    private TextView textCartItemCount;
+    private int mCartItemCount;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        //menu
+        mCartItemCount = un.getCount();
         setHasOptionsMenu(true);
 
         saveBtn = getView().findViewById(R.id.btnUpdatePassword);
@@ -98,9 +105,23 @@ public class UpdatePasswordFragment extends Fragment {
 
     }
 
+    //menu
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu, menu);
+        final MenuItem menuItem = menu.findItem(R.id.nofity_bell);
+
+        View actionView = MenuItemCompat.getActionView(menuItem);
+        textCartItemCount = (TextView) actionView.findViewById(R.id.cart_badge);
+
+        setupBadge();
+
+        actionView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onOptionsItemSelected(menuItem);
+            }
+        });
     }
 
     @Override
@@ -127,16 +148,6 @@ public class UpdatePasswordFragment extends Fragment {
                 Log.d("MENU", "GOTO DONATOR PROFILE");
                 break;
             }
-            case R.id.donatHistory:{
-
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_view,new DonatorProfileFragment())
-                        .commit();
-                Log.d("MENU", "GOTO DONATOR PROFILE HISTORY");
-                break;
-
-            }
             case R.id.timeline:{
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
@@ -146,9 +157,35 @@ public class UpdatePasswordFragment extends Fragment {
                 Log.d("USER", "GOTO Timeline");
                 break;
             }
+            case R.id.nofity_bell: {
+                // Do something
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view, new notifyFragment())
+                        .commit();
+                System.out.println("CLICK NOTIFY BELL");
+                un.setCount(0);
+                setupBadge();
+                return true;
+            }
         }
 
         return super.onOptionsItemSelected(item);
     }
+    private void setupBadge() {
+        if (textCartItemCount != null) {
+            if (mCartItemCount == 0) {
+                if (textCartItemCount.getVisibility() != View.GONE) {
+                    textCartItemCount.setVisibility(View.GONE);
+                }
+            } else {
+                textCartItemCount.setText(String.valueOf(Math.min(mCartItemCount, 99)));
+                if (textCartItemCount.getVisibility() != View.VISIBLE) {
+                    textCartItemCount.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+    }
+
 
 }
