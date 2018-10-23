@@ -8,40 +8,40 @@
     <ScrollView
 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="169dp">
+
         <LinearLayout
-            android:padding="35dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
+            android:orientation="vertical"
+            android:padding="35dp">
 
 
             <EditText
-                android:inputType="text"
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="E-mail"
-                android:layout_gravity="center"
                 android:id="@+id/login_userid"
-                />
-            <EditText
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="password"
-                android:inputType="textPassword"
                 android:layout_gravity="center"
+                android:hint="E-mail"
+                android:inputType="text" />
+
+            <EditText
+
                 android:id="@+id/login_password"
-                />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="password"
+                android:inputType="textPassword" />
 
             <Button
-                android:text="login"
+                android:id="@+id/login_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/login_btn"
-                />
+                android:text="login" />
 
             <TextView
                 android:id="@+id/login_register_Btn"

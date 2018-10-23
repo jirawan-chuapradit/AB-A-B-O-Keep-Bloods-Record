@@ -4,8 +4,8 @@
 
     <color name="colorPrimary">#dc5050</color>
     <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#e4e4e4</color>
-    <color name="colorAccentDark">#8b8b8b</color>
+    <color name="colorAccent">#dededa</color>
+    <color name="colorAccentDark">#ffa1a1</color>
     <color name="whiteColor">#ffff</color>
 
 </resources>
