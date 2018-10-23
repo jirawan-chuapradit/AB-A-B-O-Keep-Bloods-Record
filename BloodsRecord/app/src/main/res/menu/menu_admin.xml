@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/sert_nationalID"
-        android:title="Sert National ID" />
+        android:title="Seach National ID" />
 
     <item
         android:id="@+id/sigOut"
