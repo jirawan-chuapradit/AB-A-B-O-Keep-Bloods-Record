@@ -130,10 +130,9 @@ public class UpdatePasswordFragment extends Fragment {
             case R.id.sigOut:{
 
                 FirebaseAuth.getInstance().signOut();
-
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.main_view, new LoginFragment())
+                        .replace(R.id.main_view, new notifyBGProcess())
                         .addToBackStack(null)
                         .commit();
                 Log.d("USER", "GOTO LOGIN");

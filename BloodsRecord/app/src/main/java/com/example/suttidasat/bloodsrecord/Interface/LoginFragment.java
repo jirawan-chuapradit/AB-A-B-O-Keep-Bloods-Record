@@ -35,12 +35,11 @@ public class LoginFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         if(FirebaseAuth.getInstance().getCurrentUser()!= null){
-
             Log.d("USER", "USER ALREADY LOG IN");
             Log.d("USER", "GOTO HomePage");
             getActivity().getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.main_view,new CountNofity())
+                    .replace(R.id.main_view,new notifyBGProcess())
                     .commit();
             return;
         }
@@ -102,7 +101,7 @@ public class LoginFragment extends Fragment {
                                     public void onSuccess(AuthResult authResult) {
                                         getActivity().getSupportFragmentManager()
                                                 .beginTransaction()
-                                                .replace(R.id.main_view, new CountNofity())
+                                                .replace(R.id.main_view, new notifyBGProcess())
                                                 .commit();
 
                                     }
