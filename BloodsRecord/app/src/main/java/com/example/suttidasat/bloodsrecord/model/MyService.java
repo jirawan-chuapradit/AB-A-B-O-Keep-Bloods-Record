@@ -76,7 +76,7 @@ public class MyService extends Service {
                 Log.d("MY TASK", "MY TASK HAS BEEN DONE IN SPRINT");
 
                 try {
-                    TimeUnit.MINUTES.sleep(1);
+                    TimeUnit.SECONDS.sleep(10);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -251,7 +251,7 @@ public class MyService extends Service {
         super.onDestroy();
         //stopping the time Check when service is destroyed
         Log.d("MY SERVICE", "HAS BEEN DESTROY...");
-        executorService.isShutdown();
+        executorService.shutdown();
     }
 
 }

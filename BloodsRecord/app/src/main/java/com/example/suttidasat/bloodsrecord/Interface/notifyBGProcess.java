@@ -13,20 +13,11 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class notifyBGProcess  extends Fragment {
 
-    String uid;
-    private FirebaseAuth fbAuth;
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-
-        if (FirebaseAuth.getInstance().getCurrentUser()!= null){
-
-            //GET VALUDE FROM FIREBASE
-        fbAuth = FirebaseAuth.getInstance();
-        uid = fbAuth.getCurrentUser().getUid();
-
-            Log.d("USER ID : ", uid);
             //starting service
             getActivity().startService(new Intent(getActivity(),MyService.class));
 
@@ -35,15 +26,15 @@ public class notifyBGProcess  extends Fragment {
                     .replace(R.id.main_view, new TimeLineFragment())
                     .commit();
         }
-        else if(FirebaseAuth.getInstance().getCurrentUser()== null){
-            Log.d("USER ID :", " is null");
-            getActivity().stopService(new Intent(getActivity(),MyService.class));
-            getActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.main_view, new LoginFragment())
-                    .commit();
-        }
+//        else if(FirebaseAuth.getInstance().getCurrentUser()== null){
+//            Log.d("USER ID :", " is null");
+//            getActivity().stopService(new Intent(getActivity(),MyService.class));
+//            getActivity().getSupportFragmentManager()
+//                    .beginTransaction()
+//                    .replace(R.id.main_view, new LoginFragment())
+//                    .commit();
+//        }
 
-    }
+
 
 }

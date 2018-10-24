@@ -1,5 +1,6 @@
 package com.example.suttidasat.bloodsrecord.Interface;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import com.example.suttidasat.bloodsrecord.R;
 import com.example.suttidasat.bloodsrecord.init.BloodsRecordFirebase;
 import com.example.suttidasat.bloodsrecord.model.DonatorProfile;
+import com.example.suttidasat.bloodsrecord.model.MyService;
 import com.example.suttidasat.bloodsrecord.model.PicassoCircleTransformation;
 import com.example.suttidasat.bloodsrecord.model.UpdateNotify;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -166,9 +168,10 @@ public class DonatorProfileFragment extends Fragment {
             case R.id.sigOut:{
 
                 FirebaseAuth.getInstance().signOut();
+                getActivity().stopService(new Intent(getActivity(),MyService.class));
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.main_view, new notifyBGProcess())
+                        .replace(R.id.main_view, new LoginFragment())
                         .addToBackStack(null)
                         .commit();
                 Log.d("USER", "GOTO LOGIN");
