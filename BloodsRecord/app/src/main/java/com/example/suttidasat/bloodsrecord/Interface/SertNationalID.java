@@ -73,7 +73,6 @@ public class SertNationalID extends Fragment {
             case R.id.sigOut:{
 
                 FirebaseAuth.getInstance().signOut();
-
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.main_view, new LoginFragment())
