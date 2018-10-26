@@ -1,5 +1,7 @@
 package com.example.suttidasat.bloodsrecord.Interface;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,22 +15,39 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.suttidasat.bloodsrecord.R;
+import com.example.suttidasat.bloodsrecord.model.MyService;
+import com.example.suttidasat.bloodsrecord.model.NationaID;
 import com.example.suttidasat.bloodsrecord.model.UpdateNotify;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.List;
 
 public class TimeLineFragment extends Fragment {
 
     //menu
     UpdateNotify un = new UpdateNotify();
-    private TextView textCartItemCount;
+    private TextView textCartItemCount, donate_amount;
     private int mCartItemCount;
+
+    private FirebaseAuth fbAuth;
+    private FirebaseFirestore firestore;
+    private String uid;
+    private String nid;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_timeline,container,false);
+        return inflater.inflate(R.layout.fragment_timeline, container, false);
     }
 
     @Override
@@ -37,10 +56,59 @@ public class TimeLineFragment extends Fragment {
         //menu
         mCartItemCount = un.getCount();
         setHasOptionsMenu(true);
+        firestore = FirebaseFirestore.getInstance();
+        showAmount();
+
     }
 
+    void showAmount() {
 
-//menu
+        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        donate_amount = getView().findViewById(R.id.donate_amount);
+
+
+        /// get national ID
+
+        firestore.collection("bloodsRecord")
+                .document(uid)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        nid = task.getResult().getString("nationalID");
+                        // get amount
+
+                        firestore.collection("donateHistory")
+                                .document(nid)
+                                .collection("history")
+                                .get()
+                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                        donate_amount.setText(queryDocumentSnapshots.size() + " ครั้ง");
+                                        int amount = queryDocumentSnapshots.size();
+
+                                        /// set color
+                                        if (amount >= 1) {
+                                            TextView timeline_1 = getView().findViewById(R.id.timeline_1);
+                                            timeline_1.setBackgroundColor(Color.parseColor("#E9F415"));
+                                        }
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d("Show Donator", "ERRROR =" + e.getMessage());
+                                Toast.makeText(getContext(), "ERROR = " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+
+                    }
+                });
+
+    }
+
+    //menu
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu, menu);
@@ -61,11 +129,11 @@ public class TimeLineFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.sigOut:{
+        switch (item.getItemId()) {
+            case R.id.sigOut: {
 
                 FirebaseAuth.getInstance().signOut();
-
+                getActivity().stopService(new Intent(getActivity(), MyService.class));
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.main_view, new LoginFragment())
@@ -74,19 +142,19 @@ public class TimeLineFragment extends Fragment {
                 Log.d("USER", "GOTO LOGIN");
                 break;
             }
-            case R.id.donatorProfile:{
+            case R.id.donatorProfile: {
 
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.main_view,new DonatorProfileFragment())
+                        .replace(R.id.main_view, new DonatorProfileFragment())
                         .commit();
                 Log.d("MENU", "GOTO DONATOR PROFILE");
                 break;
             }
-            case R.id.timeline:{
+            case R.id.timeline: {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.main_view, new CountNofity())
+                        .replace(R.id.main_view, new notifyBGProcess())
                         .addToBackStack(null)
                         .commit();
                 Log.d("USER", "GOTO Timeline");
@@ -107,6 +175,7 @@ public class TimeLineFragment extends Fragment {
 
         return super.onOptionsItemSelected(item);
     }
+
     private void setupBadge() {
         if (textCartItemCount != null) {
             if (mCartItemCount == 0) {
