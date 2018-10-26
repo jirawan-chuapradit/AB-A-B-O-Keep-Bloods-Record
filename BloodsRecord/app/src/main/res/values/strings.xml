@@ -5,4 +5,6 @@
     <string name="picname">logo</string>
     <string name="donatorbox">selected donator</string>
     <string name="confirm">ยืนยัน</string>
+    <string name="add">เพิ่มรายการ</string>
+    <string name="back">ย้อนกลับ</string>
 </resources>
