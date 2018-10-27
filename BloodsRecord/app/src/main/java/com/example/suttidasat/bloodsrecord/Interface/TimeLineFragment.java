@@ -2,6 +2,11 @@ package com.example.suttidasat.bloodsrecord.Interface;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.VectorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -90,8 +95,9 @@ public class TimeLineFragment extends Fragment {
 
                                         /// set color
                                         if (amount >= 1) {
+
                                             TextView timeline_1 = getView().findViewById(R.id.timeline_1);
-                                            timeline_1.setBackgroundColor(Color.parseColor("#E9F415"));
+
                                         }
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {

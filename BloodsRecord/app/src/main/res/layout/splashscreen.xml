@@ -16,13 +16,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
+        <TextView
             android:id="@+id/imageView"
             android:layout_width="190dp"
             android:layout_height="210dp"
             android:layout_gravity="center"
             android:layout_margin="120dp"
-            app:srcCompat="@drawable/logo"
+            android:background="@drawable/logo"
             tools:layout_editor_absoluteX="106dp"
             tools:layout_editor_absoluteY="169dp" />
 
