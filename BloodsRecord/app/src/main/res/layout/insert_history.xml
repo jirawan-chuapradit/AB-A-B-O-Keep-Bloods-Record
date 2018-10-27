@@ -7,18 +7,6 @@
     android:background="@color/colorAccent"
     tools:context=".MainActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="404dp"
-        android:layout_height="58dp"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        tools:ignore="MissingConstraints"
-        android:elevation="20dp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
-
 
     <ScrollView
         android:layout_width="match_parent"
@@ -39,7 +27,7 @@
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="80dp"
+                android:layout_marginTop="30dp"
                 android:layout_gravity="center"
                 android:textAlignment="center"
                 android:text="ประวัติผู้บริจาค"
@@ -58,7 +46,7 @@
 
             <android.support.v7.widget.CardView
                 android:layout_width="300dp"
-                android:layout_height="398dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="-50dp"
                 android:background="@drawable/card_ui"
@@ -76,7 +64,7 @@
                         android:layout_marginTop="55dp"
                         android:gravity="center"
                         android:paddingTop="20dp"
-                        android:textSize="20dp" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/sh_nid_donater"
@@ -84,7 +72,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:paddingTop="20dp"
-                        android:textSize="20dp" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/sh_birth_donater"
@@ -92,7 +80,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:paddingTop="20dp"
-                        android:textSize="20dp" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/sh_email_donater"
@@ -100,7 +88,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:paddingTop="20dp"
-                        android:textSize="20dp" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/sh_group_donater"
@@ -108,7 +96,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:paddingTop="20dp"
-                        android:textSize="20dp" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/sh_date_now"
@@ -116,16 +104,16 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:paddingTop="20dp"
-                        android:textSize="20dp" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/sh_amount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
                         android:gravity="center"
                         android:paddingTop="20dp"
-                        android:layout_marginBottom="20dp"
-                        android:textSize="20dp" />
+                        android:textSize="16sp" />
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
