@@ -18,8 +18,8 @@
 
         <TextView
             android:id="@+id/imageView"
-            android:layout_width="190dp"
-            android:layout_height="210dp"
+            android:layout_width="174dp"
+            android:layout_height="189dp"
             android:layout_gravity="center"
             android:layout_margin="120dp"
             android:background="@drawable/logo"
