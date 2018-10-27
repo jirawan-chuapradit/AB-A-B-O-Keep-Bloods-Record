@@ -3,6 +3,7 @@ package com.example.suttidasat.bloodsrecord.Interface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.ShapeDrawable;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +21,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -93,10 +96,17 @@ public class TimeLineFragment extends Fragment {
                                         donate_amount.setText(queryDocumentSnapshots.size() + " ครั้ง");
                                         int amount = queryDocumentSnapshots.size();
 
+                                        TextView timeline_1 = getView().findViewById(R.id.timeline_1);
+                                        TextView timeline_7 = getView().findViewById(R.id.timeline_7);
+
                                         /// set color
                                         if (amount >= 1) {
 
-                                            TextView timeline_1 = getView().findViewById(R.id.timeline_1);
+                                            GradientDrawable gd = (GradientDrawable) timeline_1.getBackground().mutate();
+                                            gd.setColor(Color.RED);
+                                        }else if (amount >= 7){
+                                                GradientDrawable gd = (GradientDrawable) timeline_7.getBackground().mutate();
+                                                gd.setColor(Color.RED);
 
                                         }
                                     }
