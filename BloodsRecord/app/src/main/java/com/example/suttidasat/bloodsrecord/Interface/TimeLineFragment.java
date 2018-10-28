@@ -96,19 +96,26 @@ public class TimeLineFragment extends Fragment {
                                         donate_amount.setText(queryDocumentSnapshots.size() + " ครั้ง");
                                         int amount = queryDocumentSnapshots.size();
 
+                                        TextView re1 = getView().findViewById(R.id.re1);
+//                                        TextView re7 = getView().findViewById(R.id.re7);
+
                                         TextView timeline_1 = getView().findViewById(R.id.timeline_1);
-                                        TextView timeline_7 = getView().findViewById(R.id.timeline_7);
+//                                        TextView timeline_7 = getView().findViewById(R.id.timeline_7);
 
                                         /// set color
                                         if (amount >= 1) {
 
                                             GradientDrawable gd = (GradientDrawable) timeline_1.getBackground().mutate();
-                                            gd.setColor(Color.RED);
-                                        }else if (amount >= 7){
-                                                GradientDrawable gd = (GradientDrawable) timeline_7.getBackground().mutate();
-                                                gd.setColor(Color.RED);
+                                            GradientDrawable gdRe1 = (GradientDrawable) re1.getBackground().mutate();
 
+                                            gd.setColor(Color.rgb(220, 80, 80));
+                                            gdRe1.setColor(Color.rgb(249,225,183));
                                         }
+//                                        else if (amount >= 7) {
+//                                            GradientDrawable gd = (GradientDrawable) timeline_7.getBackground().mutate();
+//                                            gd.setColor(Color.rgb(220, 80, 80));
+//
+//                                        }
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                             @Override
