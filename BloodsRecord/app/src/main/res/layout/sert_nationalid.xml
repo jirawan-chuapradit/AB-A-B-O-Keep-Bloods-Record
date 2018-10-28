@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent">
+    android:background="@drawable/bg_gradient">
 
 
     <LinearLayout
@@ -15,15 +15,17 @@
         android:layout_marginEnd="24dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="83dp">
+        tools:layout_editor_absoluteY="30dp">
 
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="116dp"
             android:layout_height="114dp"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/logo"
+            android:layout_marginTop="30dp"
+            app:srcCompat="@drawable/logo_app"
             tools:layout_editor_absoluteX="134dp"
             tools:layout_editor_absoluteY="104dp" />
         <!--android:contentDescription="@string/picname"-->
@@ -49,7 +51,10 @@
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:layout_margin="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/seachborder"
             android:drawableLeft="@drawable/pic_seach"
             android:hint="เลขบัตรประชาชนผู้บริจาคโลหิต"
