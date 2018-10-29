@@ -187,7 +187,7 @@ public class TimeLineFragment extends Fragment {
                 // Do something
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.main_view, new notifyFragment())
+                        .replace(R.id.donator_view, new notifyFragment())
                         .commit();
                 System.out.println("CLICK NOTIFY BELL");
                 un.setCount(0);

@@ -97,7 +97,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         Log.d("REGISTER", "BACK TO LOGIN");
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_view, new LoginFragment())
+                .replace(R.id.login_view, new LoginFragment())
                 .addToBackStack(null)
                 .commit();
     }

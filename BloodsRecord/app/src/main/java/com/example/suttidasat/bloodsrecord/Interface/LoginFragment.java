@@ -58,7 +58,7 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.main_view,new RegisterFragment())
+                        .replace(R.id.login_view,new RegisterFragment())
                         .commit();
                 Log.d("USER", "GOTO REGISTER");
             }
