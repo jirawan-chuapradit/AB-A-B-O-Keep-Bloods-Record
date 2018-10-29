@@ -13,17 +13,39 @@
                       <PersistentState>
                         <option name="children">
                           <map>
-                            <entry key="launcherLegacy">
+                            <entry key="actionbar">
                               <value>
                                 <PersistentState>
                                   <option name="children">
                                     <map>
-                                      <entry key="clipartAsset">
+                                      <entry key="clipArt">
                                         <value>
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/av/ic_fiber_manual_record_black_24dp.xml" />
+                                                <entry key="trimmed" value="true" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                      <entry key="image">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="trimmed" value="true" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                      <entry key="text">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -33,7 +55,39 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="timeline" />
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="imageAsset" value="C:\Users\User\Downloads\register\name.png" />
+                                      <entry key="outputName" value="ic_name_tag" />
+                                      <entry key="themeColor" value="e50700" />
+                                    </map>
+                                  </option>
+                                </PersistentState>
+                              </value>
+                            </entry>
+                            <entry key="launcher">
+                              <value>
+                                <PersistentState>
+                                  <option name="children">
+                                    <map>
+                                      <entry key="foregroundImage">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="scalingPercent" value="52" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                    </map>
+                                  </option>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="backgroundLayerName" value="ic_launcher_background" />
+                                      <entry key="foregroundImage" value="C:\Users\User\Downloads\register\blood.png" />
+                                      <entry key="foregroundLayerName" value="ic_launcher_foreground" />
+                                      <entry key="outputName" value="blood" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -43,7 +97,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputIconType" value="LAUNCHER_LEGACY" />
+                            <entry key="outputIconType" value="ACTIONBAR" />
                           </map>
                         </option>
                       </PersistentState>
@@ -69,7 +123,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_brightness_1_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/editor/ic_mode_edit_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -79,9 +133,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="bebebe" />
-                            <entry key="outputName" value="timeline" />
-                            <entry key="sourceFile" value="C:\Users\user" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="ic_gift" />
+                            <entry key="sourceFile" value="C:\Users\User\Downloads\gift.svg" />
                           </map>
                         </option>
                       </PersistentState>
