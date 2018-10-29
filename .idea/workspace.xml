@@ -19,8 +19,8 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="94" />
-    <option name="y" value="67" />
+    <option name="x" value="93" />
+    <option name="y" value="66" />
     <option name="width" value="1761" />
     <option name="height" value="1032" />
   </component>
@@ -30,9 +30,9 @@
     </navigator>
     <panes>
       <pane id="AndroidView" />
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane" />
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
