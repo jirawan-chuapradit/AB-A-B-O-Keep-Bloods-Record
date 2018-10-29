@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -281,7 +282,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/re2"
+                    android:id="@+id/re7"
                     android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
@@ -296,7 +297,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/re3"
+                    android:id="@+id/re16"
                     android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
@@ -310,7 +311,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/re4"
+                    android:id="@+id/re18"
                     android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
@@ -324,7 +325,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/re5"
+                    android:id="@+id/re24"
                     android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
@@ -339,7 +340,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/re6"
+                    android:id="@+id/re36"
                     android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
@@ -353,7 +354,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/re7"
+                    android:id="@+id/re48"
                     android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
@@ -367,7 +368,7 @@
                     android:textSize="16sp"/>
 
                 <TextView
-                    android:id="@+id/re8"
+                    android:id="@+id/re50"
                     android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
@@ -381,7 +382,7 @@
                     android:textSize="16sp"/>
 
                 <TextView
-                    android:id="@+id/re9"
+                    android:id="@+id/re60"
                     android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
@@ -395,7 +396,7 @@
                     android:textSize="16sp"/>
 
                 <TextView
-                    android:id="@+id/re10"
+                    android:id="@+id/re72"
                     android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
@@ -409,7 +410,7 @@
                     android:textSize="16sp"/>
 
                 <TextView
-                    android:id="@+id/re11"
+                    android:id="@+id/re75"
                     android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
@@ -423,7 +424,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/re12"
+                    android:id="@+id/re84"
                     android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
@@ -437,7 +438,7 @@
                     android:textSize="16sp"/>
 
                 <TextView
-                    android:id="@+id/re13"
+                    android:id="@+id/re96"
                     android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
@@ -451,7 +452,7 @@
                     android:textSize="16sp"/>
 
                 <TextView
-                    android:id="@+id/re14"
+                    android:id="@+id/re100"
                     android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
@@ -465,7 +466,7 @@
                     android:textSize="16sp"/>
 
                 <TextView
-                    android:id="@+id/re15"
+                    android:id="@+id/re108"
                     android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"

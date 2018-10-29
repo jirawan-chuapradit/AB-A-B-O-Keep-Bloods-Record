@@ -18,6 +18,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"
             android:id="@+id/toolbar"
+            app:title="Blood Record    "
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:layout_width="match_parent"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
@@ -26,6 +27,7 @@
                 android:id="@+id/logoXmarks"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"
                 android:adjustViewBounds="true"
                 android:src="@drawable/logo_app" />
         </android.support.v7.widget.Toolbar>
