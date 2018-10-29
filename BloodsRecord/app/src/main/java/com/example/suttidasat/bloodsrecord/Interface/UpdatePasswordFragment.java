@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.suttidasat.bloodsrecord.DonatorMainView;
 import com.example.suttidasat.bloodsrecord.MainActivity;
 import com.example.suttidasat.bloodsrecord.R;
+import com.example.suttidasat.bloodsrecord.model.MyService;
 import com.example.suttidasat.bloodsrecord.model.UpdateNotify;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -81,6 +82,9 @@ public class UpdatePasswordFragment extends Fragment {
 
                                 //FORCE USER SIGGOUT
                                 FirebaseAuth.getInstance().signOut();
+                                //starting service
+                                getActivity().stopService(new Intent(getActivity(),MyService.class));
+
                                 Intent myIntent = new Intent(getActivity(), MainActivity.class);
                                 getActivity().startActivity(myIntent);
                                 Log.d("USER", "GOTO LOGIN");

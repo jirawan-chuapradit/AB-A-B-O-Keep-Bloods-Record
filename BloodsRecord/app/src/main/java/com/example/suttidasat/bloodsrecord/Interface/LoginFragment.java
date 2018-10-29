@@ -40,10 +40,8 @@ public class LoginFragment extends Fragment {
         if(FirebaseAuth.getInstance().getCurrentUser()!= null){
             Log.d("USER", "USER ALREADY LOG IN");
             Log.d("USER", "GOTO HomePage");
-            getActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.main_view,new notifyBGProcess())
-                    .commit();
+            Intent myIntent = new Intent(getActivity(), DonatorMainView.class);
+            getActivity().startActivity(myIntent);
             return;
         }
 
