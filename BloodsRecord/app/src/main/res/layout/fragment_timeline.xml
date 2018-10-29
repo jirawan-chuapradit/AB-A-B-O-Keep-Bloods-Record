@@ -37,7 +37,7 @@
                     android:layout_height="220dp"
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/amount"
-                    android:gravity="center"
+                    android:gravity="center"></TextView>
 
                 <TextView
                     android:id="@+id/donate_amount"
