@@ -10,13 +10,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.Window;
-import android.widget.Toolbar;
+//import android.widget.Toolbar;
+import android.support.v7.widget.Toolbar;
 
 import com.example.suttidasat.bloodsrecord.Interface.DonatorProfileFragment;
 import com.example.suttidasat.bloodsrecord.Interface.LoginFragment;
 import com.example.suttidasat.bloodsrecord.Interface.TimeLineFragment;
 import com.example.suttidasat.bloodsrecord.model.MyService;
 import com.google.firebase.auth.FirebaseAuth;
+
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -42,17 +44,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        if(savedInstanceState == null) {
-        getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_view,
-                                new TimeLineFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_home);
-        }
+//        if(savedInstanceState == null) {
+//        getSupportFragmentManager()
+//                        .beginTransaction()
+//                        .replace(R.id.main_view,
+//                                new DonatorProfileFragment()).commit();
+//            navigationView.setCheckedItem(R.id.nav_profile);
+//        }
     }
 
-    private void setSupportActionBar(Toolbar toolbar) {
-    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -71,7 +71,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_sign_out:
                 FirebaseAuth.getInstance().signOut();
-                stopService(new Intent(String.valueOf(MyService.class)));
+                Intent intent = new Intent(MainActivity.this,MyService.class );
+                stopService(intent);
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.main_view,

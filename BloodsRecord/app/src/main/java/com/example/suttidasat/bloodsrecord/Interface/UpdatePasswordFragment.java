@@ -127,35 +127,35 @@ public class UpdatePasswordFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.sigOut:{
-
-                FirebaseAuth.getInstance().signOut();
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_view, new notifyBGProcess())
-                        .addToBackStack(null)
-                        .commit();
-                Log.d("USER", "GOTO LOGIN");
-                break;
-            }
-            case R.id.donatorProfile:{
-
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_view,new DonatorProfileFragment())
-                        .commit();
-                Log.d("MENU", "GOTO DONATOR PROFILE");
-                break;
-            }
-            case R.id.timeline:{
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_view, new TimeLineFragment())
-                        .addToBackStack(null)
-                        .commit();
-                Log.d("USER", "GOTO Timeline");
-                break;
-            }
+//            case R.id.sigOut:{
+//
+//                FirebaseAuth.getInstance().signOut();
+//                getActivity().getSupportFragmentManager()
+//                        .beginTransaction()
+//                        .replace(R.id.main_view, new notifyBGProcess())
+//                        .addToBackStack(null)
+//                        .commit();
+//                Log.d("USER", "GOTO LOGIN");
+//                break;
+//            }
+//            case R.id.donatorProfile:{
+//
+//                getActivity().getSupportFragmentManager()
+//                        .beginTransaction()
+//                        .replace(R.id.main_view,new DonatorProfileFragment())
+//                        .commit();
+//                Log.d("MENU", "GOTO DONATOR PROFILE");
+//                break;
+//            }
+//            case R.id.timeline:{
+//                getActivity().getSupportFragmentManager()
+//                        .beginTransaction()
+//                        .replace(R.id.main_view, new TimeLineFragment())
+//                        .addToBackStack(null)
+//                        .commit();
+//                Log.d("USER", "GOTO Timeline");
+//                break;
+//            }
             case R.id.nofity_bell: {
                 // Do something
                 getActivity().getSupportFragmentManager()
