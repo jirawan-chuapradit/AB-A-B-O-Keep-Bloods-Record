@@ -1,5 +1,6 @@
 package com.example.suttidasat.bloodsrecord.Interface;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +14,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.suttidasat.bloodsrecord.AdminMainView;
+import com.example.suttidasat.bloodsrecord.DonatorMainView;
 import com.example.suttidasat.bloodsrecord.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -58,7 +61,7 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.login_view,new RegisterFragment())
+                        .replace(R.id.main_view,new RegisterFragment())
                         .commit();
                 Log.d("USER", "GOTO REGISTER");
             }
@@ -87,10 +90,8 @@ public class LoginFragment extends Fragment {
 
                 }else if (_userIdStr.equals("admin@gmail.com") && _passwordStr.equals("12345678"))
                 {
-                    getActivity().getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.main_view,new SertNationalID())
-                            .commit();
+                    Intent myIntent = new Intent(getActivity(), AdminMainView.class);
+                    getActivity().startActivity(myIntent);
                 }
 
                 else {
@@ -99,10 +100,8 @@ public class LoginFragment extends Fragment {
                                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                     @Override
                                     public void onSuccess(AuthResult authResult) {
-                                        getActivity().getSupportFragmentManager()
-                                                .beginTransaction()
-                                                .replace(R.id.main_view, new notifyBGProcess())
-                                                .commit();
+                                        Intent myIntent = new Intent(getActivity(), DonatorMainView.class);
+                                        getActivity().startActivity(myIntent);
 
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {

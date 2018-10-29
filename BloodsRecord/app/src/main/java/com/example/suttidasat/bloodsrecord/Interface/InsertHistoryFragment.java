@@ -55,9 +55,6 @@ public class InsertHistoryFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        //menu
-        setHasOptionsMenu(true);
-
         firestore = FirebaseFirestore.getInstance();
 
         insertHistory();
@@ -188,7 +185,7 @@ public class InsertHistoryFragment extends Fragment {
                 Toast.makeText(getActivity(), "Insert History Success", Toast.LENGTH_SHORT).show();
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.main_view, new SertNationalID())
+                        .replace(R.id.admin_view, new SertNationalID())
                         .commit();
             }
         });
@@ -196,13 +193,12 @@ public class InsertHistoryFragment extends Fragment {
 
     void backBtn() {
         Button back = getView().findViewById(R.id.btn_back_sertNID);
-
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.main_view, new SertNationalID())
+                        .replace(R.id.admin_view, new SertNationalID())
                         .commit();
 
             }
@@ -210,37 +206,6 @@ public class InsertHistoryFragment extends Fragment {
     }
 
 
-    //menu
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_admin, menu);
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.sigOut:{
-
-                FirebaseAuth.getInstance().signOut();
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_view, new LoginFragment())
-                        .addToBackStack(null)
-                        .commit();
-                Log.d("USER", "GOTO LOGIN");
-                break;
-            }
-            case R.id.sert_nationalID:{
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_view,new SertNationalID())
-                        .commit();
-                Log.d("MENU", "GOTO SERT NATIONAL ID");
-                break;
-            }
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
 }

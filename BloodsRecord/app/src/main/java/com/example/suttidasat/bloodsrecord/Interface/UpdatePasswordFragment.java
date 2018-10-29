@@ -1,5 +1,6 @@
 package com.example.suttidasat.bloodsrecord.Interface;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,6 +18,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.suttidasat.bloodsrecord.DonatorMainView;
+import com.example.suttidasat.bloodsrecord.MainActivity;
 import com.example.suttidasat.bloodsrecord.R;
 import com.example.suttidasat.bloodsrecord.model.UpdateNotify;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -78,11 +81,8 @@ public class UpdatePasswordFragment extends Fragment {
 
                                 //FORCE USER SIGGOUT
                                 FirebaseAuth.getInstance().signOut();
-                                getActivity().getSupportFragmentManager()
-                                        .beginTransaction()
-                                        .replace(R.id.main_view, new LoginFragment())
-                                        .addToBackStack(null)
-                                        .commit();
+                                Intent myIntent = new Intent(getActivity(), MainActivity.class);
+                                getActivity().startActivity(myIntent);
                                 Log.d("USER", "GOTO LOGIN");
                                 Toast.makeText(
                                         getActivity(),
@@ -127,35 +127,6 @@ public class UpdatePasswordFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-//            case R.id.sigOut:{
-//
-//                FirebaseAuth.getInstance().signOut();
-//                getActivity().getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.main_view, new notifyBGProcess())
-//                        .addToBackStack(null)
-//                        .commit();
-//                Log.d("USER", "GOTO LOGIN");
-//                break;
-//            }
-//            case R.id.donatorProfile:{
-//
-//                getActivity().getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.main_view,new DonatorProfileFragment())
-//                        .commit();
-//                Log.d("MENU", "GOTO DONATOR PROFILE");
-//                break;
-//            }
-//            case R.id.timeline:{
-//                getActivity().getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.main_view, new TimeLineFragment())
-//                        .addToBackStack(null)
-//                        .commit();
-//                Log.d("USER", "GOTO Timeline");
-//                break;
-//            }
             case R.id.nofity_bell: {
                 // Do something
                 getActivity().getSupportFragmentManager()
@@ -185,6 +156,5 @@ public class UpdatePasswordFragment extends Fragment {
             }
         }
     }
-
 
 }

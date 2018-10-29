@@ -23,11 +23,7 @@ public class notifyBGProcess  extends Fragment {
             //starting service
             getActivity().startService(new Intent(getActivity(),MyService.class));
 
-//
-//            getActivity().getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .replace(R.id.main_view, new TimeLineFragment())
-//                    .commit();
+
         Intent myIntent = new Intent(getActivity(), DonatorMainView.class);
         getActivity().startActivity(myIntent);
 

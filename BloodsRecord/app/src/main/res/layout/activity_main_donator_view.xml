@@ -22,7 +22,12 @@
             android:layout_width="match_parent"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             android:elevation="4dp">
-
+            <ImageView
+                android:id="@+id/logoXmarks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/logo_app" />
         </android.support.v7.widget.Toolbar>
 
         <FrameLayout
@@ -40,7 +45,7 @@
         android:layout_gravity="start"
         android:id="@+id/nav_view"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/drawer_menu">
+        app:menu="@menu/donator_menu">
     </android.support.design.widget.NavigationView>
 
 

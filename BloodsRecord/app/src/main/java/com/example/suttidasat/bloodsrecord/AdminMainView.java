@@ -1,31 +1,24 @@
 package com.example.suttidasat.bloodsrecord;
 
 import android.content.Intent;
-import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.Window;
 
-
 import com.example.suttidasat.bloodsrecord.Interface.DonatorProfileFragment;
-
+import com.example.suttidasat.bloodsrecord.Interface.SertNationalID;
 import com.example.suttidasat.bloodsrecord.Interface.TimeLineFragment;
-
 import com.example.suttidasat.bloodsrecord.model.MyService;
-
 import com.google.firebase.auth.FirebaseAuth;
 
-
-public class DonatorMainView extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
+public class AdminMainView extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private DrawerLayout drawerLayout;
 
     @Override
@@ -33,9 +26,9 @@ public class DonatorMainView extends AppCompatActivity implements NavigationView
         super.onCreate(savedInstanceState);
 
 
-        // menu Donator
+        // menu Admin
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_main_donator_view);
+        setContentView(R.layout.activity_main_admin_view);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -52,39 +45,26 @@ public class DonatorMainView extends AppCompatActivity implements NavigationView
         toggle.syncState();
 
         if (savedInstanceState == null) {
-            //starting service
-            Intent intent = new Intent(DonatorMainView.this, MyService.class);
-            startService(intent);
-
-
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.donator_view,
-                            new TimeLineFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_home);
+                    .replace(R.id.admin_view,
+                            new SertNationalID()).commit();
+            navigationView.setCheckedItem(R.id.nav_insert);
         }
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
-            case R.id.nav_home:
+            case R.id.nav_insert:
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.donator_view,
-                                new TimeLineFragment()).commit();
-                break;
-            case R.id.nav_profile:
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.donator_view,
-                                new DonatorProfileFragment()).commit();
+                        .replace(R.id.admin_view,
+                                new SertNationalID()).commit();
                 break;
             case R.id.nav_sign_out:
                 FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(DonatorMainView.this, MyService.class);
-                stopService(intent);
-                Intent loginIntent = new Intent(DonatorMainView.this, MainActivity.class);
+                Intent loginIntent = new Intent(AdminMainView.this, MainActivity.class);
                 startActivity(loginIntent);
                 break;
         }
