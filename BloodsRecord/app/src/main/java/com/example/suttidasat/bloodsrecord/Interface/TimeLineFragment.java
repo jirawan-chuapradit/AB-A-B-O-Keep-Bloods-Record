@@ -2,10 +2,17 @@ package com.example.suttidasat.bloodsrecord.Interface;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.VectorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +21,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -88,11 +96,26 @@ public class TimeLineFragment extends Fragment {
                                         donate_amount.setText(queryDocumentSnapshots.size() + " ครั้ง");
                                         int amount = queryDocumentSnapshots.size();
 
+                                        TextView re1 = getView().findViewById(R.id.re1);
+//                                        TextView re7 = getView().findViewById(R.id.re7);
+
+                                        TextView timeline_1 = getView().findViewById(R.id.timeline_1);
+//                                        TextView timeline_7 = getView().findViewById(R.id.timeline_7);
+
                                         /// set color
                                         if (amount >= 1) {
-                                            TextView timeline_1 = getView().findViewById(R.id.timeline_1);
-                                            timeline_1.setBackgroundColor(Color.parseColor("#E9F415"));
+
+                                            GradientDrawable gd = (GradientDrawable) timeline_1.getBackground().mutate();
+                                            GradientDrawable gdRe1 = (GradientDrawable) re1.getBackground().mutate();
+
+                                            gd.setColor(Color.rgb(220, 80, 80));
+                                            gdRe1.setColor(Color.rgb(249,225,183));
                                         }
+//                                        else if (amount >= 7) {
+//                                            GradientDrawable gd = (GradientDrawable) timeline_7.getBackground().mutate();
+//                                            gd.setColor(Color.rgb(220, 80, 80));
+//
+//                                        }
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                             @Override

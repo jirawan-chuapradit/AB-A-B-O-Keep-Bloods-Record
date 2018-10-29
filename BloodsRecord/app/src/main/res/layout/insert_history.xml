@@ -1,101 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient"
+    tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ประวัติผู้บริจาค"
-        android:layout_gravity="center"
-        android:textAlignment="center"
-        android:textSize="30dp"
-        />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:padding="35dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:weightSum="1">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias="0.0">
+            <!--app:layout_constraintTop_toBottomOf="@+id/toolbar"-->
 
 
             <TextView
-                android:id="@+id/sh_name_donater"
-                android:paddingTop="20dp"
-                android:gravity="center"
+                android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20dp" />
-            <TextView
-                android:id="@+id/sh_nid_donater"
-                android:paddingTop="20dp"
-                android:gravity="center"
-                android:layout_width="match_parent"
+                android:layout_marginTop="30dp"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:text="ประวัติผู้บริจาค"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="213dp"
+                android:layout_height="92dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="25dp"
+                android:elevation="10dp"
+                app:srcCompat="@drawable/deco1" />
+
+            <android.support.v7.widget.CardView
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:textSize="20dp" />
-            <TextView
-                android:id="@+id/sh_birth_donater"
-                android:paddingTop="20dp"
-                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_marginTop="-50dp"
+                android:background="@drawable/card_ui"
+                android:elevation="-10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/sh_name_donater"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="55dp"
+                        android:gravity="center"
+                        android:paddingTop="20dp"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/sh_nid_donater"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingTop="20dp"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/sh_birth_donater"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingTop="20dp"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/sh_email_donater"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingTop="20dp"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/sh_group_donater"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingTop="20dp"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/sh_date_now"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingTop="20dp"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/sh_amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:gravity="center"
+                        android:paddingTop="20dp"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20dp" />
-            <TextView
-                android:id="@+id/sh_email_donater"
-                android:paddingTop="20dp"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20dp" />
-            <TextView
-                android:id="@+id/sh_group_donater"
-                android:paddingTop="20dp"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20dp" />
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/sh_date_now"
-                android:paddingTop="20dp"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20dp" />
+                <!--Left button-->
+                <Button
+                    android:id="@+id/btn_back_sertNID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/backbtn_border"
+                    android:padding="20dp"
+                    android:text="@string/back"
+                    android:textColor="@color/colorPrimary" />
 
-            <TextView
-                android:id="@+id/sh_amount"
-                android:paddingTop="20dp"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20dp" />
-
-
-
-
-            <Button
-                android:layout_marginTop="8dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/btn_plus"
-                android:text="Plus"                />
-            <Button
-                android:layout_marginTop="8dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/btn_back_sertNID"
-                android:text="Back"                />
-
-
-
+                <!--Right button-->
+                <Button
+                    android:id="@+id/btn_plus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/addbtn_border"
+                    android:padding="20dp"
+                    android:text="@string/add"
+                    android:textColor="@color/whiteColor" />
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

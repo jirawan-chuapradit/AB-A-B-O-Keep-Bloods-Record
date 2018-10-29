@@ -84,7 +84,7 @@ public class InsertHistoryFragment extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        amount.setText("Amount : " + queryDocumentSnapshots.size());
+                        amount.setText("จำนวนการบริจาคทั้งหมด : " + queryDocumentSnapshots.size());
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -110,12 +110,12 @@ public class InsertHistoryFragment extends Fragment {
                         String blood = doc.get(0).get("bloodGroup").toString();
                         String email = doc.get(0).get("email").toString();
 
-                        profileName.setText("First name : " + name);
-                        profileNationalID.setText("National ID : " + nationalID);
-                        profileBirth.setText("Birth date : " + birth);
-                        profileBlood.setText("Blood Group : " + blood);
-                        profileEmail.setText("E-mail : " + email);
-                        currentDate.setText("Date : " + date);
+                        profileName.setText("ชื่อ : " + name);
+                        profileNationalID.setText("หมายเลขบัตรประชาชน : " + nationalID);
+                        profileBirth.setText("วันเกิด : " + birth);
+                        profileBlood.setText("กรุ๊ปเลือด : " + blood);
+                        profileEmail.setText("อีเมล : " + email);
+                        currentDate.setText("วันที่ : " + date);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
