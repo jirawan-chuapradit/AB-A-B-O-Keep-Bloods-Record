@@ -123,7 +123,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/editor/ic_mode_edit_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_verified_user_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -134,8 +134,9 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_gift" />
-                            <entry key="sourceFile" value="C:\Users\User\Downloads\gift.svg" />
+                            <entry key="opacityPercent" value="24" />
+                            <entry key="outputName" value="ic_password" />
+                            <entry key="sourceFile" value="C:\Users\User\Downloads\password.svg" />
                           </map>
                         </option>
                       </PersistentState>
