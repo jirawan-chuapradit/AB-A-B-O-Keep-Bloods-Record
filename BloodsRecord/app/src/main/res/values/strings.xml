@@ -7,4 +7,10 @@
     <string name="confirm">ยืนยัน</string>
     <string name="add">เพิ่มรายการ</string>
     <string name="back">ย้อนกลับ</string>
+
+
+    //nav_bar
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
 </resources>
