@@ -1,5 +1,6 @@
 package com.example.suttidasat.bloodsrecord.Interface;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -51,6 +52,7 @@ public class TimeLineFragment extends Fragment {
     private FirebaseFirestore firestore;
     private String uid;
     private String nid;
+    private ProgressDialog progressDialog;
 
     @Nullable
     @Override
@@ -66,6 +68,11 @@ public class TimeLineFragment extends Fragment {
         setHasOptionsMenu(true);
         firestore = FirebaseFirestore.getInstance();
         showAmount();
+
+        // Loading data dialog
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Please waiting...");
+        progressDialog.show();
 
     }
 
@@ -212,10 +219,13 @@ public class TimeLineFragment extends Fragment {
                                             GradientDrawable gdRe = (GradientDrawable) re108.getBackground().mutate();
                                             gdRe.setColor(Color.rgb(249,225,183));
                                         }
+
+                                        progressDialog.dismiss();
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
+                                progressDialog.dismiss();
                                 Log.d("Show Donator", "ERRROR =" + e.getMessage());
                                 Toast.makeText(getContext(), "ERROR = " + e.getMessage(), Toast.LENGTH_SHORT).show();
                             }

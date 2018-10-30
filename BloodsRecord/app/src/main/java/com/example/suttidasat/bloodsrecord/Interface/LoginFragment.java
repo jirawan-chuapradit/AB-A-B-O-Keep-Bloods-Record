@@ -1,5 +1,6 @@
 package com.example.suttidasat.bloodsrecord.Interface;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginFragment extends Fragment {
 
+    private ProgressDialog progressDialog;
     @Override
     public View onCreateView
             (@NonNull LayoutInflater inflater,
@@ -68,10 +70,17 @@ public class LoginFragment extends Fragment {
 
     void initLoginBtn() {
 
+
+
         Button _loginBtn = getView().findViewById(R.id.login_btn);
         _loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Loading data dialog
+                progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setMessage("Please waiting...");
+                progressDialog.show();
+
                 EditText _userId = (EditText) getView().findViewById(R.id.login_userid);
                 EditText _password = (EditText) getView().findViewById(R.id.login_password);
                 String _userIdStr = _userId.getText().toString();
@@ -79,6 +88,7 @@ public class LoginFragment extends Fragment {
 
 
                 if (_userIdStr.isEmpty() || _passwordStr.isEmpty()) {
+                    progressDialog.dismiss();
                     Toast.makeText(
                             getActivity(),
                             "กรุณาระบุ user or password",
@@ -88,16 +98,17 @@ public class LoginFragment extends Fragment {
 
                 }else if (_userIdStr.equals("admin@gmail.com") && _passwordStr.equals("12345678"))
                 {
+                    progressDialog.dismiss();
                     Intent myIntent = new Intent(getActivity(), AdminMainView.class);
                     getActivity().startActivity(myIntent);
                 }
 
                 else {
-
-                        FirebaseAuth.getInstance().signInWithEmailAndPassword(_userIdStr, _passwordStr)
+                     FirebaseAuth.getInstance().signInWithEmailAndPassword(_userIdStr, _passwordStr)
                                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                     @Override
                                     public void onSuccess(AuthResult authResult) {
+                                        progressDialog.dismiss();
                                         Intent myIntent = new Intent(getActivity(), DonatorMainView.class);
                                         getActivity().startActivity(myIntent);
 
@@ -105,11 +116,9 @@ public class LoginFragment extends Fragment {
                                 }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                FirebaseAuth.getInstance().signOut();
+                                progressDialog.dismiss();
                                 Log.d("USER", "INVALID USER OR PASSWORD");
                                 Toast.makeText(getContext(), "ERROR = " + e.getMessage(), Toast.LENGTH_SHORT).show();
-
-
                             }
                         });
                     }

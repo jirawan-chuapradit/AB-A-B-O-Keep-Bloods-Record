@@ -1,5 +1,6 @@
 package com.example.suttidasat.bloodsrecord.Interface;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -60,10 +61,20 @@ public class DonatorProfileFragment extends Fragment {
     private TextView textCartItemCount;
     private int mCartItemCount;
 
+
+    // Loading data dialog
+    ProgressDialog progressDialog;
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//menu
+
+        // Loading data dialog
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Please waiting...");
+        progressDialog.show();
+
+
         mCartItemCount = un.getCount();
         setHasOptionsMenu(true);
 
@@ -95,6 +106,7 @@ public class DonatorProfileFragment extends Fragment {
                         .error(R.mipmap.ic_launcher)
                         .transform((Transformation) new PicassoCircleTransformation())
                         .into(profileImage);
+                progressDialog.dismiss();
             }
         });
 
@@ -121,6 +133,7 @@ public class DonatorProfileFragment extends Fragment {
                         profileBirth.setText("Birth date : " + birth);
                         profileBlood.setText("Blood Group : " + blood);
                         profileEmail.setText("E-mail : " + email);
+
 
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -165,35 +178,6 @@ public class DonatorProfileFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-//            case R.id.sigOut:{
-//
-//                FirebaseAuth.getInstance().signOut();
-//                getActivity().stopService(new Intent(getActivity(),MyService.class));
-//                getActivity().getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.main_view, new LoginFragment())
-//                        .addToBackStack(null)
-//                        .commit();
-//                Log.d("USER", "GOTO LOGIN");
-//                break;
-//            }
-//            case R.id.donatorProfile:{
-//                getActivity().getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.main_view,new DonatorProfileFragment())
-//                        .commit();
-//                Log.d("MENU", "GOTO DONATOR PROFILE");
-//                break;
-//            }
-//            case R.id.timeline:{
-//                getActivity().getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.main_view, new CountNofity())
-//                        .addToBackStack(null)
-//                        .commit();
-//                Log.d("USER", "GOTO Timeline");
-//                break;
-//            }
             case R.id.nofity_bell: {
                 // Do something
                 getActivity().getSupportFragmentManager()

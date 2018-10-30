@@ -2,6 +2,7 @@ package com.example.suttidasat.bloodsrecord.Interface;
 
 import java.text.SimpleDateFormat;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -36,6 +37,7 @@ import java.util.List;
 
 public class InsertHistoryFragment extends Fragment {
 
+    private ProgressDialog progressDialog;
     FirebaseFirestore firestore;
     DocumentReference donateHistory;
     private TextView profileName, profileNationalID, profileBirth, profileBlood, profileEmail, currentDate, amount;
@@ -55,6 +57,8 @@ public class InsertHistoryFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+
+
         firestore = FirebaseFirestore.getInstance();
 
         insertHistory();
@@ -65,6 +69,10 @@ public class InsertHistoryFragment extends Fragment {
 
     void insertHistory() {
 
+        // Loading data dialog
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Please waiting...");
+        progressDialog.show();
 
         profileName = getView().findViewById(R.id.sh_name_donater);
         profileNationalID = getView().findViewById(R.id.sh_nid_donater);
@@ -113,6 +121,7 @@ public class InsertHistoryFragment extends Fragment {
                         profileBlood.setText("กรุ๊ปเลือด : " + blood);
                         profileEmail.setText("อีเมล : " + email);
                         currentDate.setText("วันที่ : " + date);
+                        progressDialog.dismiss();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override

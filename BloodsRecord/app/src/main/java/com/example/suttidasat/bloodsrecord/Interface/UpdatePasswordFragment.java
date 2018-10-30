@@ -1,5 +1,6 @@
 package com.example.suttidasat.bloodsrecord.Interface;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,6 +25,7 @@ import com.example.suttidasat.bloodsrecord.R;
 import com.example.suttidasat.bloodsrecord.model.MyService;
 import com.example.suttidasat.bloodsrecord.model.UpdateNotify;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -40,7 +42,7 @@ public class UpdatePasswordFragment extends Fragment {
     private EditText newPassword, reNewPassword;
     private FirebaseUser firebaseUser;
     private String userPasswordNew, userRePasswordNew;
-
+    private ProgressDialog progressDialog;
 
     //menu
     UpdateNotify un = new UpdateNotify();
@@ -65,6 +67,10 @@ public class UpdatePasswordFragment extends Fragment {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Loading data dialog
+                progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setMessage("Please waiting...");
+                progressDialog.show();
 
                 userPasswordNew = newPassword.getText().toString();
                 userRePasswordNew = reNewPassword.getText().toString();
@@ -78,8 +84,8 @@ public class UpdatePasswordFragment extends Fragment {
                     firebaseUser.updatePassword(userPasswordNew).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
+                            progressDialog.dismiss();
                             if(task.isSuccessful()){
-
                                 //FORCE USER SIGGOUT
                                 FirebaseAuth.getInstance().signOut();
                                 //starting service
@@ -93,15 +99,21 @@ public class UpdatePasswordFragment extends Fragment {
                                         "Password has been Changed",
                                         Toast.LENGTH_SHORT
                                 ).show();
-                            }else{
-                                Toast.makeText(
-                                        getActivity(),
-                                        "Password Update Failed",
-                                        Toast.LENGTH_SHORT
-                                ).show();
                             }
                         }
-                    });
+                    })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d("UPDATEPASSWORD : ", e.getMessage());
+                                        Toast.makeText(
+                                                getActivity(),
+                                                "Password Update Failed",
+                                                Toast.LENGTH_SHORT
+                                        ).show();
+                                    }
+
+                            });
                 }
 
             }
@@ -135,7 +147,7 @@ public class UpdatePasswordFragment extends Fragment {
                 // Do something
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.main_view, new notifyFragment())
+                        .replace(R.id.donator_view, new notifyFragment())
                         .commit();
                 System.out.println("CLICK NOTIFY BELL");
                 un.setCount(0);
