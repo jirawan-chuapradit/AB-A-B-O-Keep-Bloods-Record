@@ -52,7 +52,7 @@ public class MyService extends Service {
 
     //menu
     UpdateNotify un = new UpdateNotify();
-    private TextView textCartItemCount;
+//    private TextView textCartItemCount;
     ScheduledExecutorService executorService;
 
     @Override
@@ -72,7 +72,7 @@ public class MyService extends Service {
             @Override
             public void run() {
                 Log.d("MY TASK", "MY TASK HAS BEEN START IN SPRINT");
-                myTask();
+                getNationalId();
                 Log.d("MY TASK", "MY TASK HAS BEEN DONE IN SPRINT");
 
                 try {
@@ -88,7 +88,7 @@ public class MyService extends Service {
         return START_STICKY;
     }
 
-    private void myTask() {
+    private void getNationalId() {
         //getLastTime Donate
         //GET DOCUMENT DATA from booldsRecord find National ID
         //Connect to bloodRecord
@@ -125,8 +125,10 @@ public class MyService extends Service {
                         size = queryDocumentSnapshots.size();
                         Log.d("GET HOSTORY DONATE", "Time of Donate : " + size);
 
-                        //operation calculate difference date
-                        CalculateDiffDate();
+                        if(size != 0){
+                            //operation calculate difference date
+                            calculateDiffDate();
+                        }
 
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -138,7 +140,7 @@ public class MyService extends Service {
         });
     }
 
-    private void CalculateDiffDate() {
+    private void calculateDiffDate() {
         Log.d("MY TASK", "CALCULATE DIFFERENT DATE HAS BEEN START");
         donateHistoryFirebase = new DonateHistoryFirebase(
                 documentReference, firestore, nationalID, String.valueOf(size));
@@ -165,7 +167,7 @@ public class MyService extends Service {
                             } else if (type.equals("today")) {
                                 msg = "สามารถบริจาคเลือดได้";
                             }
-                            setNotifyToFirebase(type);
+                            setNotifyToFirebase();
                         }
                         Log.d("CALCULATE DIFF DATE", "mCartItemCount : " + mCartItemCount);
                     }
@@ -178,7 +180,7 @@ public class MyService extends Service {
                 });
     }
 
-    private void setNotifyToFirebase(String type) {
+    private void setNotifyToFirebase() {
         Log.d("MY TASK", "SET NOTIFY FIREBASE HAS BEEN START");
         notificationContentFirebase = new NotificationContentFirebase(
                 collectionReference, firestore, uid);

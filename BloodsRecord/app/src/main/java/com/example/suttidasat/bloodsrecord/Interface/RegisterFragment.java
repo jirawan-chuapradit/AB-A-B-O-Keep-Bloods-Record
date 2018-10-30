@@ -1,6 +1,7 @@
 package com.example.suttidasat.bloodsrecord.Interface;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 
 import android.graphics.Bitmap;
@@ -23,6 +24,7 @@ import com.example.suttidasat.bloodsrecord.DonatorMainView;
 import com.example.suttidasat.bloodsrecord.MainActivity;
 import com.example.suttidasat.bloodsrecord.R;
 import com.example.suttidasat.bloodsrecord.model.DonatorProfile;
+import com.example.suttidasat.bloodsrecord.model.PicassoCircleTransformation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -33,6 +35,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import java.io.IOException;
 
@@ -71,6 +75,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     //a Uri object to store file path
     private Uri filePath;
 
+    private ProgressDialog progressDialog;
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -103,6 +109,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     }
 
     private void register() {
+
+
         //GET VALUE FROM FRAGMENT
         gatRegisterValue();
         //check value is empty
@@ -126,6 +134,11 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             Toast.makeText(getActivity(),"กรุณาใส่รูปภาพ",Toast.LENGTH_SHORT).show();
         }
         else{
+            // Loading data dialog
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setMessage("Please waiting...");
+            progressDialog.show();
+
             fbAuth.createUserWithEmailAndPassword(emailStr,passwordStr).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -147,6 +160,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                         "Upload failed!",
                         Toast.LENGTH_SHORT
                 ).show();
+                progressDialog.dismiss();
             }
         }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -163,6 +177,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 ,bloodsStr);
         Log.d("REGISTER", "REGISTER SUCCESS");
 
+        progressDialog.dismiss();
         firestore.collection("bloodsRecord")
                 .document(uid)
                 .set(dp).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -218,12 +233,18 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == PICK_IMAGE && resultCode == RESULT_OK && data.getData() != null){
             filePath = data.getData();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
-                userProfileImage.setImageBitmap(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
+//                userProfileImage.setImageBitmap(bitmap);
+
+                Picasso.get().load(filePath).fit().centerCrop()
+                        .placeholder(R.mipmap.ic_launcher)
+                        .error(R.mipmap.ic_launcher)
+                        .transform((Transformation) new PicassoCircleTransformation())
+                        .into(userProfileImage);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

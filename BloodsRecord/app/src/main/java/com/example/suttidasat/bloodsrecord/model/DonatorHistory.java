@@ -2,7 +2,7 @@ package com.example.suttidasat.bloodsrecord.model;
 
 public class DonatorHistory  {
         private String date;
-//    private int num;
+
 
     public DonatorHistory() {
     }
@@ -10,7 +10,6 @@ public class DonatorHistory  {
     public  DonatorHistory(String date){
 
         this.date = date;
-//        this.num = num;
     }
 
     public String getDate() {
@@ -21,11 +20,4 @@ public class DonatorHistory  {
         this.date = date;
     }
 
-//    public int getNum() {
-//        return num;
-//    }
-//
-//    public void setNum(int num) {
-//        this.num = num;
-//    }
 }

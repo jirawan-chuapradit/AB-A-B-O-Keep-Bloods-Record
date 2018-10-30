@@ -9,6 +9,7 @@ public class UpdateNotify {
 
     private int count = 0;
     private int date;
+    private String type;
 
     public String getType() {
         return type;
@@ -19,7 +20,7 @@ public class UpdateNotify {
         this.type = type;
     }
 
-    private String type;
+
 
     public void countIncrease(){
         count++;
@@ -47,7 +48,7 @@ public class UpdateNotify {
 
 
     public void countNotify(){
-        if (date == 123){
+        if (date == 83){
             countIncrease();
             type = "7days";
             System.out.println("count date > 83 && date < 90");

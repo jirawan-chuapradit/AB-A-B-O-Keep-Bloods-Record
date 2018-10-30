@@ -60,7 +60,7 @@ public class UpdatePasswordFragment extends Fragment {
         saveBtn = getView().findViewById(R.id.btnUpdatePassword);
         newPassword = getView().findViewById(R.id.updatePassword);
         reNewPassword = getView().findViewById(R.id.re_updatePassword);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -88,9 +88,9 @@ public class UpdatePasswordFragment extends Fragment {
                             if(task.isSuccessful()){
                                 //FORCE USER SIGGOUT
                                 FirebaseAuth.getInstance().signOut();
+
                                 //starting service
                                 getActivity().stopService(new Intent(getActivity(),MyService.class));
-
                                 Intent myIntent = new Intent(getActivity(), MainActivity.class);
                                 getActivity().startActivity(myIntent);
                                 Log.d("USER", "GOTO LOGIN");

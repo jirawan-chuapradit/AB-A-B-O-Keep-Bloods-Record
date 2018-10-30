@@ -56,17 +56,19 @@ public class AdminMainView extends AppCompatActivity implements NavigationView.O
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
-            case R.id.nav_insert:
+            case R.id.nav_insert: {
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.admin_view,
                                 new SertNationalID()).commit();
                 break;
-            case R.id.nav_sign_out:
+            }
+            case R.id.nav_sign_out: {
                 FirebaseAuth.getInstance().signOut();
                 Intent loginIntent = new Intent(AdminMainView.this, MainActivity.class);
                 startActivity(loginIntent);
                 break;
+            }
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);

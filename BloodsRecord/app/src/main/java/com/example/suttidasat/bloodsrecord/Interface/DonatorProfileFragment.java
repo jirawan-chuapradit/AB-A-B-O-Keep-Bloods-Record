@@ -36,6 +36,8 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
+import java.util.concurrent.TimeUnit;
+
 public class DonatorProfileFragment extends Fragment {
 
     @Nullable
@@ -94,7 +96,6 @@ public class DonatorProfileFragment extends Fragment {
         profileBirth = getView().findViewById(R.id.profileBirth);
         profileBlood = getView().findViewById(R.id.profileBloodsG);
         profileEmail = getView().findViewById(R.id.profileEmail);
-        changePassword = getView().findViewById(R.id.btnChangePassword);
 
 
         StorageReference storageReference = firebaseStorage.getReference();
@@ -106,7 +107,14 @@ public class DonatorProfileFragment extends Fragment {
                         .error(R.mipmap.ic_launcher)
                         .transform((Transformation) new PicassoCircleTransformation())
                         .into(profileImage);
-                progressDialog.dismiss();
+
+                try {
+                    TimeUnit.SECONDS.sleep(7);
+                    progressDialog.dismiss();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
 
@@ -144,15 +152,6 @@ public class DonatorProfileFragment extends Fragment {
             }
         });
 
-        changePassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.donator_view, new UpdatePasswordFragment())
-                        .commit();
-            }
-        });
 
     }
 

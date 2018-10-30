@@ -19,6 +19,7 @@ import com.example.suttidasat.bloodsrecord.Interface.DonatorProfileFragment;
 
 import com.example.suttidasat.bloodsrecord.Interface.TimeLineFragment;
 
+import com.example.suttidasat.bloodsrecord.Interface.UpdatePasswordFragment;
 import com.example.suttidasat.bloodsrecord.model.MyService;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -68,25 +69,34 @@ public class DonatorMainView extends AppCompatActivity implements NavigationView
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
-            case R.id.nav_home:
+            case R.id.nav_home: {
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.donator_view,
                                 new TimeLineFragment()).commit();
                 break;
-            case R.id.nav_profile:
+            }
+            case R.id.nav_profile: {
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.donator_view,
                                 new DonatorProfileFragment()).commit();
                 break;
-            case R.id.nav_sign_out:
+            }
+            case R.id.nav_change_password: {
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.donator_view, new UpdatePasswordFragment()).commit();
+                break;
+            }
+            case R.id.nav_sign_out: {
                 FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(DonatorMainView.this, MyService.class);
                 stopService(intent);
                 Intent loginIntent = new Intent(DonatorMainView.this, MainActivity.class);
                 startActivity(loginIntent);
                 break;
+            }
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
