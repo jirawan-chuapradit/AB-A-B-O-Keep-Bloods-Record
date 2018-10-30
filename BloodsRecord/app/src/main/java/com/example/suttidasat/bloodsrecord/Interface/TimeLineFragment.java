@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.suttidasat.bloodsrecord.R;
+import com.example.suttidasat.bloodsrecord.model.CountNotify;
 import com.example.suttidasat.bloodsrecord.model.MyService;
 import com.example.suttidasat.bloodsrecord.model.NationaID;
 import com.example.suttidasat.bloodsrecord.model.UpdateNotify;
@@ -46,13 +47,12 @@ public class TimeLineFragment extends Fragment {
     //menu
     private TextView textCartItemCount, donate_amount;
     private int mCartItemCount;
-    private FirebaseAuth fbAuth;
+
     private FirebaseFirestore firestore;
     private String uid;
     private String nid;
     private ProgressDialog progressDialog;
 
-    UpdateNotify un = UpdateNotify.getUpdateNotifyInstance();
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -63,7 +63,8 @@ public class TimeLineFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         //menu
-        mCartItemCount = un.getCount();
+        mCartItemCount = CountNotify.COUNT;
+        Log.d("TimeLine Fragment: ", String.valueOf(mCartItemCount));
         setHasOptionsMenu(true);
         firestore = FirebaseFirestore.getInstance();
         showAmount();
@@ -258,36 +259,6 @@ public class TimeLineFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-//            case R.id.sigOut: {
-//
-//                FirebaseAuth.getInstance().signOut();
-//                getActivity().stopService(new Intent(getActivity(), MyService.class));
-//                getActivity().getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.main_view, new LoginFragment())
-//                        .addToBackStack(null)
-//                        .commit();
-//                Log.d("USER", "GOTO LOGIN");
-//                break;
-//            }
-//            case R.id.donatorProfile: {
-//
-//                getActivity().getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.main_view, new DonatorProfileFragment())
-//                        .commit();
-//                Log.d("MENU", "GOTO DONATOR PROFILE");
-//                break;
-//            }
-//            case R.id.timeline: {
-//                getActivity().getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.main_view, new notifyBGProcess())
-//                        .addToBackStack(null)
-//                        .commit();
-//                Log.d("USER", "GOTO Timeline");
-//                break;
-//            }
             case R.id.nofity_bell: {
                 // Do something
                 getActivity().getSupportFragmentManager()
@@ -295,7 +266,8 @@ public class TimeLineFragment extends Fragment {
                         .replace(R.id.donator_view, new notifyFragment())
                         .commit();
                 System.out.println("CLICK NOTIFY BELL");
-                un.setCount(0);
+//                un.setCount(0);
+//                UpdateNotify.count = 0;
                 setupBadge();
                 return true;
             }

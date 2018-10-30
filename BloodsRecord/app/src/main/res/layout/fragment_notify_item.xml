@@ -19,13 +19,6 @@
         android:layout_below="@+id/notify_item_text"
         android:hint="date" />
 
-    <TextView
-        android:id="@+id/notify_item_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/notify_item_date"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="14dp"
-        android:text="time" />
+
 
 </RelativeLayout>

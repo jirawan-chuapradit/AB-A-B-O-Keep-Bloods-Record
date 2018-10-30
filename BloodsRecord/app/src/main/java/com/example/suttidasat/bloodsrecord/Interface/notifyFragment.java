@@ -57,7 +57,7 @@ public class notifyFragment extends Fragment {
         progressDialog.setMessage("Please waiting...");
         progressDialog.show();
 
-        mCartItemCount = un.getCount();
+//        mCartItemCount = un.getCount();
         setHasOptionsMenu(true);
 
 
@@ -120,7 +120,7 @@ public class notifyFragment extends Fragment {
                         .replace(R.id.donator_view, new notifyFragment())
                         .commit();
                 System.out.println("CLICK NOTIFY BELL");
-                un.setCount(0);
+//                un.setCount(0);
                 setupBadge();
                 return true;
             }

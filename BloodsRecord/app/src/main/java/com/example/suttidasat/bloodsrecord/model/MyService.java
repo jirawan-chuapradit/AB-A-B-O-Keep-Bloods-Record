@@ -155,17 +155,17 @@ public class MyService extends Service {
                         Log.d("CALCULATE DIFF DATE", "diffDate : " + diffDate);
 
                         un.setDate(diffDate);
-                        mCartItemCount = un.getCount();
-                        if (mCartItemCount != 0) {
-                            type = un.getType();
-                            if (type.equals("7days")) {
-                                msg = "อีก 7 วัน จะถึงรอบบริจาคครั้งถัดไป";
-                            } else if (type.equals("today")) {
-                                msg = "สามารถบริจาคเลือดได้";
-                            }
-                            setNotifyToFirebase();
+                        type = un.countNotify(type);
+                        if (type.equals("7days")) {
+                            msg = "อีก 7 วัน จะถึงรอบบริจาคครั้งถัดไป";
+                        } else if (type.equals("today")) {
+                            msg = "สามารถบริจาคเลือดได้";
                         }
-                        Log.d("CALCULATE DIFF DATE", "mCartItemCount : " + mCartItemCount);
+                        else if (type.equals("not change")){
+                            return;
+                        }
+                        setNotifyToFirebase();
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -188,7 +188,35 @@ public class MyService extends Service {
                         sizeofContent = queryDocumentSnapshots.size();
                         Log.d("SET NOTIFY FIREBASE", "size Of content : " + sizeofContent);
 
-                        checkNotify(sizeofContent);
+                        if(sizeofContent!= 0){
+                            checkNotify(sizeofContent);
+                        }
+                        else {
+                            Log.d("SET NOTIFY TO FIREBASE", "SIZE OF CONTENT = 0");
+                            NotifyManange nm = NotifyManange.getNotifyManangeInstance();
+                            nm.setDate(currentDate);
+                            nm.setText(msg);
+                            firestore.collection("notificationContent")
+                                    .document(uid)
+                                    .collection("content")
+                                    .document(String.valueOf(sizeofContent + 1))
+                                    .set(nm).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d("DisplayFragment", "Notification has been saved!!!");
+
+                                    CountNotify.setCOUNT(1);
+                                    mCartItemCount = CountNotify.getCOUNT();
+                                    Log.d("CALCULATE DIFF DATE", "mCartItemCount : " + mCartItemCount);
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d("REGISTER", "ERRROR =" + e.getMessage());
+                                }
+                            });
+                        }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -225,6 +253,10 @@ public class MyService extends Service {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     Log.d("DisplayFragment", "Notification has been saved!!!");
+//                                    un.countIncrease();
+                                    CountNotify.setCOUNT(1);
+                                    mCartItemCount = CountNotify.getCOUNT();
+                                    Log.d("CALCULATE DIFF DATE", "mCartItemCount : " + mCartItemCount);
 
                                 }
                             }).addOnFailureListener(new OnFailureListener() {

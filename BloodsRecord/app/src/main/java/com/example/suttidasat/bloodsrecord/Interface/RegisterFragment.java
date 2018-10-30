@@ -238,18 +238,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == PICK_IMAGE && resultCode == RESULT_OK && data.getData() != null){
             filePath = data.getData();
-//            try {
-//                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
-//                userProfileImage.setImageBitmap(bitmap);
 
                 Picasso.get().load(filePath).fit().centerCrop()
                         .placeholder(R.mipmap.ic_launcher)
                         .error(R.mipmap.ic_launcher)
                         .transform((Transformation) new PicassoCircleTransformation())
                         .into(userProfileImage);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

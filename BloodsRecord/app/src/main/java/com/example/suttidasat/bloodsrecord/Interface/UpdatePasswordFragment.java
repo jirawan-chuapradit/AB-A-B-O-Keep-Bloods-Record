@@ -47,14 +47,14 @@ public class UpdatePasswordFragment extends Fragment {
     //menu
     private TextView textCartItemCount;
     private int mCartItemCount;
-    UpdateNotify un = UpdateNotify.getUpdateNotifyInstance();
+//    UpdateNotify un = UpdateNotify.getUpdateNotifyInstance();
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         //menu
-        mCartItemCount = un.getCount();
+//        mCartItemCount = un.getCount();
         setHasOptionsMenu(true);
 
         saveBtn = getView().findViewById(R.id.btnUpdatePassword);
@@ -150,7 +150,7 @@ public class UpdatePasswordFragment extends Fragment {
                         .replace(R.id.donator_view, new notifyFragment())
                         .commit();
                 System.out.println("CLICK NOTIFY BELL");
-                un.setCount(0);
+//                un.setCount(0);
                 setupBadge();
                 return true;
             }

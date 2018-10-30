@@ -1,5 +1,6 @@
 package com.example.suttidasat.bloodsrecord.Interface;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 
 import com.example.suttidasat.bloodsrecord.R;
 import com.example.suttidasat.bloodsrecord.init.BloodsRecordFirebase;
+import com.example.suttidasat.bloodsrecord.model.CountNotify;
 import com.example.suttidasat.bloodsrecord.model.DonatorProfile;
 import com.example.suttidasat.bloodsrecord.model.MyService;
 import com.example.suttidasat.bloodsrecord.model.PicassoCircleTransformation;
@@ -61,11 +63,12 @@ public class DonatorProfileFragment extends Fragment {
     //menu
     private TextView textCartItemCount;
     private int mCartItemCount;
-    UpdateNotify un = UpdateNotify.getUpdateNotifyInstance();
+//    UpdateNotify un = UpdateNotify.getUpdateNotifyInstance();
 
     // Loading data dialog
     ProgressDialog progressDialog;
 
+    @SuppressLint("LongLogTag")
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -76,7 +79,8 @@ public class DonatorProfileFragment extends Fragment {
         progressDialog.show();
 
 
-        mCartItemCount = un.getCount();
+        mCartItemCount = CountNotify.getCOUNT();
+        Log.d("Donator: ", String.valueOf(mCartItemCount));
         setHasOptionsMenu(true);
 
         //Firebase
@@ -183,7 +187,7 @@ public class DonatorProfileFragment extends Fragment {
                         .replace(R.id.donator_view, new notifyFragment())
                         .commit();
                 System.out.println("CLICK NOTIFY BELL");
-                un.setCount(0);
+//                un.setCount(0);
                 setupBadge();
                 return true;
             }
