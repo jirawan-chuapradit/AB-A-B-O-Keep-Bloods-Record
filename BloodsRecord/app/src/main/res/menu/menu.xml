@@ -3,25 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-
     <item
         android:id="@+id/nofity_bell"
         android:icon="@drawable/ic_notify_bell"
         android:title="notifyBell"
         app:actionLayout="@layout/custom_action_item_layout"
         app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/timeline"
-        android:title="Home" />
 
-
-    <item
-        android:id="@+id/donatorProfile"
-        android:title="My Profile" />
-
-
-    <item
-        android:id="@+id/sigOut"
-        android:title="Sign Out" />
 
 </menu>

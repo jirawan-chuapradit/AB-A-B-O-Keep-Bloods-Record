@@ -1,5 +1,6 @@
 package com.example.suttidasat.bloodsrecord.Interface;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.suttidasat.bloodsrecord.DonatorMainView;
+import com.example.suttidasat.bloodsrecord.MainActivity;
 import com.example.suttidasat.bloodsrecord.R;
 import com.example.suttidasat.bloodsrecord.model.NationaID;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,8 +33,6 @@ public class SertNationalID extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        //menu
-        setHasOptionsMenu(true);
         btnSertNationalID();
 
     }
@@ -50,7 +51,7 @@ public class SertNationalID extends Fragment {
 
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.main_view, new InsertHistoryFragment())
+                        .replace(R.id.admin_view, new InsertHistoryFragment())
                         .commit();
 
 
@@ -59,39 +60,5 @@ public class SertNationalID extends Fragment {
         });
 
 
-    }
-
-    //menu
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_admin, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.sigOut:{
-
-                FirebaseAuth.getInstance().signOut();
-
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_view, new LoginFragment())
-                        .addToBackStack(null)
-                        .commit();
-                Log.d("USER", "GOTO LOGIN");
-                break;
-            }
-            case R.id.sert_nationalID:{
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_view,new SertNationalID())
-                        .commit();
-                Log.d("MENU", "GOTO SERT NATIONAL ID");
-                break;
-            }
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

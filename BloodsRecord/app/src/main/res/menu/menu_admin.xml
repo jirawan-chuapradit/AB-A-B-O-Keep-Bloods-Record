@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
 
-    <item
-        android:id="@+id/sert_nationalID"
-        android:title="Sert National ID" />
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_insert"
+            android:icon="@drawable/ic_search"
+            android:title="Insert" />
 
-    <item
-        android:id="@+id/sigOut"
-        android:title="Sign Out" />
+        <item
+            android:id="@+id/nav_sign_out"
+            android:icon="@drawable/ic_exit_to_app"
+            android:title="Sign Out" />
+    </group>
 
 </menu>

@@ -10,9 +10,10 @@
     <ScrollView
 
         android:layout_width="match_parent"
-        android:layout_height="368dp"
+        android:layout_height="match_parent"
         tools:layout_editor_absoluteX="141dp"
-        tools:layout_editor_absoluteY="56dp">
+        tools:layout_editor_absoluteY="56dp"
+        tools:ignore="MissingConstraints">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,18 +26,19 @@
                 android:layout_width="123dp"
                 android:layout_height="118dp"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/logo"
+                app:srcCompat="@drawable/logo_app"
                 tools:layout_editor_absoluteX="134dp"
                 tools:layout_editor_absoluteY="104dp" />
 
             <EditText
-                android:id="@+id/login_userid"
-                android:padding="10dp"
+                android:inputType="text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint=" E-mail"
                 android:layout_gravity="center"
-                android:hint="E-mail"
-                android:inputType="text" />
+                android:id="@+id/login_userid"
+                />
+
 
             <EditText
                 android:padding="10dp"
@@ -54,14 +56,12 @@
                 android:background="@color/login"
                 android:text="login"
                 android:textColor="#ffff" />
-
-
             <Button
                 android:id="@+id/login_register_Btn"
                 android:layout_width="120dp"
                 android:layout_height="40dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
+                android:layout_marginTop="50dp"
+                android:layout_gravity="right"
                 android:background="@color/register"
                 android:text="Register"
                 android:textColor="#000" />
@@ -71,6 +71,7 @@
 
 
     </ScrollView>
+
 
 
 

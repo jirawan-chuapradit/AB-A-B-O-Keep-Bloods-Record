@@ -3,6 +3,8 @@
   <component name="WizardSettings">
     <option name="children">
       <map>
+
+
         <entry key="imageWizard">
           <value>
             <PersistentState>
@@ -23,18 +25,35 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="paddingPercent" value="-5" />
+
+                                                <entry key="trimmed" value="true" />
+
                                               </map>
                                             </option>
                                           </PersistentState>
                                         </value>
                                       </entry>
-                                      <entry key="clipartAsset">
+
+                                      <entry key="image">
+
                                         <value>
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_brightness_1_black_24dp.xml" />
+
+                                                <entry key="trimmed" value="true" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                      <entry key="text">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="trimmed" value="true" />
+
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -44,9 +63,12 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="ic_timeline_point_pupple" />
-                                      <entry key="theme" value="CUSTOM" />
-                                      <entry key="themeColor" value="4a46e3" />
+
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="imageAsset" value="C:\Users\User\Downloads\register\name.png" />
+                                      <entry key="outputName" value="ic_name_tag" />
+                                      <entry key="themeColor" value="e50700" />
+
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -55,50 +77,18 @@
                             <entry key="launcher">
                               <value>
                                 <PersistentState>
-                                  <option name="values">
-                                    <map>
-                                      <entry key="backgroundLayerName" value="ic_launcher_background" />
-                                      <entry key="foregroundLayerName" value="ic_launcher_foreground" />
-                                      <entry key="outputName" value="timeline_point_RED" />
-                                    </map>
-                                  </option>
-                                </PersistentState>
-                              </value>
-                            </entry>
-                            <entry key="launcherLegacy">
-                              <value>
-                                <PersistentState>
+
                                   <option name="children">
                                     <map>
-                                      <entry key="clipArt">
+                                      <entry key="foregroundImage">
+
                                         <value>
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="color" value="e5001d" />
-                                                <entry key="trimmed" value="true" />
-                                              </map>
-                                            </option>
-                                          </PersistentState>
-                                        </value>
-                                      </entry>
-                                      <entry key="clipartAsset">
-                                        <value>
-                                          <PersistentState>
-                                            <option name="values">
-                                              <map>
-                                                <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/av/ic_fiber_manual_record_black_24dp.xml" />
-                                              </map>
-                                            </option>
-                                          </PersistentState>
-                                        </value>
-                                      </entry>
-                                      <entry key="image">
-                                        <value>
-                                          <PersistentState>
-                                            <option name="values">
-                                              <map>
-                                                <entry key="trimmed" value="true" />
+
+                                                <entry key="scalingPercent" value="52" />
+
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -108,10 +98,12 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="backgroundColor" value="e3101c" />
-                                      <entry key="cropped" value="true" />
-                                      <entry key="iconShape" value="CIRCLE" />
-                                      <entry key="outputName" value="red_timeline_point" />
+
+                                      <entry key="backgroundLayerName" value="ic_launcher_background" />
+                                      <entry key="foregroundImage" value="C:\Users\User\Downloads\register\blood.png" />
+                                      <entry key="foregroundLayerName" value="ic_launcher_foreground" />
+                                      <entry key="outputName" value="blood" />
+
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -132,9 +124,49 @@
             </PersistentState>
           </value>
         </entry>
+
         <entry key="vectorWizard">
           <value>
-            <PersistentState />
+            <PersistentState>
+              <option name="children">
+                <map>
+                  <entry key="vectorAssetStep">
+                    <value>
+                      <PersistentState>
+                        <option name="children">
+                          <map>
+                            <entry key="clipartAsset">
+                              <value>
+                                <PersistentState>
+                                  <option name="values">
+                                    <map>
+
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_verified_user_black_24dp.xml" />
+
+                                    </map>
+                                  </option>
+                                </PersistentState>
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                        <option name="values">
+                          <map>
+
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="opacityPercent" value="24" />
+                            <entry key="outputName" value="ic_password" />
+                            <entry key="sourceFile" value="C:\Users\User\Downloads\password.svg" />
+
+                          </map>
+                        </option>
+                      </PersistentState>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </PersistentState>
+
           </value>
         </entry>
       </map>

@@ -19,6 +19,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.suttidasat.bloodsrecord.DonatorMainView;
+import com.example.suttidasat.bloodsrecord.MainActivity;
 import com.example.suttidasat.bloodsrecord.R;
 import com.example.suttidasat.bloodsrecord.model.DonatorProfile;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -95,11 +97,9 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
     private void login() {
         Log.d("REGISTER", "BACK TO LOGIN");
-        getActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_view, new LoginFragment())
-                .addToBackStack(null)
-                .commit();
+
+        Intent myIntent = new Intent(getActivity(), MainActivity.class);
+        getActivity().startActivity(myIntent);
     }
 
     private void register() {

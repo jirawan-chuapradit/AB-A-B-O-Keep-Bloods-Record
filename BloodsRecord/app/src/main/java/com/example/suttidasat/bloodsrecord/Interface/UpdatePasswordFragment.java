@@ -1,5 +1,7 @@
 package com.example.suttidasat.bloodsrecord.Interface;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,9 +19,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.suttidasat.bloodsrecord.DonatorMainView;
+import com.example.suttidasat.bloodsrecord.MainActivity;
 import com.example.suttidasat.bloodsrecord.R;
+import com.example.suttidasat.bloodsrecord.model.MyService;
 import com.example.suttidasat.bloodsrecord.model.UpdateNotify;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -36,7 +42,7 @@ public class UpdatePasswordFragment extends Fragment {
     private EditText newPassword, reNewPassword;
     private FirebaseUser firebaseUser;
     private String userPasswordNew, userRePasswordNew;
-
+    private ProgressDialog progressDialog;
 
     //menu
     UpdateNotify un = new UpdateNotify();
@@ -61,6 +67,10 @@ public class UpdatePasswordFragment extends Fragment {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Loading data dialog
+                progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setMessage("Please waiting...");
+                progressDialog.show();
 
                 userPasswordNew = newPassword.getText().toString();
                 userRePasswordNew = reNewPassword.getText().toString();
@@ -74,30 +84,36 @@ public class UpdatePasswordFragment extends Fragment {
                     firebaseUser.updatePassword(userPasswordNew).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
+                            progressDialog.dismiss();
                             if(task.isSuccessful()){
-
                                 //FORCE USER SIGGOUT
                                 FirebaseAuth.getInstance().signOut();
-                                getActivity().getSupportFragmentManager()
-                                        .beginTransaction()
-                                        .replace(R.id.main_view, new LoginFragment())
-                                        .addToBackStack(null)
-                                        .commit();
+                                //starting service
+                                getActivity().stopService(new Intent(getActivity(),MyService.class));
+
+                                Intent myIntent = new Intent(getActivity(), MainActivity.class);
+                                getActivity().startActivity(myIntent);
                                 Log.d("USER", "GOTO LOGIN");
                                 Toast.makeText(
                                         getActivity(),
                                         "Password has been Changed",
                                         Toast.LENGTH_SHORT
                                 ).show();
-                            }else{
-                                Toast.makeText(
-                                        getActivity(),
-                                        "Password Update Failed",
-                                        Toast.LENGTH_SHORT
-                                ).show();
                             }
                         }
-                    });
+                    })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d("UPDATEPASSWORD : ", e.getMessage());
+                                        Toast.makeText(
+                                                getActivity(),
+                                                "Password Update Failed",
+                                                Toast.LENGTH_SHORT
+                                        ).show();
+                                    }
+
+                            });
                 }
 
             }
@@ -127,41 +143,11 @@ public class UpdatePasswordFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.sigOut:{
-
-                FirebaseAuth.getInstance().signOut();
-
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_view, new LoginFragment())
-                        .addToBackStack(null)
-                        .commit();
-                Log.d("USER", "GOTO LOGIN");
-                break;
-            }
-            case R.id.donatorProfile:{
-
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_view,new DonatorProfileFragment())
-                        .commit();
-                Log.d("MENU", "GOTO DONATOR PROFILE");
-                break;
-            }
-            case R.id.timeline:{
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_view, new TimeLineFragment())
-                        .addToBackStack(null)
-                        .commit();
-                Log.d("USER", "GOTO Timeline");
-                break;
-            }
             case R.id.nofity_bell: {
                 // Do something
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.main_view, new notifyFragment())
+                        .replace(R.id.donator_view, new notifyFragment())
                         .commit();
                 System.out.println("CLICK NOTIFY BELL");
                 un.setCount(0);
@@ -186,6 +172,5 @@ public class UpdatePasswordFragment extends Fragment {
             }
         }
     }
-
 
 }

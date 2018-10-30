@@ -1,5 +1,6 @@
 package com.example.suttidasat.bloodsrecord.Interface;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -31,6 +32,7 @@ public class notifyFragment extends Fragment {
 
     private TextView textCartItemCount;
     private  int mCartItemCount;
+    private ProgressDialog progressDialog;
 
     UpdateNotify un = new UpdateNotify();
 
@@ -48,6 +50,12 @@ public class notifyFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+
+        // Loading data dialog
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Please waiting...");
+        progressDialog.show();
 
         mCartItemCount = un.getCount();
         setHasOptionsMenu(true);
@@ -77,6 +85,7 @@ public class notifyFragment extends Fragment {
                             notifyMananges.add(d.toObject(NotifyManange.class));
                         }
                         notifyAdapter.notifyDataSetChanged();
+                        progressDialog.dismiss();
                     }
                 });
     }
@@ -104,35 +113,16 @@ public class notifyFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.sigOut:{
-
-                FirebaseAuth.getInstance().signOut();
-
+            case R.id.nofity_bell: {
+                // Do something
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.main_view, new LoginFragment())
-                        .addToBackStack(null)
+                        .replace(R.id.donator_view, new notifyFragment())
                         .commit();
-                Log.d("USER", "GOTO LOGIN");
-                break;
-            }
-            case R.id.donatorProfile:{
-
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_view,new DonatorProfileFragment())
-                        .commit();
-                Log.d("MENU", "GOTO DONATOR PROFILE");
-                break;
-            }
-            case R.id.timeline:{
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_view, new CountNofity())
-                        .addToBackStack(null)
-                        .commit();
-                Log.d("USER", "GOTO Timeline");
-                break;
+                System.out.println("CLICK NOTIFY BELL");
+                un.setCount(0);
+                setupBadge();
+                return true;
             }
         }
 

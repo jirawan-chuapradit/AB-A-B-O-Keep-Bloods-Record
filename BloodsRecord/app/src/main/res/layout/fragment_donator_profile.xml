@@ -6,75 +6,80 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <LinearLayout
-
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="76dp"
+        android:layout_marginEnd="8dp"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="143dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <ImageView
             android:id="@+id/profilePic"
-            android:layout_width="93dp"
-            android:layout_height="100dp"
+            android:layout_width="132dp"
+            android:layout_height="137dp"
+            android:layout_gravity="center"
             app:srcCompat="@mipmap/ic_launcher"
-            tools:layout_editor_absoluteX="146dp"
-            tools:layout_editor_absoluteY="100dp" />
+            tools:layout_editor_absoluteX="176dp"
+            tools:layout_editor_absoluteY="68dp" />
 
         <TextView
             android:id="@+id/profileName"
             android:layout_width="241dp"
             android:layout_height="35dp"
-            android:text="Ms. Jirawan Chuapradit"
-
-            tools:layout_editor_absoluteX="72dp"
-            tools:layout_editor_absoluteY="216dp" />
+            android:layout_gravity="center"
+            android:text="นางสาว จิราวรรณ เชื้อประดิษฐ์"
+            tools:layout_editor_absoluteX="67dp"
+            tools:layout_editor_absoluteY="174dp" />
 
         <TextView
             android:id="@+id/profileNationalID"
             android:layout_width="241dp"
             android:layout_height="37dp"
+            android:layout_gravity="center"
             android:text="1-700-400-222-22-2"
-            tools:layout_editor_absoluteX="72dp"
-            tools:layout_editor_absoluteY="265dp" />
+            tools:layout_editor_absoluteX="67dp"
+            tools:layout_editor_absoluteY="228dp" />
 
 
         <TextView
             android:id="@+id/profileEmail"
             android:layout_width="241dp"
             android:layout_height="37dp"
+            android:layout_gravity="center"
             android:text="example@email.com"
-
-            tools:layout_editor_absoluteX="72dp"
-            tools:layout_editor_absoluteY="307dp" />
+            tools:layout_editor_absoluteX="67dp"
+            tools:layout_editor_absoluteY="228dp" />
 
         <TextView
             android:id="@+id/profileBirth"
             android:layout_width="239dp"
             android:layout_height="37dp"
+            android:layout_gravity="center"
             android:text="25-01-1998"
-            tools:layout_editor_absoluteX="85dp"
-            tools:layout_editor_absoluteY="592dp" />
+            tools:layout_editor_absoluteX="67dp"
+            tools:layout_editor_absoluteY="288dp" />
 
         <TextView
             android:id="@+id/profileBloodsG"
             android:layout_width="241dp"
             android:layout_height="41dp"
+            android:layout_gravity="center"
             android:text="O"
-            tools:layout_editor_absoluteX="72dp"
-            tools:layout_editor_absoluteY="356dp" />
+            tools:layout_editor_absoluteX="67dp"
+            tools:layout_editor_absoluteY="351dp" />
 
         <Button
             android:id="@+id/btnChangePassword"
-            android:layout_width="80pt"
-            android:layout_height="20pt"
-            android:text="Change password"
-            tools:layout_editor_absoluteX="103dp"
-            tools:layout_editor_absoluteY="407dp" />
-
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="เปลี่ยนรหัสผ่าน" />
 
     </LinearLayout>
 

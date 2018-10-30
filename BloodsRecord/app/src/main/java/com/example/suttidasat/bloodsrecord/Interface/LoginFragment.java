@@ -1,5 +1,7 @@
 package com.example.suttidasat.bloodsrecord.Interface;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +15,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.suttidasat.bloodsrecord.AdminMainView;
+import com.example.suttidasat.bloodsrecord.DonatorMainView;
 import com.example.suttidasat.bloodsrecord.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -21,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginFragment extends Fragment {
 
+    private ProgressDialog progressDialog;
     @Override
     public View onCreateView
             (@NonNull LayoutInflater inflater,
@@ -35,13 +40,10 @@ public class LoginFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         if(FirebaseAuth.getInstance().getCurrentUser()!= null){
-
             Log.d("USER", "USER ALREADY LOG IN");
             Log.d("USER", "GOTO HomePage");
-            getActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.main_view,new CountNofity())
-                    .commit();
+            Intent myIntent = new Intent(getActivity(), DonatorMainView.class);
+            getActivity().startActivity(myIntent);
             return;
         }
 
@@ -68,10 +70,17 @@ public class LoginFragment extends Fragment {
 
     void initLoginBtn() {
 
+
+
         Button _loginBtn = getView().findViewById(R.id.login_btn);
         _loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Loading data dialog
+                progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setMessage("Please waiting...");
+                progressDialog.show();
+
                 EditText _userId = (EditText) getView().findViewById(R.id.login_userid);
                 EditText _password = (EditText) getView().findViewById(R.id.login_password);
                 String _userIdStr = _userId.getText().toString();
@@ -79,6 +88,7 @@ public class LoginFragment extends Fragment {
 
 
                 if (_userIdStr.isEmpty() || _passwordStr.isEmpty()) {
+                    progressDialog.dismiss();
                     Toast.makeText(
                             getActivity(),
                             "กรุณาระบุ user or password",
@@ -88,32 +98,27 @@ public class LoginFragment extends Fragment {
 
                 }else if (_userIdStr.equals("admin@gmail.com") && _passwordStr.equals("12345678"))
                 {
-                    getActivity().getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.main_view,new SertNationalID())
-                            .commit();
+                    progressDialog.dismiss();
+                    Intent myIntent = new Intent(getActivity(), AdminMainView.class);
+                    getActivity().startActivity(myIntent);
                 }
 
                 else {
-
-                        FirebaseAuth.getInstance().signInWithEmailAndPassword(_userIdStr, _passwordStr)
+                     FirebaseAuth.getInstance().signInWithEmailAndPassword(_userIdStr, _passwordStr)
                                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                     @Override
                                     public void onSuccess(AuthResult authResult) {
-                                        getActivity().getSupportFragmentManager()
-                                                .beginTransaction()
-                                                .replace(R.id.main_view, new CountNofity())
-                                                .commit();
+                                        progressDialog.dismiss();
+                                        Intent myIntent = new Intent(getActivity(), DonatorMainView.class);
+                                        getActivity().startActivity(myIntent);
 
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                FirebaseAuth.getInstance().signOut();
+                                progressDialog.dismiss();
                                 Log.d("USER", "INVALID USER OR PASSWORD");
                                 Toast.makeText(getContext(), "ERROR = " + e.getMessage(), Toast.LENGTH_SHORT).show();
-
-
                             }
                         });
                     }

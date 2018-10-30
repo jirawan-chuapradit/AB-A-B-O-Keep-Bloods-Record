@@ -1,5 +1,7 @@
 package com.example.suttidasat.bloodsrecord.Interface;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,6 +22,7 @@ import android.widget.TextView;
 import com.example.suttidasat.bloodsrecord.R;
 import com.example.suttidasat.bloodsrecord.init.BloodsRecordFirebase;
 import com.example.suttidasat.bloodsrecord.model.DonatorProfile;
+import com.example.suttidasat.bloodsrecord.model.MyService;
 import com.example.suttidasat.bloodsrecord.model.PicassoCircleTransformation;
 import com.example.suttidasat.bloodsrecord.model.UpdateNotify;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -58,10 +61,20 @@ public class DonatorProfileFragment extends Fragment {
     private TextView textCartItemCount;
     private int mCartItemCount;
 
+
+    // Loading data dialog
+    ProgressDialog progressDialog;
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//menu
+
+        // Loading data dialog
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Please waiting...");
+        progressDialog.show();
+
+
         mCartItemCount = un.getCount();
         setHasOptionsMenu(true);
 
@@ -93,6 +106,7 @@ public class DonatorProfileFragment extends Fragment {
                         .error(R.mipmap.ic_launcher)
                         .transform((Transformation) new PicassoCircleTransformation())
                         .into(profileImage);
+                progressDialog.dismiss();
             }
         });
 
@@ -120,6 +134,7 @@ public class DonatorProfileFragment extends Fragment {
                         profileBlood.setText("Blood Group : " + blood);
                         profileEmail.setText("E-mail : " + email);
 
+
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -134,7 +149,7 @@ public class DonatorProfileFragment extends Fragment {
             public void onClick(View view) {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.main_view, new UpdatePasswordFragment())
+                        .replace(R.id.donator_view, new UpdatePasswordFragment())
                         .commit();
             }
         });
@@ -163,39 +178,11 @@ public class DonatorProfileFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.sigOut:{
-
-                FirebaseAuth.getInstance().signOut();
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_view, new LoginFragment())
-                        .addToBackStack(null)
-                        .commit();
-                Log.d("USER", "GOTO LOGIN");
-                break;
-            }
-            case R.id.donatorProfile:{
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_view,new DonatorProfileFragment())
-                        .commit();
-                Log.d("MENU", "GOTO DONATOR PROFILE");
-                break;
-            }
-            case R.id.timeline:{
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_view, new CountNofity())
-                        .addToBackStack(null)
-                        .commit();
-                Log.d("USER", "GOTO Timeline");
-                break;
-            }
             case R.id.nofity_bell: {
                 // Do something
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.main_view, new notifyFragment())
+                        .replace(R.id.donator_view, new notifyFragment())
                         .commit();
                 System.out.println("CLICK NOTIFY BELL");
                 un.setCount(0);

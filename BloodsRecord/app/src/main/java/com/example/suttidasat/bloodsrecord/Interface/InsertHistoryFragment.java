@@ -2,6 +2,7 @@ package com.example.suttidasat.bloodsrecord.Interface;
 
 import java.text.SimpleDateFormat;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -36,6 +37,7 @@ import java.util.List;
 
 public class InsertHistoryFragment extends Fragment {
 
+    private ProgressDialog progressDialog;
     FirebaseFirestore firestore;
     DocumentReference donateHistory;
     private TextView profileName, profileNationalID, profileBirth, profileBlood, profileEmail, currentDate, amount;
@@ -55,8 +57,7 @@ public class InsertHistoryFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        //menu
-        setHasOptionsMenu(true);
+
 
         firestore = FirebaseFirestore.getInstance();
 
@@ -68,6 +69,10 @@ public class InsertHistoryFragment extends Fragment {
 
     void insertHistory() {
 
+        // Loading data dialog
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Please waiting...");
+        progressDialog.show();
 
         profileName = getView().findViewById(R.id.sh_name_donater);
         profileNationalID = getView().findViewById(R.id.sh_nid_donater);
@@ -84,7 +89,7 @@ public class InsertHistoryFragment extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        amount.setText("Amount : " + queryDocumentSnapshots.size());
+                        amount.setText("จำนวนการบริจาคทั้งหมด : " + queryDocumentSnapshots.size());
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -110,12 +115,13 @@ public class InsertHistoryFragment extends Fragment {
                         String blood = doc.get(0).get("bloodGroup").toString();
                         String email = doc.get(0).get("email").toString();
 
-                        profileName.setText("First name : " + name);
-                        profileNationalID.setText("National ID : " + nationalID);
-                        profileBirth.setText("Birth date : " + birth);
-                        profileBlood.setText("Blood Group : " + blood);
-                        profileEmail.setText("E-mail : " + email);
-                        currentDate.setText("Date : " + date);
+                        profileName.setText("ชื่อ : " + name);
+                        profileNationalID.setText("หมายเลขบัตรประชาชน : " + nationalID);
+                        profileBirth.setText("วันเกิด : " + birth);
+                        profileBlood.setText("กรุ๊ปเลือด : " + blood);
+                        profileEmail.setText("อีเมล : " + email);
+                        currentDate.setText("วันที่ : " + date);
+                        progressDialog.dismiss();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -188,7 +194,7 @@ public class InsertHistoryFragment extends Fragment {
                 Toast.makeText(getActivity(), "Insert History Success", Toast.LENGTH_SHORT).show();
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.main_view, new SertNationalID())
+                        .replace(R.id.admin_view, new SertNationalID())
                         .commit();
             }
         });
@@ -196,13 +202,12 @@ public class InsertHistoryFragment extends Fragment {
 
     void backBtn() {
         Button back = getView().findViewById(R.id.btn_back_sertNID);
-
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.main_view, new SertNationalID())
+                        .replace(R.id.admin_view, new SertNationalID())
                         .commit();
 
             }
@@ -210,38 +215,6 @@ public class InsertHistoryFragment extends Fragment {
     }
 
 
-    //menu
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_admin, menu);
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.sigOut:{
-
-                FirebaseAuth.getInstance().signOut();
-
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_view, new LoginFragment())
-                        .addToBackStack(null)
-                        .commit();
-                Log.d("USER", "GOTO LOGIN");
-                break;
-            }
-            case R.id.sert_nationalID:{
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_view,new SertNationalID())
-                        .commit();
-                Log.d("MENU", "GOTO SERT NATIONAL ID");
-                break;
-            }
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
 }
