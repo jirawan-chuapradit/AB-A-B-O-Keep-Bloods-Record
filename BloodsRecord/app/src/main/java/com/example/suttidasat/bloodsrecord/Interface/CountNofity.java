@@ -93,10 +93,8 @@ public class CountNofity extends Fragment {
     private void getHistoryDate(final String nationalID) {
         //GET DOCUMENT DATA from booldsRecord find National ID
         //getLastTime Donate
-        donateHistoryFirebase = new DonateHistoryFirebase(
-                collectionReference, firestore, nationalID);
-        donateHistoryFirebase.getConnectionCollection();
-        donateHistoryFirebase.getCollectionReference().get()
+        firestore.collection("donateHistory")
+                .document(nationalID).collection("history").get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {

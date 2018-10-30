@@ -22,12 +22,6 @@ public class DonateHistoryFirebase {
 
     private String size;
 
-    public DonateHistoryFirebase(CollectionReference collectionReference, FirebaseFirestore firestore, String nationalID) {
-
-        this.collectionReference = collectionReference;
-        this.firestore = firestore;
-        this.nationalID = nationalID;
-    }
 
     public DonateHistoryFirebase() {
     }

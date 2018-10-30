@@ -115,10 +115,8 @@ public class MyService extends Service {
 
     private void getHistoryDate(String nationalID) {
         Log.d("MY TASK", "GET HISTORY DONATE HAS BEEN START");
-        donateHistoryFirebase = new DonateHistoryFirebase(
-                collectionReference, firestore, nationalID);
-        donateHistoryFirebase.getConnectionCollection();
-        donateHistoryFirebase.getCollectionReference().get()
+         firestore.collection("donateHistory")
+                .document(nationalID).collection("history").get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
