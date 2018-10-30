@@ -49,6 +49,7 @@ public class SertNationalID extends Fragment {
 
                 NationaID.NID = nid.getText().toString();
 
+
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.admin_view, new InsertHistoryFragment())

@@ -45,9 +45,9 @@ public class UpdatePasswordFragment extends Fragment {
     private ProgressDialog progressDialog;
 
     //menu
-    UpdateNotify un = new UpdateNotify();
     private TextView textCartItemCount;
     private int mCartItemCount;
+    UpdateNotify un = UpdateNotify.getUpdateNotifyInstance();
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

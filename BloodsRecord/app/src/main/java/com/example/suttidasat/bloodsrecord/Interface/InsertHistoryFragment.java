@@ -107,7 +107,7 @@ public class InsertHistoryFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         List<DocumentSnapshot> doc = task.getResult().getDocuments();
-                        String name = doc.get(0).get("fName").toString() + "" + doc.get(0).get("lName").toString();
+                        String name = doc.get(0).get("fName").toString() + "  " + doc.get(0).get("lName").toString();
 
 
                         String nationalID = doc.get(0).get("nationalID").toString();
@@ -154,7 +154,9 @@ public class InsertHistoryFragment extends Fragment {
                                                 @Override
                                                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
-                                                    DonatorHistory dh = new DonatorHistory(date);
+                                                    DonatorHistory dh = DonatorHistory.getDonatorHistoryInstance();
+                                                    dh.setDate(date);
+
                                                     String num = Integer.toString(queryDocumentSnapshots.size()+1);
                                                     firestore.collection("donateHistory")
                                                             .document(NationaID.NID)
@@ -171,8 +173,11 @@ public class InsertHistoryFragment extends Fragment {
                                                 }
                                             });
 
-                                } else { // never donate before
-                                    DonatorHistory dh = new DonatorHistory(date);
+                                } else {
+                                    // never donate before
+                                    DonatorHistory dh = DonatorHistory.getDonatorHistoryInstance();
+                                    dh.setDate(date);
+
                                     firestore.collection("donateHistory")
                                             .document(NationaID.NID)
                                             .collection("history")

@@ -3,15 +3,20 @@ package com.example.suttidasat.bloodsrecord.model;
 public class NotifyManange {
     private String date, text,time;
 
+    //Singleton
+    private static NotifyManange notifyManangeInstance;
 
-
-    public NotifyManange(String date, String text, String time) {
-        this.date = date;
-        this.text = text;
-        this.time = time;
+    public static NotifyManange getNotifyManangeInstance(){
+        if (notifyManangeInstance == null){
+            notifyManangeInstance = new NotifyManange();
+        }
+        return notifyManangeInstance;
     }
 
-    public NotifyManange() {
+
+
+
+    private NotifyManange() {
     }
 
     public String getDate() {

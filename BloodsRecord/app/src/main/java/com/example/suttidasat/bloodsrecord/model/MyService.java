@@ -51,8 +51,7 @@ public class MyService extends Service {
     NotificationContentFirebase notificationContentFirebase;
 
     //menu
-    UpdateNotify un = new UpdateNotify();
-//    private TextView textCartItemCount;
+   UpdateNotify un = UpdateNotify.getUpdateNotifyInstance();
     ScheduledExecutorService executorService;
 
     @Override
@@ -133,7 +132,6 @@ public class MyService extends Service {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.d("Show Donator", "ERRROR =" + e.getMessage());
-//                Toast.makeText(getContext(), "ERROR = " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

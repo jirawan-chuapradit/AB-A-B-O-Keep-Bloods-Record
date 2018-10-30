@@ -44,16 +44,15 @@ import java.util.List;
 public class TimeLineFragment extends Fragment {
 
     //menu
-    UpdateNotify un = new UpdateNotify();
     private TextView textCartItemCount, donate_amount;
     private int mCartItemCount;
-
     private FirebaseAuth fbAuth;
     private FirebaseFirestore firestore;
     private String uid;
     private String nid;
     private ProgressDialog progressDialog;
 
+    UpdateNotify un = UpdateNotify.getUpdateNotifyInstance();
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

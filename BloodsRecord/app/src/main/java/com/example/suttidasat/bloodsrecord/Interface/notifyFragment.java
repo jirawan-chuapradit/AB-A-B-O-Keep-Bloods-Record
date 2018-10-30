@@ -34,7 +34,7 @@ public class notifyFragment extends Fragment {
     private  int mCartItemCount;
     private ProgressDialog progressDialog;
 
-    UpdateNotify un = new UpdateNotify();
+    UpdateNotify un = UpdateNotify.getUpdateNotifyInstance();
 
     ArrayList<NotifyManange> notifyMananges = new ArrayList<>();
 

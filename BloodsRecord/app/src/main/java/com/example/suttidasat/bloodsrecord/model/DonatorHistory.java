@@ -1,16 +1,22 @@
 package com.example.suttidasat.bloodsrecord.model;
 
 public class DonatorHistory  {
-        private String date;
+    private String date;
 
+    //Singleton
+    private static DonatorHistory donatorHistoryInstance;
 
-    public DonatorHistory() {
+    public static DonatorHistory getDonatorHistoryInstance(){
+        if(donatorHistoryInstance == null){
+            donatorHistoryInstance = new DonatorHistory();
+        }
+        return donatorHistoryInstance;
     }
 
-    public  DonatorHistory(String date){
 
-        this.date = date;
+    private DonatorHistory() {
     }
+
 
     public String getDate() {
         return date;

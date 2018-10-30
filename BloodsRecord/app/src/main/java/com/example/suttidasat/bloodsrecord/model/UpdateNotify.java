@@ -2,31 +2,38 @@ package com.example.suttidasat.bloodsrecord.model;
 
 public class UpdateNotify {
 
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
     private int count = 0;
     private int date;
     private String type;
 
+    //Singleton
+    private static UpdateNotify updateNotifyInstance;
+
+    public static UpdateNotify getUpdateNotifyInstance(){
+        if(updateNotifyInstance == null){
+            updateNotifyInstance = new UpdateNotify();
+        }
+        return updateNotifyInstance;
+    }
+
+    private UpdateNotify() {
+    }
+
+
     public String getType() {
         return type;
-
     }
 
     public void setType(String type) {
         this.type = type;
     }
 
-
+    public void setCount(int count) {
+        this.count = count;
+    }
 
     public void countIncrease(){
         count++;
-    }
-    public void countDiscrease(){
-        count--;
     }
 
     public int getDate() {
@@ -36,10 +43,6 @@ public class UpdateNotify {
     public void setDate(int date) {
         this.date = date;
         countNotify();
-    }
-
-
-    public UpdateNotify() {
     }
 
     public int getCount() {

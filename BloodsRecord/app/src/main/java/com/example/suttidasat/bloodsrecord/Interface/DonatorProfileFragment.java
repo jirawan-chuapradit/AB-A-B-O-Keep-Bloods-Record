@@ -59,10 +59,9 @@ public class DonatorProfileFragment extends Fragment {
     private ImageView profileImage;
 
     //menu
-    UpdateNotify un = new UpdateNotify();
     private TextView textCartItemCount;
     private int mCartItemCount;
-
+    UpdateNotify un = UpdateNotify.getUpdateNotifyInstance();
 
     // Loading data dialog
     ProgressDialog progressDialog;

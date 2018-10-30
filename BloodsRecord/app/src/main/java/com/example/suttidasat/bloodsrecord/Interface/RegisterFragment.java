@@ -173,8 +173,13 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        DonatorProfile dp = new DonatorProfile(birthStr,firstnameStr,lastnameStr,nationalIDStr,emailStr
-                ,bloodsStr);
+        DonatorProfile dp = DonatorProfile.getDonatorProfileInstance();
+        dp.setBirth(birthStr);
+        dp.setfName(firstnameStr);
+        dp.setlName(lastnameStr);
+        dp.setNationalID(nationalIDStr);
+        dp.setEmail(emailStr);
+        dp.setBloodGroup(bloodsStr);
         Log.d("REGISTER", "REGISTER SUCCESS");
 
         progressDialog.dismiss();

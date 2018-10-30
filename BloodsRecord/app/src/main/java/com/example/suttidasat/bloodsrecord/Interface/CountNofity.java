@@ -51,12 +51,13 @@ public class CountNofity extends Fragment {
     NotificationContentFirebase notificationContentFirebase;
 
     //menu
-    UpdateNotify un = new UpdateNotify();
     private TextView textCartItemCount;
+    UpdateNotify un = UpdateNotify.getUpdateNotifyInstance();
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
 
         //Start Firebase
         fbAuth = FirebaseAuth.getInstance();
