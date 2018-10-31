@@ -14,17 +14,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.suttidasat.bloodsrecord.DonatorMainView;
 import com.example.suttidasat.bloodsrecord.MainActivity;
 import com.example.suttidasat.bloodsrecord.R;
 import com.example.suttidasat.bloodsrecord.model.NationaID;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.List;
 
 public class SertNationalID extends Fragment {
 
-    DocumentReference danateHistory;
+    DocumentSnapshot danateHistory;
+    FirebaseFirestore firestore;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.sert_nationalid, container,false);
@@ -49,16 +61,35 @@ public class SertNationalID extends Fragment {
 
                 NationaID.NID = nid.getText().toString();
 
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.admin_view, new InsertHistoryFragment())
-                        .commit();
 
 
-                Log.d("USER", "Go To insert Danater History");
+                firestore = FirebaseFirestore.getInstance();
+
+                Query donateHistory;
+
+                donateHistory = firestore.collection("bloodsRecord")
+                        .whereEqualTo("nationalID", NationaID.NID);
+                donateHistory.get()
+                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                if (queryDocumentSnapshots.isEmpty()) {
+                                    Toast.makeText(
+                                            getActivity(),
+                                            "ระบุเลขบัตรประชาชนไม่ถูกต้อง",
+                                            Toast.LENGTH_SHORT
+                                    ).show();
+                                }else {
+                                    getActivity().getSupportFragmentManager()
+                                            .beginTransaction()
+                                            .replace(R.id.admin_view, new InsertHistoryFragment())
+                                            .commit();
+                                }
+                            }
+                        });
+
+
             }
         });
-
-
-    }
+}
 }
