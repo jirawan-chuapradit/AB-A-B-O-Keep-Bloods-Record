@@ -115,14 +115,9 @@ public class InsertHistoryFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         List<DocumentSnapshot> doc = task.getResult().getDocuments();
-<<<<<<< HEAD
 
 
                         String name = doc.get(0).get("fName").toString() + "" + doc.get(0).get("lName").toString();
-=======
-                        String name = doc.get(0).get("fName").toString() + "  " + doc.get(0).get("lName").toString();
->>>>>>> master
-
 
                         String nationalID = doc.get(0).get("nationalID").toString();
                         String birth = doc.get(0).get("birth").toString();

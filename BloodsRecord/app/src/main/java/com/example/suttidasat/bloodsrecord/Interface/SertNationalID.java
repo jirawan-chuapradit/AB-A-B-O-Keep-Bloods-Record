@@ -14,14 +14,12 @@ import android.widget.Toast;
 
 import com.example.suttidasat.bloodsrecord.R;
 import com.example.suttidasat.bloodsrecord.model.NationaID;
-<<<<<<< HEAD
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-=======
->>>>>>> master
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -65,17 +63,6 @@ public class SertNationalID extends Fragment {
 
                 NationaID.NID = nid.getText().toString();
 
-<<<<<<< HEAD
-=======
-
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.admin_view, new InsertHistoryFragment())
-                        .addToBackStack(null)
-                        .commit();
->>>>>>> master
-
-
                 firestore = FirebaseFirestore.getInstance();
 
                 Query donateHistory;
@@ -93,6 +80,7 @@ public class SertNationalID extends Fragment {
                                             Toast.LENGTH_SHORT
                                     ).show();
                                 }else {
+
                                     getActivity().getSupportFragmentManager()
                                             .beginTransaction()
                                             .replace(R.id.admin_view, new InsertHistoryFragment())
