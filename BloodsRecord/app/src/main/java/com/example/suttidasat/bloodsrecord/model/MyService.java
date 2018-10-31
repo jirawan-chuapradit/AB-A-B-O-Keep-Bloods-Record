@@ -1,7 +1,9 @@
 package com.example.suttidasat.bloodsrecord.model;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
@@ -205,9 +207,11 @@ public class MyService extends Service {
                                 public void onSuccess(Void aVoid) {
                                     Log.d("DisplayFragment", "Notification has been saved!!!");
 
-                                    CountNotify.setCOUNT(1);
-                                    mCartItemCount = CountNotify.getCOUNT();
-                                    Log.d("CALCULATE DIFF DATE", "mCartItemCount : " + mCartItemCount);
+                                    SharedPreferences.Editor prefs = getBaseContext().getSharedPreferences("BloodsRecord",MODE_PRIVATE).edit();
+                                    prefs.putInt("countNotify",1);
+                                    prefs.apply();
+
+//
 
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
@@ -253,10 +257,14 @@ public class MyService extends Service {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     Log.d("DisplayFragment", "Notification has been saved!!!");
-//                                    un.countIncrease();
-                                    CountNotify.setCOUNT(1);
-                                    mCartItemCount = CountNotify.getCOUNT();
-                                    Log.d("CALCULATE DIFF DATE", "mCartItemCount : " + mCartItemCount);
+
+
+                                    SharedPreferences prefs = getBaseContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
+                                    mCartItemCount = prefs.getInt("countNotify", 0);
+                                    mCartItemCount++;
+                                    SharedPreferences.Editor prefs2 = getBaseContext().getSharedPreferences("BloodsRecord",MODE_PRIVATE).edit();
+                                    prefs2.putInt("countNotify",mCartItemCount);
+                                    prefs2.apply();
 
                                 }
                             }).addOnFailureListener(new OnFailureListener() {

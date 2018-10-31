@@ -1,7 +1,9 @@
 package com.example.suttidasat.bloodsrecord.Interface;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
@@ -63,8 +65,13 @@ public class TimeLineFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         //menu
-        mCartItemCount = CountNotify.COUNT;
-        Log.d("TimeLine Fragment: ", String.valueOf(mCartItemCount));
+
+//        Log.d("TimeLine Fragment: ", String.valueOf(mCartItemCount));
+
+        SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
+        mCartItemCount = prefs.getInt("ccc", 0);
+        Log.d("SharedPreferences", String.valueOf(mCartItemCount));
+
         setHasOptionsMenu(true);
         firestore = FirebaseFirestore.getInstance();
         showAmount();
@@ -266,9 +273,11 @@ public class TimeLineFragment extends Fragment {
                         .replace(R.id.donator_view, new notifyFragment())
                         .commit();
                 System.out.println("CLICK NOTIFY BELL");
-//                un.setCount(0);
-//                UpdateNotify.count = 0;
-                setupBadge();
+
+                SharedPreferences.Editor prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE).edit();
+                prefs.putInt("countNotify",0);
+                prefs.apply();
+
                 return true;
             }
         }

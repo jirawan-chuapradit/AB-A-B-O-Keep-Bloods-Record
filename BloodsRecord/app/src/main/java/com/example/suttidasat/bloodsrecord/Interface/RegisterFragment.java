@@ -183,6 +183,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         Log.d("REGISTER", "REGISTER SUCCESS");
 
         progressDialog.dismiss();
+
         firestore.collection("bloodsRecord")
                 .document(uid)
                 .set(dp).addOnSuccessListener(new OnSuccessListener<Void>() {

@@ -2,7 +2,9 @@ package com.example.suttidasat.bloodsrecord.Interface;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -56,7 +58,6 @@ public class DonatorProfileFragment extends Fragment {
     private DocumentReference documentReference;
 
     private TextView profileName, profileNationalID, profileBirth, profileBlood, profileEmail;
-    private Button changePassword;
     private String uid;
     private ImageView profileImage;
 
@@ -78,9 +79,10 @@ public class DonatorProfileFragment extends Fragment {
         progressDialog.setMessage("Please waiting...");
         progressDialog.show();
 
+        SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
+        mCartItemCount = prefs.getInt("countNotify", 0);
+        Log.d("SharedPreferences", String.valueOf(mCartItemCount));
 
-        mCartItemCount = CountNotify.getCOUNT();
-        Log.d("Donator: ", String.valueOf(mCartItemCount));
         setHasOptionsMenu(true);
 
         //Firebase
@@ -139,7 +141,7 @@ public class DonatorProfileFragment extends Fragment {
                         String blood = dp.getBloodGroup();
                         String email = dp.getEmail();
 
-                        profileName.setText("First name : " + name);
+                        profileName.setText("Name : " + name);
                         profileNationalID.setText("National ID : " + nationalID);
                         profileBirth.setText("Birth date : " + birth);
                         profileBlood.setText("Blood Group : " + blood);
@@ -187,7 +189,11 @@ public class DonatorProfileFragment extends Fragment {
                         .replace(R.id.donator_view, new notifyFragment())
                         .commit();
                 System.out.println("CLICK NOTIFY BELL");
-//                un.setCount(0);
+
+                SharedPreferences.Editor prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE).edit();
+                prefs.putInt("countNotify",0);
+                prefs.apply();
+
                 setupBadge();
                 return true;
             }

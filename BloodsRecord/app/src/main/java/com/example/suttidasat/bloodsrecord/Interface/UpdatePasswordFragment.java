@@ -1,7 +1,9 @@
 package com.example.suttidasat.bloodsrecord.Interface;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -47,14 +49,16 @@ public class UpdatePasswordFragment extends Fragment {
     //menu
     private TextView textCartItemCount;
     private int mCartItemCount;
-//    UpdateNotify un = UpdateNotify.getUpdateNotifyInstance();
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        //menu
-//        mCartItemCount = un.getCount();
+        SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
+        mCartItemCount = prefs.getInt("countNotify", 0);
+        Log.d("SharedPreferences", String.valueOf(mCartItemCount));
+
         setHasOptionsMenu(true);
 
         saveBtn = getView().findViewById(R.id.btnUpdatePassword);
@@ -150,7 +154,12 @@ public class UpdatePasswordFragment extends Fragment {
                         .replace(R.id.donator_view, new notifyFragment())
                         .commit();
                 System.out.println("CLICK NOTIFY BELL");
-//                un.setCount(0);
+
+
+                SharedPreferences.Editor prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE).edit();
+                prefs.putInt("countNotify",0);
+                prefs.apply();
+
                 setupBadge();
                 return true;
             }

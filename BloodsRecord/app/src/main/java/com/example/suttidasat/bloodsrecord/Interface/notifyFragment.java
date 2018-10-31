@@ -1,6 +1,8 @@
 package com.example.suttidasat.bloodsrecord.Interface;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -57,7 +59,10 @@ public class notifyFragment extends Fragment {
         progressDialog.setMessage("Please waiting...");
         progressDialog.show();
 
-//        mCartItemCount = un.getCount();
+        SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
+        mCartItemCount = prefs.getInt("ccc", 0);
+        Log.d("SharedPreferences", String.valueOf(mCartItemCount));
+
         setHasOptionsMenu(true);
 
 
@@ -120,7 +125,11 @@ public class notifyFragment extends Fragment {
                         .replace(R.id.donator_view, new notifyFragment())
                         .commit();
                 System.out.println("CLICK NOTIFY BELL");
-//                un.setCount(0);
+
+                SharedPreferences.Editor prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE).edit();
+                prefs.putInt("countNotify",0);
+                prefs.apply();
+
                 setupBadge();
                 return true;
             }
