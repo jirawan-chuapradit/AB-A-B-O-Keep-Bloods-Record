@@ -1,7 +1,10 @@
 package com.example.suttidasat.bloodsrecord.Interface;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,6 +24,7 @@ import android.widget.TextView;
 
 import com.example.suttidasat.bloodsrecord.R;
 import com.example.suttidasat.bloodsrecord.init.BloodsRecordFirebase;
+import com.example.suttidasat.bloodsrecord.model.CountNotify;
 import com.example.suttidasat.bloodsrecord.model.DonatorProfile;
 import com.example.suttidasat.bloodsrecord.model.MyService;
 import com.example.suttidasat.bloodsrecord.model.PicassoCircleTransformation;
@@ -38,7 +42,12 @@ import com.squareup.picasso.Transformation;
 
 import java.util.concurrent.TimeUnit;
 
-public class DonatorProfileFragment extends Fragment {
+/*******************************************************
+ *intent: Show User Profile                            *
+ *pre-condition: User must login with role Donor       *
+ *******************************************************/
+
+public class DonorProfileFragment extends Fragment {
 
     @Nullable
     @Override
@@ -54,19 +63,18 @@ public class DonatorProfileFragment extends Fragment {
     private DocumentReference documentReference;
 
     private TextView profileName, profileNationalID, profileBirth, profileBlood, profileEmail;
-    private Button changePassword;
     private String uid;
     private ImageView profileImage;
 
     //menu
-    UpdateNotify un = new UpdateNotify();
     private TextView textCartItemCount;
     private int mCartItemCount;
-
+//    UpdateNotify un = UpdateNotify.getUpdateNotifyInstance();
 
     // Loading data dialog
     ProgressDialog progressDialog;
 
+    @SuppressLint("LongLogTag")
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -76,8 +84,10 @@ public class DonatorProfileFragment extends Fragment {
         progressDialog.setMessage("Please waiting...");
         progressDialog.show();
 
+        SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
+        mCartItemCount = prefs.getInt("countNotify", 0);
+        Log.d("SharedPreferences", String.valueOf(mCartItemCount));
 
-        mCartItemCount = un.getCount();
         setHasOptionsMenu(true);
 
         //Firebase
@@ -109,7 +119,7 @@ public class DonatorProfileFragment extends Fragment {
                         .into(profileImage);
 
                 try {
-                    TimeUnit.SECONDS.sleep(7);
+                    TimeUnit.SECONDS.sleep(5);
                     progressDialog.dismiss();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -136,7 +146,7 @@ public class DonatorProfileFragment extends Fragment {
                         String blood = dp.getBloodGroup();
                         String email = dp.getEmail();
 
-                        profileName.setText("First name : " + name);
+                        profileName.setText("Name : " + name);
                         profileNationalID.setText("National ID : " + nationalID);
                         profileBirth.setText("Birth date : " + birth);
                         profileBlood.setText("Blood Group : " + blood);
@@ -182,9 +192,14 @@ public class DonatorProfileFragment extends Fragment {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.donator_view, new notifyFragment())
+                        .addToBackStack(null)
                         .commit();
-                System.out.println("CLICK NOTIFY BELL");
-                un.setCount(0);
+                Log.d("USER ", "CLICK NOTIFY BELL");
+
+                SharedPreferences.Editor prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE).edit();
+                prefs.putInt("countNotify",0);
+                prefs.apply();
+
                 setupBadge();
                 return true;
             }

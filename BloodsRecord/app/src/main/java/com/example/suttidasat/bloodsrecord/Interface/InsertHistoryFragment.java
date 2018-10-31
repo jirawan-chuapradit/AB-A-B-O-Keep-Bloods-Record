@@ -35,6 +35,14 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.Calendar;
 import java.util.List;
 
+
+/*******************************************************
+ *intent: Show history of donor and plus donation time *
+ *pre-condition: User must login with role Admin and   *
+ *               User must insert national ID of donor *
+ *post-condition: User go to Insert national ID page   *
+ *******************************************************/
+
 public class InsertHistoryFragment extends Fragment {
 
     private ProgressDialog progressDialog;
@@ -107,9 +115,13 @@ public class InsertHistoryFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         List<DocumentSnapshot> doc = task.getResult().getDocuments();
+<<<<<<< HEAD
 
 
                         String name = doc.get(0).get("fName").toString() + "" + doc.get(0).get("lName").toString();
+=======
+                        String name = doc.get(0).get("fName").toString() + "  " + doc.get(0).get("lName").toString();
+>>>>>>> master
 
 
                         String nationalID = doc.get(0).get("nationalID").toString();
@@ -156,7 +168,9 @@ public class InsertHistoryFragment extends Fragment {
                                                 @Override
                                                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
-                                                    DonatorHistory dh = new DonatorHistory(date);
+                                                    DonatorHistory dh = DonatorHistory.getDonatorHistoryInstance();
+                                                    dh.setDate(date);
+
                                                     String num = Integer.toString(queryDocumentSnapshots.size()+1);
                                                     firestore.collection("donateHistory")
                                                             .document(NationaID.NID)
@@ -173,8 +187,11 @@ public class InsertHistoryFragment extends Fragment {
                                                 }
                                             });
 
-                                } else { // never donate before
-                                    DonatorHistory dh = new DonatorHistory(date);
+                                } else {
+                                    // never donate before
+                                    DonatorHistory dh = DonatorHistory.getDonatorHistoryInstance();
+                                    dh.setDate(date);
+
                                     firestore.collection("donateHistory")
                                             .document(NationaID.NID)
                                             .collection("history")

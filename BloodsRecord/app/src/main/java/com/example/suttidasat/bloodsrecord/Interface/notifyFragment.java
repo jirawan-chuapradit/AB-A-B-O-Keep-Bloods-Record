@@ -1,6 +1,8 @@
 package com.example.suttidasat.bloodsrecord.Interface;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -28,13 +30,19 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
+/*******************************************************
+ *intent: Show notification                            *
+ *pre-condition: User must login with role Donor       *
+ *post-condition: Time of new notifications disappears *
+ *******************************************************/
+
 public class notifyFragment extends Fragment {
 
     private TextView textCartItemCount;
     private  int mCartItemCount;
     private ProgressDialog progressDialog;
 
-    UpdateNotify un = new UpdateNotify();
+    UpdateNotify un = UpdateNotify.getUpdateNotifyInstance();
 
     ArrayList<NotifyManange> notifyMananges = new ArrayList<>();
 
@@ -57,7 +65,10 @@ public class notifyFragment extends Fragment {
         progressDialog.setMessage("Please waiting...");
         progressDialog.show();
 
-        mCartItemCount = un.getCount();
+        SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
+        mCartItemCount = prefs.getInt("countNotify", 0);
+        Log.d("SharedPreferences", String.valueOf(mCartItemCount));
+
         setHasOptionsMenu(true);
 
 
@@ -118,9 +129,14 @@ public class notifyFragment extends Fragment {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.donator_view, new notifyFragment())
+                        .addToBackStack(null)
                         .commit();
-                System.out.println("CLICK NOTIFY BELL");
-                un.setCount(0);
+                Log.d("USER ", "CLICK NOTIFY BELL");
+
+                SharedPreferences.Editor prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE).edit();
+                prefs.putInt("countNotify",0);
+                prefs.apply();
+
                 setupBadge();
                 return true;
             }

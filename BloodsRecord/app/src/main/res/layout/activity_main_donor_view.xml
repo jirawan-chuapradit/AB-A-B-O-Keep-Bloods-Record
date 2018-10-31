@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DonatorMainView"
+    tools:context=".DonorMainView"
     android:id="@+id/drawer_layout"
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
@@ -16,7 +16,7 @@
 
         <android.support.v7.widget.Toolbar
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
+            android:background="?attr/colorPrimary"
             android:id="@+id/toolbar"
             app:title=" "
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
@@ -46,7 +46,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:id="@+id/nav_view"
-
+        android:fitsSystemWindows="true"
         app:menu="@menu/donator_menu">
     </android.support.design.widget.NavigationView>
     <!--app:headerLayout="@layout/nav_header"-->

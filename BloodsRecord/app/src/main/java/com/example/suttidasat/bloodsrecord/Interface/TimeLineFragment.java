@@ -1,7 +1,9 @@
 package com.example.suttidasat.bloodsrecord.Interface;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
@@ -27,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.suttidasat.bloodsrecord.R;
+import com.example.suttidasat.bloodsrecord.model.CountNotify;
 import com.example.suttidasat.bloodsrecord.model.MyService;
 import com.example.suttidasat.bloodsrecord.model.NationaID;
 import com.example.suttidasat.bloodsrecord.model.UpdateNotify;
@@ -41,14 +44,17 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
+/*************************************************
+ *intent: As Home show time of donations         *
+ *pre-condition: user must login with role Donor *
+ *************************************************/
+
 public class TimeLineFragment extends Fragment {
 
     //menu
-    UpdateNotify un = new UpdateNotify();
     private TextView textCartItemCount, donate_amount;
     private int mCartItemCount;
 
-    private FirebaseAuth fbAuth;
     private FirebaseFirestore firestore;
     private String uid;
     private String nid;
@@ -63,8 +69,12 @@ public class TimeLineFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         //menu
-        mCartItemCount = un.getCount();
+        SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
+        mCartItemCount = prefs.getInt("countNotify", 0);
+        Log.d("SharedPreferences : ", String.valueOf(mCartItemCount));
+
         setHasOptionsMenu(true);
         firestore = FirebaseFirestore.getInstance();
         showAmount();
@@ -259,45 +269,19 @@ public class TimeLineFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-//            case R.id.sigOut: {
-//
-//                FirebaseAuth.getInstance().signOut();
-//                getActivity().stopService(new Intent(getActivity(), MyService.class));
-//                getActivity().getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.main_view, new LoginFragment())
-//                        .addToBackStack(null)
-//                        .commit();
-//                Log.d("USER", "GOTO LOGIN");
-//                break;
-//            }
-//            case R.id.donatorProfile: {
-//
-//                getActivity().getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.main_view, new DonatorProfileFragment())
-//                        .commit();
-//                Log.d("MENU", "GOTO DONATOR PROFILE");
-//                break;
-//            }
-//            case R.id.timeline: {
-//                getActivity().getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.main_view, new notifyBGProcess())
-//                        .addToBackStack(null)
-//                        .commit();
-//                Log.d("USER", "GOTO Timeline");
-//                break;
-//            }
             case R.id.nofity_bell: {
                 // Do something
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.donator_view, new notifyFragment())
+                        .addToBackStack(null)
                         .commit();
-                System.out.println("CLICK NOTIFY BELL");
-                un.setCount(0);
-                setupBadge();
+                Log.d("USER ", "CLICK NOTIFY BELL");
+
+                SharedPreferences.Editor prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE).edit();
+                prefs.putInt("countNotify",0);
+                prefs.apply();
+
                 return true;
             }
         }

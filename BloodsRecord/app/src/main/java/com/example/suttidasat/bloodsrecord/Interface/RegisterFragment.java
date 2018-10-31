@@ -4,10 +4,8 @@ package com.example.suttidasat.bloodsrecord.Interface;
 import android.app.ProgressDialog;
 import android.content.Intent;
 
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,7 +18,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.suttidasat.bloodsrecord.DonatorMainView;
 import com.example.suttidasat.bloodsrecord.MainActivity;
 import com.example.suttidasat.bloodsrecord.R;
 import com.example.suttidasat.bloodsrecord.model.DonatorProfile;
@@ -37,8 +34,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
-
-import java.io.IOException;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -150,6 +145,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     }
 
     private void sendUserData() {
+
+        //save image to storage
         StorageReference imageReference = storageReference.child(uid).child("Images").child("Profile Pic");  //User id/Images/Profile Pic.jpg
         UploadTask uploadTask = imageReference.putFile(filePath);
         uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -173,11 +170,17 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        DonatorProfile dp = new DonatorProfile(birthStr,firstnameStr,lastnameStr,nationalIDStr,emailStr
-                ,bloodsStr);
+        DonatorProfile dp = DonatorProfile.getDonatorProfileInstance();
+        dp.setBirth(birthStr);
+        dp.setfName(firstnameStr);
+        dp.setlName(lastnameStr);
+        dp.setNationalID(nationalIDStr);
+        dp.setEmail(emailStr);
+        dp.setBloodGroup(bloodsStr);
         Log.d("REGISTER", "REGISTER SUCCESS");
 
         progressDialog.dismiss();
+
         firestore.collection("bloodsRecord")
                 .document(uid)
                 .set(dp).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -233,18 +236,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == PICK_IMAGE && resultCode == RESULT_OK && data.getData() != null){
             filePath = data.getData();
-//            try {
-//                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
-//                userProfileImage.setImageBitmap(bitmap);
 
                 Picasso.get().load(filePath).fit().centerCrop()
                         .placeholder(R.mipmap.ic_launcher)
                         .error(R.mipmap.ic_launcher)
                         .transform((Transformation) new PicassoCircleTransformation())
                         .into(userProfileImage);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

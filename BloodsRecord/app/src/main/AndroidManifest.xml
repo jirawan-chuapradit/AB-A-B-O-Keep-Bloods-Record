@@ -27,7 +27,7 @@
         <!-- defining the service class here -->
         <service android:name=".model.MyService" />
         <activity android:name=".AdminMainView" />
-        <activity android:name=".DonatorMainView"></activity>
+        <activity android:name=".DonorMainView"></activity>
     </application>
 
 </manifest>
