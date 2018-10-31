@@ -36,16 +36,16 @@ import java.util.concurrent.TimeUnit;
 public class DonorMainView extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    NavigationView navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // menu Donor
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main_donor_view);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
 
@@ -56,7 +56,7 @@ public class DonorMainView extends AppCompatActivity
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         if (savedInstanceState == null) {
@@ -83,18 +83,21 @@ public class DonorMainView extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = menuItem.getItemId();
         if (id == R.id.nav_home) {
+            navigationView.setCheckedItem(R.id.nav_home);
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.donator_view,
                             new TimeLineFragment()).addToBackStack(null).commit();
         }
         if (id == R.id.nav_profile) {
+            navigationView.setCheckedItem(R.id.nav_profile);
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.donator_view,
                             new DonorProfileFragment()).addToBackStack(null).commit();
         }
         if (id == R.id.nav_change_password) {
+            navigationView.setCheckedItem(R.id.nav_change_password);
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.donator_view, new UpdatePasswordFragment()).addToBackStack(null).commit();
