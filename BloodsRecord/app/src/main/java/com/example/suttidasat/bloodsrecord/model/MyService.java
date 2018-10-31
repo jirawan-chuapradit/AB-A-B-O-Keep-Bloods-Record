@@ -205,11 +205,12 @@ public class MyService extends Service {
                                     .set(nm).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    Log.d("DisplayFragment", "Notification has been saved!!!");
+                                    Log.d("FIRST TIME NOTIFY", "Notification has been saved!!!");
 
                                     SharedPreferences.Editor prefs = getBaseContext().getSharedPreferences("BloodsRecord",MODE_PRIVATE).edit();
                                     prefs.putInt("countNotify",1);
                                     prefs.apply();
+
 
 //
 
@@ -256,7 +257,7 @@ public class MyService extends Service {
                                     .set(nm).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    Log.d("DisplayFragment", "Notification has been saved!!!");
+                                    Log.d("NEW NOTIFY NOT EXIST ", "Notification has been saved!!!");
 
 
                                     SharedPreferences prefs = getBaseContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);

@@ -35,6 +35,14 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.Calendar;
 import java.util.List;
 
+
+/*******************************************************
+ *intent: Show history of donor and plus donation time *
+ *pre-condition: User must login with role Admin and   *
+ *               User must insert national ID of donor *
+ *post-condition: User go to Insert national ID page   *
+ *******************************************************/
+
 public class InsertHistoryFragment extends Fragment {
 
     private ProgressDialog progressDialog;

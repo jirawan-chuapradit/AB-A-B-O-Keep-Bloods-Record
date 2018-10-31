@@ -1,26 +1,26 @@
 package com.example.suttidasat.bloodsrecord.Interface;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.suttidasat.bloodsrecord.DonatorMainView;
-import com.example.suttidasat.bloodsrecord.MainActivity;
 import com.example.suttidasat.bloodsrecord.R;
 import com.example.suttidasat.bloodsrecord.model.NationaID;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+
+
+/*******************************************************
+ *intent: Fill in the required national ID             *
+ *pre-condition: User must login with role Admin       *
+ *post-condition: User go to donor'profile page        *
+ *******************************************************/
 
 public class SertNationalID extends Fragment {
 
@@ -53,6 +53,7 @@ public class SertNationalID extends Fragment {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.admin_view, new InsertHistoryFragment())
+                        .addToBackStack(null)
                         .commit();
 
 

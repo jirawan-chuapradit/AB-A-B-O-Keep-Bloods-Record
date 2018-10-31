@@ -4,10 +4,8 @@ package com.example.suttidasat.bloodsrecord.Interface;
 import android.app.ProgressDialog;
 import android.content.Intent;
 
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,7 +18,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.suttidasat.bloodsrecord.DonatorMainView;
 import com.example.suttidasat.bloodsrecord.MainActivity;
 import com.example.suttidasat.bloodsrecord.R;
 import com.example.suttidasat.bloodsrecord.model.DonatorProfile;
@@ -37,8 +34,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
-
-import java.io.IOException;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -150,6 +145,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     }
 
     private void sendUserData() {
+
+        //save image to storage
         StorageReference imageReference = storageReference.child(uid).child("Images").child("Profile Pic");  //User id/Images/Profile Pic.jpg
         UploadTask uploadTask = imageReference.putFile(filePath);
         uploadTask.addOnFailureListener(new OnFailureListener() {

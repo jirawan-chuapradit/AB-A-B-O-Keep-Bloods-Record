@@ -21,16 +21,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.suttidasat.bloodsrecord.DonatorMainView;
 import com.example.suttidasat.bloodsrecord.MainActivity;
 import com.example.suttidasat.bloodsrecord.R;
 import com.example.suttidasat.bloodsrecord.model.MyService;
-import com.example.suttidasat.bloodsrecord.model.UpdateNotify;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+/*************************************************
+ *intent: Update password                        *
+ *pre-condition: User must login with role Donor *
+ *post-condition: User sign out and go to login  *
+ *************************************************/
 
 public class UpdatePasswordFragment extends Fragment {
 
@@ -152,9 +156,11 @@ public class UpdatePasswordFragment extends Fragment {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.donator_view, new notifyFragment())
+                        .addToBackStack(null)
                         .commit();
                 System.out.println("CLICK NOTIFY BELL");
 
+                Log.d("USER ", "CLICK NOTIFY BELL");
 
                 SharedPreferences.Editor prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE).edit();
                 prefs.putInt("countNotify",0);

@@ -44,6 +44,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
+/*************************************************
+ *intent: As Home show time of donations         *
+ *pre-condition: user must login with role Donor *
+ *************************************************/
+
 public class TimeLineFragment extends Fragment {
 
     //menu
@@ -64,13 +69,11 @@ public class TimeLineFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         //menu
-
-//        Log.d("TimeLine Fragment: ", String.valueOf(mCartItemCount));
-
         SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
-        mCartItemCount = prefs.getInt("ccc", 0);
-        Log.d("SharedPreferences", String.valueOf(mCartItemCount));
+        mCartItemCount = prefs.getInt("countNotify", 0);
+        Log.d("SharedPreferences : ", String.valueOf(mCartItemCount));
 
         setHasOptionsMenu(true);
         firestore = FirebaseFirestore.getInstance();
@@ -271,8 +274,9 @@ public class TimeLineFragment extends Fragment {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.donator_view, new notifyFragment())
+                        .addToBackStack(null)
                         .commit();
-                System.out.println("CLICK NOTIFY BELL");
+                Log.d("USER ", "CLICK NOTIFY BELL");
 
                 SharedPreferences.Editor prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE).edit();
                 prefs.putInt("countNotify",0);

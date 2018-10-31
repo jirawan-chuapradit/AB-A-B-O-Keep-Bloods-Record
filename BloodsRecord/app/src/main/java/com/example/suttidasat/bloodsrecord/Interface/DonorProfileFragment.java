@@ -42,7 +42,12 @@ import com.squareup.picasso.Transformation;
 
 import java.util.concurrent.TimeUnit;
 
-public class DonatorProfileFragment extends Fragment {
+/*******************************************************
+ *intent: Show User Profile                            *
+ *pre-condition: User must login with role Donor       *
+ *******************************************************/
+
+public class DonorProfileFragment extends Fragment {
 
     @Nullable
     @Override
@@ -114,7 +119,7 @@ public class DonatorProfileFragment extends Fragment {
                         .into(profileImage);
 
                 try {
-                    TimeUnit.SECONDS.sleep(7);
+                    TimeUnit.SECONDS.sleep(5);
                     progressDialog.dismiss();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -187,8 +192,9 @@ public class DonatorProfileFragment extends Fragment {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.donator_view, new notifyFragment())
+                        .addToBackStack(null)
                         .commit();
-                System.out.println("CLICK NOTIFY BELL");
+                Log.d("USER ", "CLICK NOTIFY BELL");
 
                 SharedPreferences.Editor prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE).edit();
                 prefs.putInt("countNotify",0);

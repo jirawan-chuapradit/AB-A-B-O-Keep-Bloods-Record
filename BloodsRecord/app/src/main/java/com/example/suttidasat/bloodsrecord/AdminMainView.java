@@ -12,11 +12,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.Window;
 
-import com.example.suttidasat.bloodsrecord.Interface.DonatorProfileFragment;
 import com.example.suttidasat.bloodsrecord.Interface.SertNationalID;
-import com.example.suttidasat.bloodsrecord.Interface.TimeLineFragment;
-import com.example.suttidasat.bloodsrecord.model.MyService;
 import com.google.firebase.auth.FirebaseAuth;
+
+
+/*************************************************
+ *intent: main view of Admin used every page     *
+ *precondition: user must login with role Admin  *
+ *************************************************/
 
 public class AdminMainView extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private DrawerLayout drawerLayout;
@@ -55,6 +58,7 @@ public class AdminMainView extends AppCompatActivity implements NavigationView.O
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        // Handle navigation view item clicks here.
         switch (menuItem.getItemId()) {
             case R.id.nav_insert: {
                 getSupportFragmentManager()

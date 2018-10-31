@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.suttidasat.bloodsrecord.AdminMainView;
-import com.example.suttidasat.bloodsrecord.DonatorMainView;
+import com.example.suttidasat.bloodsrecord.DonorMainView;
 import com.example.suttidasat.bloodsrecord.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -41,7 +41,7 @@ public class LoginFragment extends Fragment {
         if(FirebaseAuth.getInstance().getCurrentUser()!= null){
             Log.d("USER", "USER ALREADY LOG IN");
             Log.d("USER", "GOTO HomePage");
-            Intent myIntent = new Intent(getActivity(), DonatorMainView.class);
+            Intent myIntent = new Intent(getActivity(), DonorMainView.class);
             getActivity().startActivity(myIntent);
             return;
         }
@@ -61,6 +61,7 @@ public class LoginFragment extends Fragment {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.main_view,new RegisterFragment())
+                        .addToBackStack(null)
                         .commit();
                 Log.d("USER", "GOTO REGISTER");
             }
@@ -108,7 +109,7 @@ public class LoginFragment extends Fragment {
                                     @Override
                                     public void onSuccess(AuthResult authResult) {
                                         progressDialog.dismiss();
-                                        Intent myIntent = new Intent(getActivity(), DonatorMainView.class);
+                                        Intent myIntent = new Intent(getActivity(), DonorMainView.class);
                                         getActivity().startActivity(myIntent);
 
                                     }
