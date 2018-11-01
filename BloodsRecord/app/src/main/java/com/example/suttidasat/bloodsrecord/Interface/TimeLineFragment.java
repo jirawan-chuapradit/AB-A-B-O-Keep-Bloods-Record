@@ -155,75 +155,75 @@ public class TimeLineFragment extends Fragment {
                                             gd.setColor(Color.rgb(220, 80, 80));
                                             gdRe.setColor(Color.rgb(249,225,183));
                                         }
-                                        else if (amount >= 7) {
+                                         if (amount >= 7) {
                                             GradientDrawable gd = (GradientDrawable) timeline_7.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
                                             GradientDrawable gdRe = (GradientDrawable) re7.getBackground().mutate();
                                             gdRe.setColor(Color.rgb(249,225,183));
 
                                         }
-                                        else if (amount >= 16) {
+                                         if (amount >= 16) {
                                             GradientDrawable gd = (GradientDrawable) timeline_16.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
                                             GradientDrawable gdRe = (GradientDrawable) re16.getBackground().mutate();
                                             gdRe.setColor(Color.rgb(249,225,183));
 
-                                        }else if (amount >= 18) {
+                                        } if (amount >= 18) {
                                             GradientDrawable gd = (GradientDrawable) timeline_18.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
                                             GradientDrawable gdRe = (GradientDrawable) re18.getBackground().mutate();
                                             gdRe.setColor(Color.rgb(249,225,183));
-                                        }else if (amount >= 24) {
+                                        } if (amount >= 24) {
                                             GradientDrawable gd = (GradientDrawable) timeline_24.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
                                             GradientDrawable gdRe = (GradientDrawable) re24.getBackground().mutate();
                                             gdRe.setColor(Color.rgb(249,225,183));
-                                        }else if (amount >= 36) {
+                                        } if (amount >= 36) {
                                             GradientDrawable gd = (GradientDrawable) timeline_36.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
                                             GradientDrawable gdRe = (GradientDrawable) re36.getBackground().mutate();
                                             gdRe.setColor(Color.rgb(249,225,183));
-                                        }else if (amount >= 48) {
+                                        } if (amount >= 48) {
                                             GradientDrawable gd = (GradientDrawable) timeline_48.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
                                             GradientDrawable gdRe = (GradientDrawable) re48.getBackground().mutate();
                                             gdRe.setColor(Color.rgb(249,225,183));
-                                        }else if (amount >= 50) {
+                                        } if (amount >= 50) {
                                             GradientDrawable gd = (GradientDrawable) timeline_50.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
                                             GradientDrawable gdRe = (GradientDrawable) re50.getBackground().mutate();
                                             gdRe.setColor(Color.rgb(249,225,183));
-                                        }else if (amount >= 60) {
+                                        } if (amount >= 60) {
                                             GradientDrawable gd = (GradientDrawable) timeline_60.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
                                             GradientDrawable gdRe = (GradientDrawable) re60.getBackground().mutate();
                                             gdRe.setColor(Color.rgb(249,225,183));
-                                        }else if (amount >= 72) {
+                                        } if (amount >= 72) {
                                             GradientDrawable gd = (GradientDrawable) timeline_72.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
                                             GradientDrawable gdRe = (GradientDrawable) re72.getBackground().mutate();
                                             gdRe.setColor(Color.rgb(249,225,183));
-                                        }else if (amount >= 75) {
+                                        } if (amount >= 75) {
                                             GradientDrawable gd = (GradientDrawable) timeline_75.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
                                             GradientDrawable gdRe = (GradientDrawable) re75.getBackground().mutate();
                                             gdRe.setColor(Color.rgb(249,225,183));
-                                        }else if (amount >= 84) {
+                                        } if (amount >= 84) {
                                             GradientDrawable gd = (GradientDrawable) timeline_84.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
                                             GradientDrawable gdRe = (GradientDrawable) re84.getBackground().mutate();
                                             gdRe.setColor(Color.rgb(249,225,183));
-                                        }else if (amount >= 96) {
+                                        } if (amount >= 96) {
                                             GradientDrawable gd = (GradientDrawable) timeline_96.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
                                             GradientDrawable gdRe = (GradientDrawable) re96.getBackground().mutate();
                                             gdRe.setColor(Color.rgb(249,225,183));
-                                        }else if (amount >= 100) {
+                                        } if (amount >= 100) {
                                             GradientDrawable gd = (GradientDrawable) timeline_100.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
                                             GradientDrawable gdRe = (GradientDrawable) re100.getBackground().mutate();
                                             gdRe.setColor(Color.rgb(249,225,183));
-                                        }else if (amount >= 108) {
+                                        } if (amount >= 108) {
                                             GradientDrawable gd = (GradientDrawable) timeline_108.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
                                             GradientDrawable gdRe = (GradientDrawable) re108.getBackground().mutate();
