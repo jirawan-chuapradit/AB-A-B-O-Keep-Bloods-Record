@@ -9,17 +9,21 @@ public class DonatorProfile {
     private String email;
     private String bloodGroup;
 
-    public DonatorProfile() {
+    // Singleton
+    private static DonatorProfile donatorProfileInsatance;
+
+    public static DonatorProfile getDonatorProfileInstance(){
+
+        if (donatorProfileInsatance == null){
+            donatorProfileInsatance = new DonatorProfile();
+        }
+        return donatorProfileInsatance;
     }
 
-    public DonatorProfile(String birth, String fName, String lName, String nationalID, String email, String bloodGroup) {
-        this.birth = birth;
-        this.fName = fName;
-        this.lName = lName;
-        this.nationalID = nationalID;
-        this.email = email;
-        this.bloodGroup = bloodGroup;
+    private DonatorProfile() {
     }
+
+
 
     public String getBirth() {
         return birth;

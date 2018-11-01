@@ -3,30 +3,31 @@ package com.example.suttidasat.bloodsrecord.model;
 public class UpdateNotify {
 
 
-    public void setCount(int count) {
-        this.count = count;
-    }
-
-    private int count = 0;
+//    private int count;
     private int date;
 
-    public String getType() {
-        return type;
+    //Singleton
+    private static UpdateNotify updateNotifyInstance;
 
+    public static UpdateNotify getUpdateNotifyInstance(){
+        if(updateNotifyInstance == null){
+            updateNotifyInstance = new UpdateNotify();
+        }
+        return updateNotifyInstance;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    private UpdateNotify() {
     }
 
-    private String type;
 
-    public void countIncrease(){
-        count++;
-    }
-    public void countDiscrease(){
-        count--;
-    }
+
+//    public static void setCount(int count) {
+//        this.count = count;
+//    }
+
+//    public void countIncrease(){
+//        count++;
+//    }
 
     public int getDate() {
         return date;
@@ -34,28 +35,24 @@ public class UpdateNotify {
 
     public void setDate(int date) {
         this.date = date;
-        countNotify();
+
     }
 
-
-    public UpdateNotify() {
-    }
-
-    public int getCount() {
-        return count;
-    }
+//    public int getCount() {
+//        return count;
+//    }
 
 
-    public void countNotify(){
-        if (date == 123){
-            countIncrease();
+    public String countNotify(String type){
+        type = "not change";
+        if (date == 83){
             type = "7days";
             System.out.println("count date > 83 && date < 90");
         }
         else if(date == 90){
-            countIncrease();
             type = "today";
             System.out.println("count date >= 90");
         }
+        return type;
     }
 }

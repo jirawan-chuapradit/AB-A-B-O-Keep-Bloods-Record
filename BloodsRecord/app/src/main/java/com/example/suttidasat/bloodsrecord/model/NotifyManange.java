@@ -1,17 +1,22 @@
 package com.example.suttidasat.bloodsrecord.model;
 
 public class NotifyManange {
-    private String date, text,time;
+    private String date, text;
 
+    //Singleton
+    private static NotifyManange notifyManangeInstance;
 
-
-    public NotifyManange(String date, String text, String time) {
-        this.date = date;
-        this.text = text;
-        this.time = time;
+    public static NotifyManange getNotifyManangeInstance(){
+        if (notifyManangeInstance == null){
+            notifyManangeInstance = new NotifyManange();
+        }
+        return notifyManangeInstance;
     }
 
-    public NotifyManange() {
+
+
+
+    private NotifyManange() {
     }
 
     public String getDate() {
@@ -29,14 +34,5 @@ public class NotifyManange {
     public void setText(String text) {
         this.text = text;
     }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
 
 }

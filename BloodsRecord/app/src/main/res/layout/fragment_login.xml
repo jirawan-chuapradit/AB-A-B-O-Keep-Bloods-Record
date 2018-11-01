@@ -35,6 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint=" E-mail"
+                android:textCursorDrawable="@color/colorPrimary"
                 android:layout_gravity="center"
                 android:id="@+id/login_userid"
                 />
@@ -44,6 +45,7 @@
                 android:padding="10dp"
                 android:id="@+id/login_password"
                 android:layout_width="match_parent"
+                android:textCursorDrawable="@color/colorPrimary"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:hint="password"
