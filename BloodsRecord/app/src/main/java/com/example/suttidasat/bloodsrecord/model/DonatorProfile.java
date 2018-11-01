@@ -2,7 +2,6 @@ package com.example.suttidasat.bloodsrecord.model;
 
 public class DonatorProfile {
 
-    private String birth;
     private String fName;
     private String lName;
     private String nationalID;
@@ -25,13 +24,6 @@ public class DonatorProfile {
 
 
 
-    public String getBirth() {
-        return birth;
-    }
-
-    public void setBirth(String birth) {
-        this.birth = birth;
-    }
 
     public String getfName() {
         return fName;

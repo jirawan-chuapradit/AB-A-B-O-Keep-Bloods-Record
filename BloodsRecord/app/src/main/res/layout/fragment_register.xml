@@ -95,16 +95,6 @@
                 android:ems="10"
                 />
 
-            <EditText
-                android:id="@+id/registerBirth"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:hint="วันเกิด"
-                android:drawableLeft="@drawable/ic_gift"
-                android:ems="10"
-                />
-
 
             <Button
                 android:id="@+id/registerBtn"
