@@ -219,11 +219,11 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
 
         //CONVERSE TO STRING
-        firstnameStr = firstnameEdt.getText().toString();
-        lastnameStr = lastnameEdt.getText().toString();
+        firstnameStr = firstnameEdt.getText().toString().toUpperCase();
+        lastnameStr = lastnameEdt.getText().toString().toUpperCase();
         birthStr = birthEdt.getText().toString();
         nationalIDStr = nationalIDEdt.getText().toString();
-        bloodsStr = bloodsEdt.getText().toString();
+        bloodsStr = bloodsEdt.getText().toString().toUpperCase();
         emailStr = emailEdt.getText().toString();
         passwordStr = passwordEdt.getText().toString();
         rePasswordStr = rePasswordEdt.getText().toString();
