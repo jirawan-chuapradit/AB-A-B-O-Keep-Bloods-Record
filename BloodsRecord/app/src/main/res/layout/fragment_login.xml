@@ -56,7 +56,7 @@
                 android:layout_width="284dp"
                 android:layout_height="40dp"
                 android:background="@color/login"
-                android:text="login"
+                android:text="เข้าสู่ระบบ"
                 android:textColor="#ffff" />
             <Button
                 android:id="@+id/login_register_Btn"
@@ -64,7 +64,7 @@
                 android:layout_height="40dp"
                 android:background="@color/login"
                 android:layout_marginTop="20dp"
-                android:text="Register"
+                android:text="ลงทะเบียน"
                 android:textColor="#ffff" />
 
 
