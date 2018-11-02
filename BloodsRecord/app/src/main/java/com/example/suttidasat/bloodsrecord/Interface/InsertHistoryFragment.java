@@ -208,7 +208,7 @@ public class InsertHistoryFragment extends Fragment {
                 Toast.makeText(getActivity(), "Insert History Success", Toast.LENGTH_SHORT).show();
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.admin_view, new SertNationalID())
+                        .replace(R.id.admin_view, new InsertHistoryFragment())
                         .commit();
             }
         });
