@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -95,6 +97,7 @@ public class InsertHistoryFragment extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        deley();
                         amount.setText("จำนวนการบริจาคทั้งหมด : " + queryDocumentSnapshots.size());
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -112,7 +115,10 @@ public class InsertHistoryFragment extends Fragment {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        deley();
                         List<DocumentSnapshot> doc = task.getResult().getDocuments();
+
 
 
                         String name = doc.get(0).get("fName").toString() + " " + doc.get(0).get("lName").toString();
@@ -165,7 +171,7 @@ public class InsertHistoryFragment extends Fragment {
                                                 if (size == 0)
                                                     date_last = "";
                                                 else
-                                                     date_last = task.getResult().get("date").toString();
+                                                    date_last = task.getResult().get("date").toString();
                                                 if (!date_last.equals(date)) {
                                                     donateHistory = firestore.collection("donateHistory")
                                                             .document(NationaID.NID);
@@ -222,6 +228,8 @@ public class InsertHistoryFragment extends Fragment {
                                                                     }
 
                                                                     Toast.makeText(getActivity(), "เพิ่มประวัติการบริจาคสำเร็จ", Toast.LENGTH_SHORT).show();
+
+                                                                    deley();
                                                                     getActivity().getSupportFragmentManager()
                                                                             .beginTransaction()
                                                                             .replace(R.id.admin_view, new InsertHistoryFragment())
@@ -230,11 +238,9 @@ public class InsertHistoryFragment extends Fragment {
                                                                 }
 
                                                             });
-                                                }
-
-                                                    else {
+                                                } else {
                                                     System.out.println("วันซ้ำๆๆๆๆๆๆ");
-                                                    Toast.makeText(getActivity(), "วันซ้ำ", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(getActivity(), "เพิ่มการบริจาควันนี้ซ้ำ", Toast.LENGTH_SHORT).show();
                                                     getActivity().getSupportFragmentManager()
                                                             .beginTransaction()
                                                             .replace(R.id.admin_view, new InsertHistoryFragment())
@@ -264,5 +270,15 @@ public class InsertHistoryFragment extends Fragment {
         });
     }
 
+    private void deley() {
 
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        final Handler handle = new Handler() {
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                progressDialog.incrementProgressBy(2); // Incremented By Value 2
+            }
+        };
+
+    }
 }
