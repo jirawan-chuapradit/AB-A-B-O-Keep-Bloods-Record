@@ -114,9 +114,9 @@ public class DonorProfileFragment extends Fragment {
                         String email = dp.getEmail();
 
                         profileName.setText("ชื่อ : " + name);
-                        profileNationalID.setText("รหัสบัตรประชาชน : " + nationalID);
-                        profileBlood.setText("กรุ๊ปเลือด : " + blood);
-                        profileEmail.setText("อีเมลล์ : " + email);
+                        profileNationalID.setText(nationalID);
+                        profileBlood.setText(blood);
+                        profileEmail.setText(email+"   ");
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
