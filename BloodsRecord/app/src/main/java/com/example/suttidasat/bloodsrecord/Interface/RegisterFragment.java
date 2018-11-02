@@ -6,6 +6,8 @@ import android.content.Intent;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -70,7 +72,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     //a Uri object to store file path
     private Uri filePath;
 
-    private ProgressDialog progressDialog;
+
 
 
     @Override
@@ -129,16 +131,13 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             Toast.makeText(getActivity(),"กรุณาใส่รูปภาพ",Toast.LENGTH_SHORT).show();
         }
         else{
-            // Loading data dialog
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Please waiting...");
-            progressDialog.show();
-
+            deley();
             fbAuth.createUserWithEmailAndPassword(emailStr,passwordStr).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     uid = fbAuth.getCurrentUser().getUid();
                     sendUserData();
+
                 }
             });
         }
@@ -157,7 +156,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                         "Upload failed!",
                         Toast.LENGTH_SHORT
                 ).show();
-                progressDialog.dismiss();
+
             }
         }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -177,8 +176,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         dp.setEmail(emailStr);
         dp.setBloodGroup(bloodsStr);
         Log.d("REGISTER", "REGISTER SUCCESS");
-
-        progressDialog.dismiss();
 
         firestore.collection("bloodsRecord")
                 .document(uid)
@@ -251,6 +248,47 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
     }
 
+    /**********************************
+     *   intent: สร้าง popup ระบบกำลังประมวลผล  *
+     **********************************/
+    private void deley() {
+
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        final Handler handle = new Handler() {
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                progressDialog.incrementProgressBy(2); // Incremented By Value 2
+            }
+        };
+        // Progress Dialog Max Value
+        progressDialog.setMax(100);
+        progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
+        progressDialog.setMessage("กรุณารอสักครู่...");
+        // Progress Dialog Style Horizontal
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        // Display Progress Dialog
+        progressDialog.show();
+        // Cannot Cancel Progress Dialog
+        progressDialog.setCancelable(false);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while (progressDialog.getProgress() <= progressDialog.getMax()) {
+                        Thread.sleep(100);
+                        handle.sendMessage(handle.obtainMessage());
+                        if (progressDialog.getProgress() == progressDialog.getMax()) {
+                            progressDialog.dismiss();
+                        }
+                    }
+
+                }catch (Exception e){
+                    e.getStackTrace();
+                }
+            }
+        }).start();
+    }
     @Override
     public void onClick(View v) {
         if(v == userProfileImage){

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -48,7 +50,7 @@ public class UpdatePasswordFragment extends Fragment {
     private EditText newPassword, reNewPassword;
     private FirebaseUser firebaseUser;
     private String userPasswordNew, userRePasswordNew,uid;
-    private ProgressDialog progressDialog;
+
 
     //menu
     private TextView textCartItemCount;
@@ -61,8 +63,8 @@ public class UpdatePasswordFragment extends Fragment {
 
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
-        mCartItemCount = prefs.getInt(uid+"_countNotify", 0);
-        Log.d("SharedPreferences", String.valueOf(mCartItemCount));
+        mCartItemCount = prefs.getInt(uid+"_countNotify", -1);
+        Log.d("prefs Update", String.valueOf(mCartItemCount));
 
         setHasOptionsMenu(true);
 
@@ -76,10 +78,6 @@ public class UpdatePasswordFragment extends Fragment {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Loading data dialog
-                progressDialog = new ProgressDialog(getActivity());
-                progressDialog.setMessage("Please waiting...");
-                progressDialog.show();
 
                 userPasswordNew = newPassword.getText().toString();
                 userRePasswordNew = reNewPassword.getText().toString();
@@ -93,7 +91,7 @@ public class UpdatePasswordFragment extends Fragment {
                     firebaseUser.updatePassword(userPasswordNew).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            progressDialog.dismiss();
+                            deley();
                             if(task.isSuccessful()){
                                 //FORCE USER SIGGOUT
                                 FirebaseAuth.getInstance().signOut();
@@ -128,6 +126,47 @@ public class UpdatePasswordFragment extends Fragment {
             }
         });
 
+    }
+    /**********************************
+     *   intent: สร้าง popup ระบบกำลังประมวลผล  *
+     **********************************/
+    private void deley() {
+
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        final Handler handle = new Handler() {
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                progressDialog.incrementProgressBy(2); // Incremented By Value 2
+            }
+        };
+        // Progress Dialog Max Value
+        progressDialog.setMax(100);
+        progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
+        progressDialog.setMessage("กรุณารอสักครู่...");
+        // Progress Dialog Style Horizontal
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        // Display Progress Dialog
+        progressDialog.show();
+        // Cannot Cancel Progress Dialog
+        progressDialog.setCancelable(false);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while (progressDialog.getProgress() <= progressDialog.getMax()) {
+                        Thread.sleep(100);
+                        handle.sendMessage(handle.obtainMessage());
+                        if (progressDialog.getProgress() == progressDialog.getMax()) {
+                            progressDialog.dismiss();
+                        }
+                    }
+
+                }catch (Exception e){
+                    e.getStackTrace();
+                }
+            }
+        }).start();
     }
 
     //menu
