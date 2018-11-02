@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.example.suttidasat.bloodsrecord.MainActivity;
 import com.example.suttidasat.bloodsrecord.R;
 import com.example.suttidasat.bloodsrecord.model.DonatorProfile;
+import com.example.suttidasat.bloodsrecord.model.NationaID;
 import com.example.suttidasat.bloodsrecord.model.PicassoCircleTransformation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -34,6 +35,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -64,8 +67,9 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
 
     //Register value
-    String firstnameStr,lastnameStr,nationalIDStr
+    private String firstnameStr,lastnameStr,nationalIDStr
             ,bloodsStr,emailStr,passwordStr,rePasswordStr,uid;
+    private boolean nationalIdIsEmpty;
 
     //ImageView
     private ImageView userProfileImage;
@@ -108,10 +112,9 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
     private void register() {
 
-
-
         //GET VALUE FROM FRAGMENT
         getRegisterValue();
+        checkNationIdIsExist();
         //check value is empty
         if(firstnameStr.isEmpty() || lastnameStr.isEmpty()||nationalIDStr.isEmpty()||bloodsStr.isEmpty()
                 || emailStr.isEmpty()|| passwordStr.isEmpty()||rePasswordStr.isEmpty()){
@@ -131,6 +134,9 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         else if(filePath == null){
             Log.d("REGISTER", "ไม่ได้เลือกรูปภาพ");
             Toast.makeText(getActivity(),"กรุณาใส่รูปภาพ",Toast.LENGTH_SHORT).show();
+        }else if(nationalIdIsEmpty==false){
+            Log.d("REGISTER : ", "NATIONAL ID IS ALREADY EXIST");
+            Toast.makeText(getActivity(),"รหัสบัตรประชาชนนี้ไม่สามารถลงทะเบียนได้",Toast.LENGTH_SHORT).show();
         }
         else{
             deley();
@@ -143,6 +149,27 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 }
             });
         }
+    }
+
+    private void checkNationIdIsExist() {
+        Query existNationalId;
+        existNationalId = firestore.collection("bloodsRecord")
+                .whereEqualTo("nationalID", nationalIDStr);
+        existNationalId.get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if (queryDocumentSnapshots.isEmpty()) {
+                            Log.d("NATIONAL_ID : ", "CAN RESIST");
+                            nationalIdIsEmpty = true;
+
+                        }else {
+                            Log.d("NATIONAL_ID : ", "IS ALREADY EXIST");
+                            nationalIdIsEmpty = false;
+                        }
+                    }
+                });
+
     }
 
     private void sendUserData() {
