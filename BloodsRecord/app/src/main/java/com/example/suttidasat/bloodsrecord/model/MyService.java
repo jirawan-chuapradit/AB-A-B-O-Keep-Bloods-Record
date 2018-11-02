@@ -208,7 +208,8 @@ public class MyService extends Service {
                                     Log.d("FIRST TIME NOTIFY", "Notification has been saved!!!");
 
                                     SharedPreferences.Editor prefs = getBaseContext().getSharedPreferences("BloodsRecord",MODE_PRIVATE).edit();
-                                    prefs.putInt("countNotify",1);
+                                    prefs.putInt(uid+"_countNotify",1);
+                                    prefs.putInt(uid+"_checkFnotify", 1);
                                     prefs.apply();
 
 
@@ -261,10 +262,10 @@ public class MyService extends Service {
 
 
                                     SharedPreferences prefs = getBaseContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
-                                    mCartItemCount = prefs.getInt("countNotify", 0);
+                                    mCartItemCount = prefs.getInt(uid+"_countNotify", -1);
                                     mCartItemCount++;
                                     SharedPreferences.Editor prefs2 = getBaseContext().getSharedPreferences("BloodsRecord",MODE_PRIVATE).edit();
-                                    prefs2.putInt("countNotify",mCartItemCount);
+                                    prefs2.putInt(uid+"_countNotify",mCartItemCount);
                                     prefs2.apply();
 
                                 }

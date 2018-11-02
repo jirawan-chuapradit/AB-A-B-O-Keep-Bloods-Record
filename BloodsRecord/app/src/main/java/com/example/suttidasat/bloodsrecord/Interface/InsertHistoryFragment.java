@@ -66,7 +66,6 @@ public class InsertHistoryFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
 
-
         firestore = FirebaseFirestore.getInstance();
 
         insertHistory();
@@ -102,7 +101,7 @@ public class InsertHistoryFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.d("Show Donator", "ERRROR =" + e.getMessage());
-                Toast.makeText(getContext(),"ERROR = "+e.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "ERROR = " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -116,7 +115,7 @@ public class InsertHistoryFragment extends Fragment {
                         List<DocumentSnapshot> doc = task.getResult().getDocuments();
 
 
-                        String name = doc.get(0).get("fName").toString() + "" + doc.get(0).get("lName").toString();
+                        String name = doc.get(0).get("fName").toString() + " " + doc.get(0).get("lName").toString();
 
                         String nationalID = doc.get(0).get("nationalID").toString();
                         String blood = doc.get(0).get("bloodGroup").toString();
@@ -133,7 +132,7 @@ public class InsertHistoryFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.d("Show Donator", "ERRROR =" + e.getMessage());
-                Toast.makeText(getContext(),"ERROR = "+e.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "ERROR = " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -144,69 +143,110 @@ public class InsertHistoryFragment extends Fragment {
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                donateHistory = firestore.collection("donateHistory")
-                        .document(NationaID.NID);
-                donateHistory.get()
-                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+
+
+                firestore.collection("donateHistory")
+                        .document(NationaID.NID)
+                        .collection("history")
+                        .get()
+                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                             @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                final int size = queryDocumentSnapshots.size();
+                                firestore.collection("donateHistory")
+                                        .document(NationaID.NID)
+                                        .collection("history")
+                                        .document(String.valueOf(size))
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                String date_last;
+                                                if (size == 0)
+                                                    date_last = "";
+                                                else
 
-                                if (documentSnapshot.exists()) { //have
-                                    firestore.collection("donateHistory") /// get size (amount of donate)
-                                            .document(NationaID.NID)
-                                            .collection("history")
-                                            .get()
-                                            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                                @Override
-                                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-
-                                                    DonatorHistory dh = DonatorHistory.getDonatorHistoryInstance();
-                                                    dh.setDate(date);
-
-                                                    String num = Integer.toString(queryDocumentSnapshots.size()+1);
-                                                    firestore.collection("donateHistory")
-                                                            .document(NationaID.NID)
-                                                            .collection("history")
-                                                            .document(num)
-                                                            .set(dh)
-                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                 date_last = task.getResult().get("date").toString();
+                                                if (!date_last.equals(date)) {
+                                                    donateHistory = firestore.collection("donateHistory")
+                                                            .document(NationaID.NID);
+                                                    donateHistory.get()
+                                                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                                                 @Override
-                                                                public void onSuccess(Void aVoid) {
-                                                                    Log.d("Insert", "Insert Success");
+                                                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                                                                    if (documentSnapshot.exists()) { //have
+                                                                        firestore.collection("donateHistory") /// get size (amount of donate)
+                                                                                .document(NationaID.NID)
+                                                                                .collection("history")
+                                                                                .get()
+                                                                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                                                    @Override
+                                                                                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+                                                                                        DonatorHistory dh = DonatorHistory.getDonatorHistoryInstance();
+                                                                                        dh.setDate(date);
+
+                                                                                        String num = Integer.toString(queryDocumentSnapshots.size() + 1);
+                                                                                        firestore.collection("donateHistory")
+                                                                                                .document(NationaID.NID)
+                                                                                                .collection("history")
+                                                                                                .document(num)
+                                                                                                .set(dh)
+                                                                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                                                    @Override
+                                                                                                    public void onSuccess(Void aVoid) {
+                                                                                                        Log.d("Insert", "Insert Success");
+                                                                                                    }
+                                                                                                });
+
+                                                                                    }
+                                                                                });
+
+                                                                    } else {
+                                                                        // never donate before
+                                                                        DonatorHistory dh = DonatorHistory.getDonatorHistoryInstance();
+                                                                        dh.setDate(date);
+
+                                                                        firestore.collection("donateHistory")
+                                                                                .document(NationaID.NID)
+                                                                                .collection("history")
+                                                                                .document("1")
+                                                                                .set(dh)
+                                                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                                    @Override
+                                                                                    public void onSuccess(Void aVoid) {
+                                                                                        Log.d("Insert", "Insert First Time Success");
+                                                                                    }
+                                                                                });
+
+                                                                    }
+
+                                                                    Toast.makeText(getActivity(), "เพิ่มประวัติการบริจาคสำเร็จ", Toast.LENGTH_SHORT).show();
+                                                                    getActivity().getSupportFragmentManager()
+                                                                            .beginTransaction()
+                                                                            .replace(R.id.admin_view, new InsertHistoryFragment())
+                                                                            .commit();
+
                                                                 }
+
                                                             });
-
                                                 }
-                                            });
 
-                                } else {
-                                    // never donate before
-                                    DonatorHistory dh = DonatorHistory.getDonatorHistoryInstance();
-                                    dh.setDate(date);
-
-                                    firestore.collection("donateHistory")
-                                            .document(NationaID.NID)
-                                            .collection("history")
-                                            .document("1")
-                                            .set(dh)
-                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
-                                                    Log.d("Insert", "Insert First Time Success");
+                                                    else {
+                                                    System.out.println("วันซ้ำๆๆๆๆๆๆ");
+                                                    Toast.makeText(getActivity(), "วันซ้ำ", Toast.LENGTH_SHORT).show();
+                                                    getActivity().getSupportFragmentManager()
+                                                            .beginTransaction()
+                                                            .replace(R.id.admin_view, new InsertHistoryFragment())
+                                                            .commit();
                                                 }
-                                            });
-
-                                }
+                                            }
+                                        });
 
                             }
-
                         });
 
-                Toast.makeText(getActivity(), "Insert History Success", Toast.LENGTH_SHORT).show();
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.admin_view, new SertNationalID())
-                        .commit();
             }
         });
     }
@@ -224,8 +264,6 @@ public class InsertHistoryFragment extends Fragment {
             }
         });
     }
-
-
 
 
 }
