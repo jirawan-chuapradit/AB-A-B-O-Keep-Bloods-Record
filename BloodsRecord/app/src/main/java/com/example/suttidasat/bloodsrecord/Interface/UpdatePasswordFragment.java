@@ -25,12 +25,19 @@ import android.widget.Toast;
 
 import com.example.suttidasat.bloodsrecord.MainActivity;
 import com.example.suttidasat.bloodsrecord.R;
+import com.example.suttidasat.bloodsrecord.init.BloodsRecordFirebase;
+import com.example.suttidasat.bloodsrecord.model.DonatorProfile;
 import com.example.suttidasat.bloodsrecord.model.MyService;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 
 /*************************************************
  *intent: Update password                        *
@@ -46,10 +53,14 @@ public class UpdatePasswordFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_update_password,container,false);
     }
 
+    //Firebase
+    private FirebaseAuth fbAuth;
+    private FirebaseFirestore firestore;
+    private DocumentReference documentReference;
     private Button saveBtn;
-    private EditText newPassword, reNewPassword;
+    private EditText newPassword, reNewPassword,oldPassword;
     private FirebaseUser firebaseUser;
-    private String userPasswordNew, userRePasswordNew,uid;
+    private String userPasswordNew, userRePasswordNew,uid,userOldPassword,currentPassword;
 
 
     //menu
@@ -61,7 +72,13 @@ public class UpdatePasswordFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        //Firebase
+        firestore = FirebaseFirestore.getInstance();
+        fbAuth = FirebaseAuth.getInstance();
+
+
+        //GET VALUDE FROM FIREBASE
+        uid = fbAuth.getCurrentUser().getUid();
         SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
         mCartItemCount = prefs.getInt(uid+"_countNotify", -1);
         Log.d("prefs Update", String.valueOf(mCartItemCount));
@@ -69,8 +86,9 @@ public class UpdatePasswordFragment extends Fragment {
         setHasOptionsMenu(true);
 
         saveBtn = getView().findViewById(R.id.btnUpdatePassword);
-        newPassword = getView().findViewById(R.id.updatePassword);
-        reNewPassword = getView().findViewById(R.id.re_updatePassword);
+        oldPassword = getView().findViewById(R.id.update_oldPassword);
+        newPassword = getView().findViewById(R.id.update_newPassword);
+        reNewPassword = getView().findViewById(R.id.update_re_newPassword);
 
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -78,16 +96,40 @@ public class UpdatePasswordFragment extends Fragment {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                userOldPassword = oldPassword.getText().toString();
                 userPasswordNew = newPassword.getText().toString();
                 userRePasswordNew = reNewPassword.getText().toString();
+
+                //Connect to bloodRecord
+                BloodsRecordFirebase bloodsRecordConnection = new BloodsRecordFirebase(
+                        documentReference, firestore, uid);
+                bloodsRecordConnection.getConnection();
+                bloodsRecordConnection.getDocumentReference().get()
+                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                DonatorProfile dp = documentSnapshot.toObject(DonatorProfile.class);
+                                currentPassword = dp.getPassword();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+
+                            }
+                        });
+
                 if (userPasswordNew.length() <= 5 || userRePasswordNew.length() <= 5){
-                    Log.d("REGISTER", "รหัสผ่านน้อยกว่า 6 ตัว");
+                    Log.d("UPDATE", "PASSWORD LESS THAN 6");
                     Toast.makeText(getActivity(),"กรุณาระบุรหัสผ่านมากกว่า 5 ตัว",Toast.LENGTH_SHORT).show();
                 }else if(userPasswordNew.isEmpty() || userRePasswordNew.isEmpty()){
-                    Log.d("REGISTER", "VALUE IS EMPTY");
-                    Toast.makeText(getActivity(),"กรุณากรอกข้อมูลให้ครบถ้วน",Toast.LENGTH_SHORT).show();
-                }else {
+                    Log.d("UPDATE", "VALUE IS EMPTY");
+                    Toast.makeText(getActivity(),"กรุณาระบุข้อมูลให้ครบถ้วน",Toast.LENGTH_SHORT).show();
+                }else if(!userOldPassword.equals(currentPassword)){
+                    Log.d("UPDATE", "OLD PASSWORD WAS WRONG");
+                    Toast.makeText(getActivity(),"รหัสผ่านไม่ถูกต้อง",Toast.LENGTH_SHORT).show();
+                }
+                else {
                     firebaseUser.updatePassword(userPasswordNew).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {

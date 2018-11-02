@@ -113,10 +113,10 @@ public class DonorProfileFragment extends Fragment {
                         String blood = dp.getBloodGroup();
                         String email = dp.getEmail();
 
-                        profileName.setText("Name : " + name);
-                        profileNationalID.setText("National ID : " + nationalID);
-                        profileBlood.setText("Blood Group : " + blood);
-                        profileEmail.setText("E-mail : " + email);
+                        profileName.setText("ชื่อ : " + name);
+                        profileNationalID.setText("รหัสบัตรประชาชน : " + nationalID);
+                        profileBlood.setText("กรุ๊ปเลือด : " + blood);
+                        profileEmail.setText("อีเมลล์ : " + email);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override

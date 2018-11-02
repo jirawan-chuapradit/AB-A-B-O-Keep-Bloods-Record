@@ -106,13 +106,6 @@
                 />
 
 
-            <Button
-                android:id="@+id/login_btn"
-                android:layout_marginTop="10dp"
-                android:text="กลับสู่หน้าเข้าสู่ระบบ"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

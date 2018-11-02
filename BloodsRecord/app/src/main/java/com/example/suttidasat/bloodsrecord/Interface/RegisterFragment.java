@@ -64,7 +64,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     //ImageView
     private ImageView userProfileImage;
     //Buttons
-    private Button loginBtn,registerBtn;
+    private Button registerBtn;
 
     //a constant to track the file chooser intent
     private static int PICK_IMAGE = 123;
@@ -88,22 +88,14 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
 
         //getting views from layout
-        loginBtn =  getView().findViewById(R.id.login_btn);
         registerBtn = getView().findViewById(R.id.registerBtn);
         userProfileImage = getView().findViewById(R.id.userProfileImage);
 
         //attaching listener
-        loginBtn.setOnClickListener(this);
         registerBtn.setOnClickListener(this);
         userProfileImage.setOnClickListener(this);
     }
 
-    private void login() {
-        Log.d("REGISTER", "BACK TO LOGIN");
-
-        Intent myIntent = new Intent(getActivity(), MainActivity.class);
-        getActivity().startActivity(myIntent);
-    }
 
     private void register() {
 
@@ -175,6 +167,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         dp.setNationalID(nationalIDStr);
         dp.setEmail(emailStr);
         dp.setBloodGroup(bloodsStr);
+        dp.setPassword(passwordStr);
         Log.d("REGISTER", "REGISTER SUCCESS");
 
         firestore.collection("bloodsRecord")
@@ -295,10 +288,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             //open file chooser
             Log.d("REGISTER", "CLICK = USER_PROFIRE_IMAGE");
             showFileChooser();
-        }else if(v == loginBtn){
-            //back to login
-            Log.d("REGISTER", "CLICK = LOGIN");
-            login();
+
         }else if(v == registerBtn){
             //register
             Log.d("REGISTER", "CLICK = REGISTER");
