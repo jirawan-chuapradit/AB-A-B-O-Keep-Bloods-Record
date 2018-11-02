@@ -95,6 +95,7 @@ public class DonorProfileFragment extends Fragment {
     }
 
     private void setParameter() {
+        deley();
         getImagePic();
         //Connect to bloodRecord
         BloodsRecordFirebase bloodsRecordConnection = new BloodsRecordFirebase(
@@ -137,7 +138,7 @@ public class DonorProfileFragment extends Fragment {
                         .error(R.mipmap.ic_launcher)
                         .transform((Transformation) new PicassoCircleTransformation())
                         .into(profileImage);
-                deley();
+
             }
         });
     }

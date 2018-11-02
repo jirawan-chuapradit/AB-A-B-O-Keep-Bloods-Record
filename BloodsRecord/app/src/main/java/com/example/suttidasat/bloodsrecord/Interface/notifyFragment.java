@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
@@ -40,7 +42,6 @@ public class notifyFragment extends Fragment {
 
     private TextView textCartItemCount;
     private  int mCartItemCount;
-    private ProgressDialog progressDialog;
 
     UpdateNotify un = UpdateNotify.getUpdateNotifyInstance();
 
@@ -60,11 +61,7 @@ public class notifyFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-
-        // Loading data dialog
-        progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Please waiting...");
-        progressDialog.show();
+        deley();
 
         firestore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
@@ -107,11 +104,53 @@ public class notifyFragment extends Fragment {
                             notifyMananges.add(d.toObject(NotifyManange.class));
                         }
                         notifyAdapter.notifyDataSetChanged();
-                        progressDialog.dismiss();
+
                     }
                 });
     }
 
+
+    /**********************************
+     *   intent: สร้าง popup ระบบกำลังประมวลผล  *
+     **********************************/
+    private void deley() {
+
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        final Handler handle = new Handler() {
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                progressDialog.incrementProgressBy(4); // Incremented By Value 1
+            }
+        };
+        // Progress Dialog Max Value
+        progressDialog.setMax(100);
+        progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
+        progressDialog.setMessage("กรุณารอสักครู่...");
+        // Progress Dialog Style Horizontal
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        // Display Progress Dialog
+        progressDialog.show();
+        // Cannot Cancel Progress Dialog
+        progressDialog.setCancelable(false);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while (progressDialog.getProgress() <= progressDialog.getMax()) {
+                        Thread.sleep(100);
+                        handle.sendMessage(handle.obtainMessage());
+                        if (progressDialog.getProgress() == progressDialog.getMax()) {
+                            progressDialog.dismiss();
+                        }
+                    }
+
+                }catch (Exception e){
+                    e.getStackTrace();
+                }
+            }
+        }).start();
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -131,6 +170,7 @@ public class notifyFragment extends Fragment {
         });
 
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
