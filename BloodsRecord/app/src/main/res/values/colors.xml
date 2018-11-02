@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#e4e4e4</color>
     <color name="colorAccentDark">#ffa1a1</color>
-    <color name="whiteColor">#ffff</color>
+    <color name="whiteColor">#ffffff</color>
     <color name="login">#d40000</color>
     <color name="register">#b9b7b7</color>
     <color name="bg">#FFFAF0</color>
