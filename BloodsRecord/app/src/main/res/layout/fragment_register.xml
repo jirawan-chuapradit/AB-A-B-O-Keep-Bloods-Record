@@ -86,15 +86,12 @@
                 android:ems="10" />
 
 
-            <EditText
-                android:id="@+id/registerBloodsGroup"
+            <Spinner
+                android:id="@+id/spinner1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:hint="กรุ๊ปเลือด"
-                android:drawableLeft="@drawable/ic_blood"
-                android:ems="10"
-                />
+                android:entries="@array/blood_arrays"
+                android:prompt="@string/bloods_groups" />
 
 
             <Button

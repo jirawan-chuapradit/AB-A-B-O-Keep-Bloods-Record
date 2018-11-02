@@ -45,9 +45,10 @@ public class notifyFragment extends Fragment {
     UpdateNotify un = UpdateNotify.getUpdateNotifyInstance();
 
     ArrayList<NotifyManange> notifyMananges = new ArrayList<>();
-
+    String uid;
     FirebaseFirestore firestore;
     FirebaseAuth auth;
+    private int checkFnofity;
 
     @Nullable
     @Override
@@ -65,15 +66,26 @@ public class notifyFragment extends Fragment {
         progressDialog.setMessage("Please waiting...");
         progressDialog.show();
 
+        firestore = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
+        uid = auth.getCurrentUser().getUid();
+
         SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
-        mCartItemCount = prefs.getInt("countNotify", 0);
-        Log.d("SharedPreferences", String.valueOf(mCartItemCount));
+        mCartItemCount = prefs.getInt(uid+"_countNotify", -1);
+        Log.d("prefs Notify", String.valueOf(mCartItemCount));
+
+        checkFnofity = prefs.getInt(uid+"_checkFnotify", -1);
+        Log.d("CHECK NOTIFY: " , String.valueOf(checkFnofity));
+
+
+        if(checkFnofity == 1){
+            TextView emptyNotify = getView().findViewById(R.id.empty_notify);
+            emptyNotify.setText("");
+
+        }
 
         setHasOptionsMenu(true);
 
-
-        firestore = FirebaseFirestore.getInstance();
-        auth = FirebaseAuth.getInstance();
 
         ListView notifyList = getView().findViewById(R.id.notify_list);
         final NotifyAdapter notifyAdapter = new NotifyAdapter(
@@ -84,7 +96,6 @@ public class notifyFragment extends Fragment {
         notifyList.setAdapter(notifyAdapter);
 
         //GET VALUDE FROM FIREBASE
-        String uid = auth.getCurrentUser().getUid();
         firestore.collection("notificationContent")
                 .document(uid)
                 .collection("content")
@@ -134,7 +145,7 @@ public class notifyFragment extends Fragment {
                 Log.d("USER ", "CLICK NOTIFY BELL");
 
                 SharedPreferences.Editor prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE).edit();
-                prefs.putInt("countNotify",0);
+                prefs.putInt(uid+"_countNotify",0);
                 prefs.apply();
 
                 setupBadge();

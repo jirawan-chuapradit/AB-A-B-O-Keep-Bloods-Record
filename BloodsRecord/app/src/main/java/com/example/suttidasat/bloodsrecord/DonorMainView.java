@@ -1,6 +1,7 @@
 package com.example.suttidasat.bloodsrecord;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 
 import android.support.annotation.NonNull;
@@ -35,11 +36,11 @@ import java.util.concurrent.TimeUnit;
 
 public class DonorMainView extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
     NavigationView navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         setContentView(R.layout.activity_main_donor_view);
 
@@ -63,17 +64,11 @@ public class DonorMainView extends AppCompatActivity
             //starting service
             Intent intent = new Intent(DonorMainView.this, MyService.class);
             startService(intent);
-
-            try {
-                TimeUnit.SECONDS.sleep(5);
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.donator_view,
                                 new TimeLineFragment()).commit();
                 navigationView.setCheckedItem(R.id.nav_home);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
     }
 

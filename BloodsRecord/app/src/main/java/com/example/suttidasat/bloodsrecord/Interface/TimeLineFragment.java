@@ -12,6 +12,8 @@ import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.VectorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -58,7 +60,7 @@ public class TimeLineFragment extends Fragment {
     private FirebaseFirestore firestore;
     private String uid;
     private String nid;
-    private ProgressDialog progressDialog;
+
 
     @Nullable
     @Override
@@ -69,26 +71,68 @@ public class TimeLineFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         //menu
         SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
-        mCartItemCount = prefs.getInt("countNotify", 0);
-        Log.d("SharedPreferences : ", String.valueOf(mCartItemCount));
+        mCartItemCount = prefs.getInt(uid+"_countNotify", -1);
 
+        Log.d("prefs Timeline: ", String.valueOf(mCartItemCount));
         setHasOptionsMenu(true);
         firestore = FirebaseFirestore.getInstance();
         showAmount();
 
         // Loading data dialog
-        progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Please waiting...");
-        progressDialog.show();
+        deley();
 
+
+    }
+
+
+    /**********************************
+     *   intent: สร้าง popup ระบบกำลังประมวลผล  *
+     **********************************/
+    private void deley() {
+
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        final Handler handle = new Handler() {
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                progressDialog.incrementProgressBy(2); // Incremented By Value 2
+            }
+        };
+        // Progress Dialog Max Value
+        progressDialog.setMax(100);
+        progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
+        progressDialog.setMessage("กรุณารอสักครู่...");
+        // Progress Dialog Style Horizontal
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        // Display Progress Dialog
+        progressDialog.show();
+        // Cannot Cancel Progress Dialog
+        progressDialog.setCancelable(false);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while (progressDialog.getProgress() <= progressDialog.getMax()) {
+                        Thread.sleep(100);
+                        handle.sendMessage(handle.obtainMessage());
+                        if (progressDialog.getProgress() == progressDialog.getMax()) {
+                            progressDialog.dismiss();
+                        }
+                    }
+
+                }catch (Exception e){
+                    e.getStackTrace();
+                }
+            }
+        }).start();
     }
 
     void showAmount() {
 
-        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
         donate_amount = getView().findViewById(R.id.donate_amount);
 
 
@@ -229,13 +273,11 @@ public class TimeLineFragment extends Fragment {
                                             GradientDrawable gdRe = (GradientDrawable) re108.getBackground().mutate();
                                             gdRe.setColor(Color.rgb(249,225,183));
                                         }
-
-                                        progressDialog.dismiss();
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                progressDialog.dismiss();
+
                                 Log.d("Show Donator", "ERRROR =" + e.getMessage());
                                 Toast.makeText(getContext(), "ERROR = " + e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
@@ -279,7 +321,7 @@ public class TimeLineFragment extends Fragment {
                 Log.d("USER ", "CLICK NOTIFY BELL");
 
                 SharedPreferences.Editor prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE).edit();
-                prefs.putInt("countNotify",0);
+                prefs.putInt(uid+"_countNotify",0);
                 prefs.apply();
 
                 return true;
