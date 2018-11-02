@@ -48,7 +48,7 @@ public class notifyFragment extends Fragment {
     String uid;
     FirebaseFirestore firestore;
     FirebaseAuth auth;
-    private boolean checkFnofity;
+    private int checkFnofity;
 
     @Nullable
     @Override
@@ -71,14 +71,14 @@ public class notifyFragment extends Fragment {
         uid = auth.getCurrentUser().getUid();
 
         SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
-        mCartItemCount = prefs.getInt(uid+"_countNotify", 0);
+        mCartItemCount = prefs.getInt(uid+"_countNotify", -1);
         Log.d("prefs Notify", String.valueOf(mCartItemCount));
 
-        checkFnofity = prefs.getBoolean(uid+"_checkFnotify", false);
+        checkFnofity = prefs.getInt(uid+"_checkFnotify", -1);
         Log.d("CHECK NOTIFY: " , String.valueOf(checkFnofity));
 
 
-        if(checkFnofity == true){
+        if(checkFnofity == 1){
             TextView emptyNotify = getView().findViewById(R.id.empty_notify);
             emptyNotify.setText("");
 

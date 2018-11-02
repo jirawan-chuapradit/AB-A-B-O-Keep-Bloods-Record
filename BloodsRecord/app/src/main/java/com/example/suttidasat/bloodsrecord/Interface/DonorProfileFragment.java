@@ -85,7 +85,7 @@ public class DonorProfileFragment extends Fragment {
 
         //get Notify count
         SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
-        mCartItemCount = prefs.getInt(uid+"_countNotify", 0);
+        mCartItemCount = prefs.getInt(uid+"_countNotify", -1);
         Log.d("prefs profile", String.valueOf(mCartItemCount));
 
         setHasOptionsMenu(true);

@@ -4,6 +4,7 @@ package com.example.suttidasat.bloodsrecord.Interface;
 import android.app.ProgressDialog;
 import android.content.Intent;
 
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,9 +16,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.suttidasat.bloodsrecord.MainActivity;
@@ -38,6 +41,7 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class RegisterFragment extends Fragment implements View.OnClickListener {
@@ -55,6 +59,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     private FirebaseFirestore firestore;
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
+
+    private Spinner spinner1;
 
 
     //Register value
@@ -79,7 +85,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-
         //Firebase
         fbAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
@@ -94,14 +99,17 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         //attaching listener
         registerBtn.setOnClickListener(this);
         userProfileImage.setOnClickListener(this);
+
+
     }
 
 
     private void register() {
 
 
+
         //GET VALUE FROM FRAGMENT
-        gatRegisterValue();
+        getRegisterValue();
         //check value is empty
         if(firstnameStr.isEmpty() || lastnameStr.isEmpty()||nationalIDStr.isEmpty()||bloodsStr.isEmpty()
                 || emailStr.isEmpty()|| passwordStr.isEmpty()||rePasswordStr.isEmpty()){
@@ -177,6 +185,11 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             public void onSuccess(Void aVoid) {
                 Log.d("REGISTER", "VALUE HAS BEEN SAVED IN FIREBASE");
 
+                SharedPreferences.Editor prefs = getContext().getSharedPreferences("BloodsRecord",MODE_PRIVATE).edit();
+                prefs.putInt(uid+"_countNotify",0);
+                prefs.putInt(uid+"_checkFnotify", 0);
+                prefs.apply();
+
                 //FORCE USER SIGGOUT
                 FirebaseAuth.getInstance().signOut();
                 getActivity().getSupportFragmentManager()
@@ -195,22 +208,23 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         });
     }
 
-    private void gatRegisterValue() {
+    private void getRegisterValue() {
         //GET INPUT FROM frament register
         EditText firstnameEdt = getView().findViewById(R.id.registerFirstname);
         EditText lastnameEdt = getView().findViewById(R.id.registerLastname);
         EditText nationalIDEdt = getView().findViewById(R.id.registerNationalID);
-        EditText bloodsEdt = getView().findViewById(R.id.registerBloodsGroup);
         EditText emailEdt = getView().findViewById(R.id.registerEmail);
         EditText passwordEdt = getView().findViewById(R.id.registerPassword);
         EditText rePasswordEdt = getView().findViewById(R.id.registerRePassword);
+        spinner1 = getView().findViewById(R.id.spinner1);
+
 
 
         //CONVERSE TO STRING
         firstnameStr = firstnameEdt.getText().toString().toUpperCase();
         lastnameStr = lastnameEdt.getText().toString().toUpperCase();
         nationalIDStr = nationalIDEdt.getText().toString();
-        bloodsStr = bloodsEdt.getText().toString().toUpperCase();
+        bloodsStr = (String) spinner1.getSelectedItem();
         emailStr = emailEdt.getText().toString();
         passwordStr = passwordEdt.getText().toString();
         rePasswordStr = rePasswordEdt.getText().toString();

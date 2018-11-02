@@ -209,7 +209,7 @@ public class MyService extends Service {
 
                                     SharedPreferences.Editor prefs = getBaseContext().getSharedPreferences("BloodsRecord",MODE_PRIVATE).edit();
                                     prefs.putInt(uid+"_countNotify",1);
-                                    prefs.putBoolean(uid+"_checkFnotify", true);
+                                    prefs.putInt(uid+"_checkFnotify", 1);
                                     prefs.apply();
 
 
@@ -262,7 +262,7 @@ public class MyService extends Service {
 
 
                                     SharedPreferences prefs = getBaseContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
-                                    mCartItemCount = prefs.getInt(uid+"_countNotify", 0);
+                                    mCartItemCount = prefs.getInt(uid+"_countNotify", -1);
                                     mCartItemCount++;
                                     SharedPreferences.Editor prefs2 = getBaseContext().getSharedPreferences("BloodsRecord",MODE_PRIVATE).edit();
                                     prefs2.putInt(uid+"_countNotify",mCartItemCount);
