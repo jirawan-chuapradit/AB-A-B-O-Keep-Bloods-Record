@@ -47,7 +47,7 @@ public class UpdatePasswordFragment extends Fragment {
     private Button saveBtn;
     private EditText newPassword, reNewPassword;
     private FirebaseUser firebaseUser;
-    private String userPasswordNew, userRePasswordNew;
+    private String userPasswordNew, userRePasswordNew,uid;
     private ProgressDialog progressDialog;
 
     //menu
@@ -59,8 +59,9 @@ public class UpdatePasswordFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
-        mCartItemCount = prefs.getInt("countNotify", 0);
+        mCartItemCount = prefs.getInt(uid+"_countNotify", 0);
         Log.d("SharedPreferences", String.valueOf(mCartItemCount));
 
         setHasOptionsMenu(true);
@@ -163,7 +164,7 @@ public class UpdatePasswordFragment extends Fragment {
                 Log.d("USER ", "CLICK NOTIFY BELL");
 
                 SharedPreferences.Editor prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE).edit();
-                prefs.putInt("countNotify",0);
+                prefs.putInt(uid+"_countNotify",0);
                 prefs.apply();
 
                 setupBadge();
