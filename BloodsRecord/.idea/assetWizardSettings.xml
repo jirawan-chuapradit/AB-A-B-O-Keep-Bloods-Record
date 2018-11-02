@@ -3,8 +3,6 @@
   <component name="WizardSettings">
     <option name="children">
       <map>
-
-
         <entry key="imageWizard">
           <value>
             <PersistentState>
@@ -25,22 +23,17 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-
                                                 <entry key="trimmed" value="true" />
-
                                               </map>
                                             </option>
                                           </PersistentState>
                                         </value>
                                       </entry>
-
                                       <entry key="image">
-
                                         <value>
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-
                                                 <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
@@ -53,7 +46,6 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="trimmed" value="true" />
-
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -63,12 +55,11 @@
                                   </option>
                                   <option name="values">
                                     <map>
-
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="C:\Users\User\Downloads\register\name.png" />
-                                      <entry key="outputName" value="ic_name_tag" />
+                                      <entry key="imageAsset" value="C:\Users\Asus\Documents\SE\project\tab_ic.png" />
+                                      <entry key="outputName" value="ic_name_tabbb" />
+                                      <entry key="theme" value="CUSTOM" />
                                       <entry key="themeColor" value="e50700" />
-
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -77,18 +68,14 @@
                             <entry key="launcher">
                               <value>
                                 <PersistentState>
-
                                   <option name="children">
                                     <map>
                                       <entry key="foregroundImage">
-
                                         <value>
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-
                                                 <entry key="scalingPercent" value="52" />
-
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -98,12 +85,10 @@
                                   </option>
                                   <option name="values">
                                     <map>
-
                                       <entry key="backgroundLayerName" value="ic_launcher_background" />
                                       <entry key="foregroundImage" value="C:\Users\User\Downloads\register\blood.png" />
                                       <entry key="foregroundLayerName" value="ic_launcher_foreground" />
                                       <entry key="outputName" value="blood" />
-
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -124,7 +109,6 @@
             </PersistentState>
           </value>
         </entry>
-
         <entry key="vectorWizard">
           <value>
             <PersistentState>
@@ -140,9 +124,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-
                                       <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_verified_user_black_24dp.xml" />
-
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -152,12 +134,10 @@
                         </option>
                         <option name="values">
                           <map>
-
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="opacityPercent" value="24" />
                             <entry key="outputName" value="ic_password" />
                             <entry key="sourceFile" value="C:\Users\User\Downloads\password.svg" />
-
                           </map>
                         </option>
                       </PersistentState>
@@ -166,7 +146,6 @@
                 </map>
               </option>
             </PersistentState>
-
           </value>
         </entry>
       </map>
