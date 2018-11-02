@@ -56,13 +56,13 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
 
     //Register value
-    String firstnameStr,lastnameStr,birthStr,nationalIDStr
+    String firstnameStr,lastnameStr,nationalIDStr
             ,bloodsStr,emailStr,passwordStr,rePasswordStr,uid;
 
     //ImageView
     private ImageView userProfileImage;
     //Buttons
-    private Button chooseBtn,loginBtn,registerBtn;
+    private Button loginBtn,registerBtn;
 
     //a constant to track the file chooser intent
     private static int PICK_IMAGE = 123;
@@ -109,7 +109,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         //GET VALUE FROM FRAGMENT
         gatRegisterValue();
         //check value is empty
-        if(firstnameStr.isEmpty() || lastnameStr.isEmpty()||birthStr.isEmpty()||nationalIDStr.isEmpty()||bloodsStr.isEmpty()
+        if(firstnameStr.isEmpty() || lastnameStr.isEmpty()||nationalIDStr.isEmpty()||bloodsStr.isEmpty()
                 || emailStr.isEmpty()|| passwordStr.isEmpty()||rePasswordStr.isEmpty()){
             Log.d("REGISTER", "VALUE IS EMPTY");
             Toast.makeText(getActivity(),"กรุณากรอกข้อมูลให้ครบถ้วน",Toast.LENGTH_SHORT).show();
@@ -171,7 +171,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         });
 
         DonatorProfile dp = DonatorProfile.getDonatorProfileInstance();
-        dp.setBirth(birthStr);
         dp.setfName(firstnameStr);
         dp.setlName(lastnameStr);
         dp.setNationalID(nationalIDStr);
@@ -210,7 +209,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         //GET INPUT FROM frament register
         EditText firstnameEdt = getView().findViewById(R.id.registerFirstname);
         EditText lastnameEdt = getView().findViewById(R.id.registerLastname);
-        EditText birthEdt = getView().findViewById(R.id.registerBirth);
         EditText nationalIDEdt = getView().findViewById(R.id.registerNationalID);
         EditText bloodsEdt = getView().findViewById(R.id.registerBloodsGroup);
         EditText emailEdt = getView().findViewById(R.id.registerEmail);
@@ -219,11 +217,10 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
 
         //CONVERSE TO STRING
-        firstnameStr = firstnameEdt.getText().toString();
-        lastnameStr = lastnameEdt.getText().toString();
-        birthStr = birthEdt.getText().toString();
+        firstnameStr = firstnameEdt.getText().toString().toUpperCase();
+        lastnameStr = lastnameEdt.getText().toString().toUpperCase();
         nationalIDStr = nationalIDEdt.getText().toString();
-        bloodsStr = bloodsEdt.getText().toString();
+        bloodsStr = bloodsEdt.getText().toString().toUpperCase();
         emailStr = emailEdt.getText().toString();
         passwordStr = passwordEdt.getText().toString();
         rePasswordStr = rePasswordEdt.getText().toString();

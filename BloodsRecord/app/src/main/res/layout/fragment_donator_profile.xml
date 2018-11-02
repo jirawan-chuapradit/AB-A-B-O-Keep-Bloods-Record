@@ -43,7 +43,6 @@
                 android:layout_width="241dp"
                 android:layout_height="35dp"
                 android:layout_gravity="center"
-                android:text="นางสาว จิราวรรณ เชื้อประดิษฐ์"
                 tools:layout_editor_absoluteX="67dp"
                 tools:layout_editor_absoluteY="174dp" />
 
@@ -52,7 +51,6 @@
                 android:layout_width="241dp"
                 android:layout_height="37dp"
                 android:layout_gravity="center"
-                android:text="1-700-400-222-22-2"
                 tools:layout_editor_absoluteX="67dp"
                 tools:layout_editor_absoluteY="228dp" />
 
@@ -62,25 +60,14 @@
                 android:layout_width="241dp"
                 android:layout_height="37dp"
                 android:layout_gravity="center"
-                android:text="example@email.com"
                 tools:layout_editor_absoluteX="67dp"
                 tools:layout_editor_absoluteY="228dp" />
-
-            <TextView
-                android:id="@+id/profileBirth"
-                android:layout_width="239dp"
-                android:layout_height="37dp"
-                android:layout_gravity="center"
-                android:text="25-01-1998"
-                tools:layout_editor_absoluteX="67dp"
-                tools:layout_editor_absoluteY="288dp" />
 
             <TextView
                 android:id="@+id/profileBloodsG"
                 android:layout_width="241dp"
                 android:layout_height="41dp"
                 android:layout_gravity="center"
-                android:text="O"
                 tools:layout_editor_absoluteX="67dp"
                 tools:layout_editor_absoluteY="351dp" />
 
