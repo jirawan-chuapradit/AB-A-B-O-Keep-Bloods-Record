@@ -93,18 +93,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
 
         //getting views from layout
-<<<<<<< HEAD
 
-=======
->>>>>>> master
         registerBtn = getView().findViewById(R.id.registerBtn);
         userProfileImage = getView().findViewById(R.id.userProfileImage);
 
         //attaching listener
-<<<<<<< HEAD
 
-=======
->>>>>>> master
         registerBtn.setOnClickListener(this);
         userProfileImage.setOnClickListener(this);
 
