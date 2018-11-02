@@ -165,8 +165,7 @@ public class InsertHistoryFragment extends Fragment {
                                                 if (size == 0)
                                                     date_last = "";
                                                 else
-
-                                                 date_last = task.getResult().get("date").toString();
+                                                     date_last = task.getResult().get("date").toString();
                                                 if (!date_last.equals(date)) {
                                                     donateHistory = firestore.collection("donateHistory")
                                                             .document(NationaID.NID);
@@ -175,7 +174,7 @@ public class InsertHistoryFragment extends Fragment {
                                                                 @Override
                                                                 public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                                                                    if (documentSnapshot.exists()) { //have
+                                                                    if (documentSnapshot.exists() || size > 0) { //have
                                                                         firestore.collection("donateHistory") /// get size (amount of donate)
                                                                                 .document(NationaID.NID)
                                                                                 .collection("history")
