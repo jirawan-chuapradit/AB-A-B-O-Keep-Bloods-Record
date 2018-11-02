@@ -62,14 +62,14 @@ public class DonorProfileFragment extends Fragment {
 
     private DocumentReference documentReference;
 
-    private TextView profileName, profileNationalID, profileBirth, profileBlood, profileEmail;
+    private TextView profileName, profileNationalID, profileBlood, profileEmail;
     private String uid;
     private ImageView profileImage;
 
     //menu
     private TextView textCartItemCount;
     private int mCartItemCount;
-//    UpdateNotify un = UpdateNotify.getUpdateNotifyInstance();
+
 
     // Loading data dialog
     ProgressDialog progressDialog;
@@ -103,7 +103,6 @@ public class DonorProfileFragment extends Fragment {
         profileImage = getView().findViewById(R.id.profilePic);
         profileName = getView().findViewById(R.id.profileName);
         profileNationalID = getView().findViewById(R.id.profileNationalID);
-        profileBirth = getView().findViewById(R.id.profileBirth);
         profileBlood = getView().findViewById(R.id.profileBloodsG);
         profileEmail = getView().findViewById(R.id.profileEmail);
 
@@ -142,13 +141,11 @@ public class DonorProfileFragment extends Fragment {
                         DonatorProfile dp = documentSnapshot.toObject(DonatorProfile.class);
                         String name = dp.getfName() + "  " + dp.getlName();
                         String nationalID = dp.getNationalID();
-                        String birth = dp.getBirth();
                         String blood = dp.getBloodGroup();
                         String email = dp.getEmail();
 
                         profileName.setText("Name : " + name);
                         profileNationalID.setText("National ID : " + nationalID);
-                        profileBirth.setText("Birth date : " + birth);
                         profileBlood.setText("Blood Group : " + blood);
                         profileEmail.setText("E-mail : " + email);
 
