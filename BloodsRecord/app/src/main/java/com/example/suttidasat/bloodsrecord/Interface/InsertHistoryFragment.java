@@ -116,7 +116,7 @@ public class InsertHistoryFragment extends Fragment {
                         List<DocumentSnapshot> doc = task.getResult().getDocuments();
 
 
-                        String name = doc.get(0).get("fName").toString() + "" + doc.get(0).get("lName").toString();
+                        String name = doc.get(0).get("fName").toString() + " " + doc.get(0).get("lName").toString();
 
                         String nationalID = doc.get(0).get("nationalID").toString();
                         String blood = doc.get(0).get("bloodGroup").toString();
@@ -202,7 +202,7 @@ public class InsertHistoryFragment extends Fragment {
 
                         });
 
-                Toast.makeText(getActivity(), "Insert History Success", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "เพิ่มประวัติการบริจาคสำเร็จ", Toast.LENGTH_SHORT).show();
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.admin_view, new InsertHistoryFragment())
