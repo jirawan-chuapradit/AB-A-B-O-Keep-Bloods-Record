@@ -74,7 +74,7 @@ public class notifyFragment extends Fragment {
         mCartItemCount = prefs.getInt(uid+"_countNotify", -1);
         Log.d("prefs Notify", String.valueOf(mCartItemCount));
 
-        checkFnofity = prefs.getInt(uid+"_checkFnotify", -1);
+        checkFnofity = prefs.getInt(uid+"_checkFnotify", 2);
         Log.d("CHECK NOTIFY: " , String.valueOf(checkFnofity));
 
 

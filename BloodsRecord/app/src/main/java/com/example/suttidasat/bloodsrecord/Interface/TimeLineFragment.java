@@ -76,6 +76,10 @@ public class TimeLineFragment extends Fragment {
         SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
         mCartItemCount = prefs.getInt(uid+"_countNotify", -1);
 
+        //delete SharedPreferences
+//        SharedPreferences preferences = getContext().getSharedPreferences("BloodsRecord", 0);
+//        preferences.edit().remove(uid+"_checkFnotify").commit();
+
         Log.d("prefs Timeline: ", String.valueOf(mCartItemCount));
         setHasOptionsMenu(true);
         firestore = FirebaseFirestore.getInstance();
@@ -97,7 +101,7 @@ public class TimeLineFragment extends Fragment {
         final Handler handle = new Handler() {
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                progressDialog.incrementProgressBy(2); // Incremented By Value 2
+                progressDialog.incrementProgressBy(1); // Incremented By Value 1
             }
         };
         // Progress Dialog Max Value
