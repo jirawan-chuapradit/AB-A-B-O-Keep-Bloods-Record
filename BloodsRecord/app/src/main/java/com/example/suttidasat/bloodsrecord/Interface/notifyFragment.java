@@ -1,6 +1,8 @@
 package com.example.suttidasat.bloodsrecord.Interface;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -28,18 +30,25 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
+/*******************************************************
+ *intent: Show notification                            *
+ *pre-condition: User must login with role Donor       *
+ *post-condition: Time of new notifications disappears *
+ *******************************************************/
+
 public class notifyFragment extends Fragment {
 
     private TextView textCartItemCount;
     private  int mCartItemCount;
     private ProgressDialog progressDialog;
 
-    UpdateNotify un = new UpdateNotify();
+    UpdateNotify un = UpdateNotify.getUpdateNotifyInstance();
 
     ArrayList<NotifyManange> notifyMananges = new ArrayList<>();
-
+    String uid;
     FirebaseFirestore firestore;
     FirebaseAuth auth;
+    private int checkFnofity;
 
     @Nullable
     @Override
@@ -57,12 +66,26 @@ public class notifyFragment extends Fragment {
         progressDialog.setMessage("Please waiting...");
         progressDialog.show();
 
-        mCartItemCount = un.getCount();
-        setHasOptionsMenu(true);
-
-
         firestore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
+        uid = auth.getCurrentUser().getUid();
+
+        SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
+        mCartItemCount = prefs.getInt(uid+"_countNotify", -1);
+        Log.d("prefs Notify", String.valueOf(mCartItemCount));
+
+        checkFnofity = prefs.getInt(uid+"_checkFnotify", -1);
+        Log.d("CHECK NOTIFY: " , String.valueOf(checkFnofity));
+
+
+        if(checkFnofity == 1){
+            TextView emptyNotify = getView().findViewById(R.id.empty_notify);
+            emptyNotify.setText("");
+
+        }
+
+        setHasOptionsMenu(true);
+
 
         ListView notifyList = getView().findViewById(R.id.notify_list);
         final NotifyAdapter notifyAdapter = new NotifyAdapter(
@@ -73,7 +96,6 @@ public class notifyFragment extends Fragment {
         notifyList.setAdapter(notifyAdapter);
 
         //GET VALUDE FROM FIREBASE
-        String uid = auth.getCurrentUser().getUid();
         firestore.collection("notificationContent")
                 .document(uid)
                 .collection("content")
@@ -118,9 +140,14 @@ public class notifyFragment extends Fragment {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.donator_view, new notifyFragment())
+                        .addToBackStack(null)
                         .commit();
-                System.out.println("CLICK NOTIFY BELL");
-                un.setCount(0);
+                Log.d("USER ", "CLICK NOTIFY BELL");
+
+                SharedPreferences.Editor prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE).edit();
+                prefs.putInt(uid+"_countNotify",0);
+                prefs.apply();
+
                 setupBadge();
                 return true;
             }

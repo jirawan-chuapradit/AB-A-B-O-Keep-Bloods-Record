@@ -56,8 +56,9 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="C:\Users\User\Downloads\register\name.png" />
-                                      <entry key="outputName" value="ic_name_tag" />
+                                      <entry key="imageAsset" value="C:\Users\Asus\Documents\SE\project\tab_ic.png" />
+                                      <entry key="outputName" value="ic_name_tabbb" />
+                                      <entry key="theme" value="CUSTOM" />
                                       <entry key="themeColor" value="e50700" />
                                     </map>
                                   </option>
@@ -123,7 +124,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/communication/ic_vpn_key_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_verified_user_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -133,7 +134,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_key_password" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="opacityPercent" value="24" />
+                            <entry key="outputName" value="ic_password" />
                             <entry key="sourceFile" value="C:\Users\User\Downloads\password.svg" />
                           </map>
                         </option>

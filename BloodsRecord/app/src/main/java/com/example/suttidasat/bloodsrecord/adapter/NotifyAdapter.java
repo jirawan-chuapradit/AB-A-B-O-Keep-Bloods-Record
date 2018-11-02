@@ -36,12 +36,11 @@ public class NotifyAdapter extends ArrayAdapter<NotifyManange> {
 
         TextView date = notifyItem.findViewById(R.id.notify_item_date);
         TextView text = notifyItem.findViewById(R.id.notify_item_text);
-        TextView time = notifyItem.findViewById(R.id.notify_item_time);
+
 
         NotifyManange row = notifyMananges.get(position);
         date.setText(row.getDate());
         text.setText(row.getText());
-        time.setText(row.getTime());
 
         return notifyItem;
 

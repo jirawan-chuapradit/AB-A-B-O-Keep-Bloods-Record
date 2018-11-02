@@ -1,7 +1,9 @@
 package com.example.suttidasat.bloodsrecord.model;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
@@ -51,8 +53,7 @@ public class MyService extends Service {
     NotificationContentFirebase notificationContentFirebase;
 
     //menu
-    UpdateNotify un = new UpdateNotify();
-//    private TextView textCartItemCount;
+   UpdateNotify un = UpdateNotify.getUpdateNotifyInstance();
     ScheduledExecutorService executorService;
 
     @Override
@@ -133,7 +134,6 @@ public class MyService extends Service {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.d("Show Donator", "ERRROR =" + e.getMessage());
-//                Toast.makeText(getContext(), "ERROR = " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -157,17 +157,17 @@ public class MyService extends Service {
                         Log.d("CALCULATE DIFF DATE", "diffDate : " + diffDate);
 
                         un.setDate(diffDate);
-                        mCartItemCount = un.getCount();
-                        if (mCartItemCount != 0) {
-                            type = un.getType();
-                            if (type.equals("7days")) {
-                                msg = "อีก 7 วัน จะถึงรอบบริจาคครั้งถัดไป";
-                            } else if (type.equals("today")) {
-                                msg = "สามารถบริจาคเลือดได้";
-                            }
-                            setNotifyToFirebase();
+                        type = un.countNotify(type);
+                        if (type.equals("7days")) {
+                            msg = "อีก 7 วัน จะถึงรอบบริจาคครั้งถัดไป";
+                        } else if (type.equals("today")) {
+                            msg = "สามารถบริจาคเลือดได้";
                         }
-                        Log.d("CALCULATE DIFF DATE", "mCartItemCount : " + mCartItemCount);
+                        else if (type.equals("not change")){
+                            return;
+                        }
+                        setNotifyToFirebase();
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -190,7 +190,39 @@ public class MyService extends Service {
                         sizeofContent = queryDocumentSnapshots.size();
                         Log.d("SET NOTIFY FIREBASE", "size Of content : " + sizeofContent);
 
-                        checkNotify(sizeofContent);
+                        if(sizeofContent!= 0){
+                            checkNotify(sizeofContent);
+                        }
+                        else {
+                            Log.d("SET NOTIFY TO FIREBASE", "SIZE OF CONTENT = 0");
+                            NotifyManange nm = NotifyManange.getNotifyManangeInstance();
+                            nm.setDate(currentDate);
+                            nm.setText(msg);
+                            firestore.collection("notificationContent")
+                                    .document(uid)
+                                    .collection("content")
+                                    .document(String.valueOf(sizeofContent + 1))
+                                    .set(nm).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d("FIRST TIME NOTIFY", "Notification has been saved!!!");
+
+                                    SharedPreferences.Editor prefs = getBaseContext().getSharedPreferences("BloodsRecord",MODE_PRIVATE).edit();
+                                    prefs.putInt(uid+"_countNotify",1);
+                                    prefs.putInt(uid+"_checkFnotify", 1);
+                                    prefs.apply();
+
+
+//
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d("REGISTER", "ERRROR =" + e.getMessage());
+                                }
+                            });
+                        }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -226,7 +258,15 @@ public class MyService extends Service {
                                     .set(nm).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    Log.d("DisplayFragment", "Notification has been saved!!!");
+                                    Log.d("NEW NOTIFY NOT EXIST ", "Notification has been saved!!!");
+
+
+                                    SharedPreferences prefs = getBaseContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
+                                    mCartItemCount = prefs.getInt(uid+"_countNotify", -1);
+                                    mCartItemCount++;
+                                    SharedPreferences.Editor prefs2 = getBaseContext().getSharedPreferences("BloodsRecord",MODE_PRIVATE).edit();
+                                    prefs2.putInt(uid+"_countNotify",mCartItemCount);
+                                    prefs2.apply();
 
                                 }
                             }).addOnFailureListener(new OnFailureListener() {

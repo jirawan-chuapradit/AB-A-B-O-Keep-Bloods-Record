@@ -1,7 +1,9 @@
 package com.example.suttidasat.bloodsrecord.Interface;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
@@ -10,6 +12,8 @@ import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.VectorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -27,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.suttidasat.bloodsrecord.R;
+import com.example.suttidasat.bloodsrecord.model.CountNotify;
 import com.example.suttidasat.bloodsrecord.model.MyService;
 import com.example.suttidasat.bloodsrecord.model.NationaID;
 import com.example.suttidasat.bloodsrecord.model.UpdateNotify;
@@ -41,18 +46,21 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
+/*************************************************
+ *intent: As Home show time of donations         *
+ *pre-condition: user must login with role Donor *
+ *************************************************/
+
 public class TimeLineFragment extends Fragment {
 
     //menu
-    UpdateNotify un = new UpdateNotify();
     private TextView textCartItemCount, donate_amount;
     private int mCartItemCount;
 
-    private FirebaseAuth fbAuth;
     private FirebaseFirestore firestore;
     private String uid;
     private String nid;
-    private ProgressDialog progressDialog;
+
 
     @Nullable
     @Override
@@ -63,22 +71,68 @@ public class TimeLineFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         //menu
-        mCartItemCount = un.getCount();
+        SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
+        mCartItemCount = prefs.getInt(uid+"_countNotify", -1);
+
+        Log.d("prefs Timeline: ", String.valueOf(mCartItemCount));
         setHasOptionsMenu(true);
         firestore = FirebaseFirestore.getInstance();
         showAmount();
 
         // Loading data dialog
-        progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Please waiting...");
-        progressDialog.show();
+        deley();
 
+
+    }
+
+
+    /**********************************
+     *   intent: สร้าง popup ระบบกำลังประมวลผล  *
+     **********************************/
+    private void deley() {
+
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        final Handler handle = new Handler() {
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                progressDialog.incrementProgressBy(2); // Incremented By Value 2
+            }
+        };
+        // Progress Dialog Max Value
+        progressDialog.setMax(100);
+        progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
+        progressDialog.setMessage("กรุณารอสักครู่...");
+        // Progress Dialog Style Horizontal
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        // Display Progress Dialog
+        progressDialog.show();
+        // Cannot Cancel Progress Dialog
+        progressDialog.setCancelable(false);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while (progressDialog.getProgress() <= progressDialog.getMax()) {
+                        Thread.sleep(100);
+                        handle.sendMessage(handle.obtainMessage());
+                        if (progressDialog.getProgress() == progressDialog.getMax()) {
+                            progressDialog.dismiss();
+                        }
+                    }
+
+                }catch (Exception e){
+                    e.getStackTrace();
+                }
+            }
+        }).start();
     }
 
     void showAmount() {
 
-        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
         donate_amount = getView().findViewById(R.id.donate_amount);
 
 
@@ -145,87 +199,85 @@ public class TimeLineFragment extends Fragment {
                                             gd.setColor(Color.rgb(220, 80, 80));
                                             gdRe.setColor(Color.rgb(249,225,183));
                                         }
-                                        else if (amount >= 7) {
+                                         if (amount >= 7) {
                                             GradientDrawable gd = (GradientDrawable) timeline_7.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
                                             GradientDrawable gdRe = (GradientDrawable) re7.getBackground().mutate();
                                             gdRe.setColor(Color.rgb(249,225,183));
 
                                         }
-                                        else if (amount >= 16) {
+                                         if (amount >= 16) {
                                             GradientDrawable gd = (GradientDrawable) timeline_16.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
                                             GradientDrawable gdRe = (GradientDrawable) re16.getBackground().mutate();
                                             gdRe.setColor(Color.rgb(249,225,183));
 
-                                        }else if (amount >= 18) {
+                                        } if (amount >= 18) {
                                             GradientDrawable gd = (GradientDrawable) timeline_18.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
                                             GradientDrawable gdRe = (GradientDrawable) re18.getBackground().mutate();
                                             gdRe.setColor(Color.rgb(249,225,183));
-                                        }else if (amount >= 24) {
+                                        } if (amount >= 24) {
                                             GradientDrawable gd = (GradientDrawable) timeline_24.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
                                             GradientDrawable gdRe = (GradientDrawable) re24.getBackground().mutate();
                                             gdRe.setColor(Color.rgb(249,225,183));
-                                        }else if (amount >= 36) {
+                                        } if (amount >= 36) {
                                             GradientDrawable gd = (GradientDrawable) timeline_36.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
                                             GradientDrawable gdRe = (GradientDrawable) re36.getBackground().mutate();
                                             gdRe.setColor(Color.rgb(249,225,183));
-                                        }else if (amount >= 48) {
+                                        } if (amount >= 48) {
                                             GradientDrawable gd = (GradientDrawable) timeline_48.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
                                             GradientDrawable gdRe = (GradientDrawable) re48.getBackground().mutate();
                                             gdRe.setColor(Color.rgb(249,225,183));
-                                        }else if (amount >= 50) {
+                                        } if (amount >= 50) {
                                             GradientDrawable gd = (GradientDrawable) timeline_50.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
                                             GradientDrawable gdRe = (GradientDrawable) re50.getBackground().mutate();
                                             gdRe.setColor(Color.rgb(249,225,183));
-                                        }else if (amount >= 60) {
+                                        } if (amount >= 60) {
                                             GradientDrawable gd = (GradientDrawable) timeline_60.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
                                             GradientDrawable gdRe = (GradientDrawable) re60.getBackground().mutate();
                                             gdRe.setColor(Color.rgb(249,225,183));
-                                        }else if (amount >= 72) {
+                                        } if (amount >= 72) {
                                             GradientDrawable gd = (GradientDrawable) timeline_72.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
                                             GradientDrawable gdRe = (GradientDrawable) re72.getBackground().mutate();
                                             gdRe.setColor(Color.rgb(249,225,183));
-                                        }else if (amount >= 75) {
+                                        } if (amount >= 75) {
                                             GradientDrawable gd = (GradientDrawable) timeline_75.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
                                             GradientDrawable gdRe = (GradientDrawable) re75.getBackground().mutate();
                                             gdRe.setColor(Color.rgb(249,225,183));
-                                        }else if (amount >= 84) {
+                                        } if (amount >= 84) {
                                             GradientDrawable gd = (GradientDrawable) timeline_84.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
                                             GradientDrawable gdRe = (GradientDrawable) re84.getBackground().mutate();
                                             gdRe.setColor(Color.rgb(249,225,183));
-                                        }else if (amount >= 96) {
+                                        } if (amount >= 96) {
                                             GradientDrawable gd = (GradientDrawable) timeline_96.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
                                             GradientDrawable gdRe = (GradientDrawable) re96.getBackground().mutate();
                                             gdRe.setColor(Color.rgb(249,225,183));
-                                        }else if (amount >= 100) {
+                                        } if (amount >= 100) {
                                             GradientDrawable gd = (GradientDrawable) timeline_100.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
                                             GradientDrawable gdRe = (GradientDrawable) re100.getBackground().mutate();
                                             gdRe.setColor(Color.rgb(249,225,183));
-                                        }else if (amount >= 108) {
+                                        } if (amount >= 108) {
                                             GradientDrawable gd = (GradientDrawable) timeline_108.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
                                             GradientDrawable gdRe = (GradientDrawable) re108.getBackground().mutate();
                                             gdRe.setColor(Color.rgb(249,225,183));
                                         }
-
-                                        progressDialog.dismiss();
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                progressDialog.dismiss();
+
                                 Log.d("Show Donator", "ERRROR =" + e.getMessage());
                                 Toast.makeText(getContext(), "ERROR = " + e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
@@ -259,45 +311,19 @@ public class TimeLineFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-//            case R.id.sigOut: {
-//
-//                FirebaseAuth.getInstance().signOut();
-//                getActivity().stopService(new Intent(getActivity(), MyService.class));
-//                getActivity().getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.main_view, new LoginFragment())
-//                        .addToBackStack(null)
-//                        .commit();
-//                Log.d("USER", "GOTO LOGIN");
-//                break;
-//            }
-//            case R.id.donatorProfile: {
-//
-//                getActivity().getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.main_view, new DonatorProfileFragment())
-//                        .commit();
-//                Log.d("MENU", "GOTO DONATOR PROFILE");
-//                break;
-//            }
-//            case R.id.timeline: {
-//                getActivity().getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.main_view, new notifyBGProcess())
-//                        .addToBackStack(null)
-//                        .commit();
-//                Log.d("USER", "GOTO Timeline");
-//                break;
-//            }
             case R.id.nofity_bell: {
                 // Do something
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.donator_view, new notifyFragment())
+                        .addToBackStack(null)
                         .commit();
-                System.out.println("CLICK NOTIFY BELL");
-                un.setCount(0);
-                setupBadge();
+                Log.d("USER ", "CLICK NOTIFY BELL");
+
+                SharedPreferences.Editor prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE).edit();
+                prefs.putInt(uid+"_countNotify",0);
+                prefs.apply();
+
                 return true;
             }
         }

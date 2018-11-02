@@ -1,9 +1,14 @@
 package com.example.suttidasat.bloodsrecord.Interface;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,6 +26,7 @@ import android.widget.TextView;
 
 import com.example.suttidasat.bloodsrecord.R;
 import com.example.suttidasat.bloodsrecord.init.BloodsRecordFirebase;
+import com.example.suttidasat.bloodsrecord.model.CountNotify;
 import com.example.suttidasat.bloodsrecord.model.DonatorProfile;
 import com.example.suttidasat.bloodsrecord.model.MyService;
 import com.example.suttidasat.bloodsrecord.model.PicassoCircleTransformation;
@@ -38,7 +44,12 @@ import com.squareup.picasso.Transformation;
 
 import java.util.concurrent.TimeUnit;
 
-public class DonatorProfileFragment extends Fragment {
+/*******************************************************
+ *intent: Show User Profile                            *
+ *pre-condition: User must login with role Donor       *
+ *******************************************************/
+
+public class DonorProfileFragment extends Fragment {
 
     @Nullable
     @Override
@@ -50,35 +61,19 @@ public class DonatorProfileFragment extends Fragment {
     private FirebaseAuth fbAuth;
     private FirebaseFirestore firestore;
     private FirebaseStorage firebaseStorage;
-
     private DocumentReference documentReference;
-
-    private TextView profileName, profileNationalID, profileBirth, profileBlood, profileEmail;
-    private Button changePassword;
+    private TextView profileName, profileNationalID, profileBlood, profileEmail;
     private String uid;
     private ImageView profileImage;
-
     //menu
-    UpdateNotify un = new UpdateNotify();
     private TextView textCartItemCount;
     private int mCartItemCount;
 
 
-    // Loading data dialog
-    ProgressDialog progressDialog;
-
+    @SuppressLint("LongLogTag")
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        // Loading data dialog
-        progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Please waiting...");
-        progressDialog.show();
-
-
-        mCartItemCount = un.getCount();
-        setHasOptionsMenu(true);
 
         //Firebase
         firestore = FirebaseFirestore.getInstance();
@@ -88,36 +83,19 @@ public class DonatorProfileFragment extends Fragment {
         //GET VALUDE FROM FIREBASE
         uid = fbAuth.getCurrentUser().getUid();
 
+        //get Notify count
+        SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
+        mCartItemCount = prefs.getInt(uid+"_countNotify", -1);
+        Log.d("prefs profile", String.valueOf(mCartItemCount));
 
-        //get textView
-        profileImage = getView().findViewById(R.id.profilePic);
-        profileName = getView().findViewById(R.id.profileName);
-        profileNationalID = getView().findViewById(R.id.profileNationalID);
-        profileBirth = getView().findViewById(R.id.profileBirth);
-        profileBlood = getView().findViewById(R.id.profileBloodsG);
-        profileEmail = getView().findViewById(R.id.profileEmail);
+        setHasOptionsMenu(true);
+        getParamet();
+        setParameter();
 
+    }
 
-        StorageReference storageReference = firebaseStorage.getReference();
-        storageReference.child(uid).child("Images/Profile Pic").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).fit().centerCrop()
-                        .placeholder(R.mipmap.ic_launcher)
-                        .error(R.mipmap.ic_launcher)
-                        .transform((Transformation) new PicassoCircleTransformation())
-                        .into(profileImage);
-
-                try {
-                    TimeUnit.SECONDS.sleep(7);
-                    progressDialog.dismiss();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
-
+    private void setParameter() {
+        getImagePic();
         //Connect to bloodRecord
         BloodsRecordFirebase bloodsRecordConnection = new BloodsRecordFirebase(
                 documentReference, firestore, uid);
@@ -132,17 +110,13 @@ public class DonatorProfileFragment extends Fragment {
                         DonatorProfile dp = documentSnapshot.toObject(DonatorProfile.class);
                         String name = dp.getfName() + "  " + dp.getlName();
                         String nationalID = dp.getNationalID();
-                        String birth = dp.getBirth();
                         String blood = dp.getBloodGroup();
                         String email = dp.getEmail();
 
-                        profileName.setText("First name : " + name);
-                        profileNationalID.setText("National ID : " + nationalID);
-                        profileBirth.setText("Birth date : " + birth);
-                        profileBlood.setText("Blood Group : " + blood);
-                        profileEmail.setText("E-mail : " + email);
-
-
+                        profileName.setText("ชื่อ : " + name);
+                        profileNationalID.setText("รหัสบัตรประชาชน : " + nationalID);
+                        profileBlood.setText("กรุ๊ปเลือด : " + blood);
+                        profileEmail.setText("อีเมลล์ : " + email);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -151,8 +125,71 @@ public class DonatorProfileFragment extends Fragment {
 
             }
         });
+    }
 
+    private void getImagePic() {
+        StorageReference storageReference = firebaseStorage.getReference();
+        storageReference.child(uid).child("Images/Profile Pic").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).fit().centerCrop()
+                        .placeholder(R.mipmap.ic_launcher)
+                        .error(R.mipmap.ic_launcher)
+                        .transform((Transformation) new PicassoCircleTransformation())
+                        .into(profileImage);
+                deley();
+            }
+        });
+    }
 
+    private void getParamet() {
+        profileImage = getView().findViewById(R.id.profilePic);
+        profileName = getView().findViewById(R.id.profileName);
+        profileNationalID = getView().findViewById(R.id.profileNationalID);
+        profileBlood = getView().findViewById(R.id.profileBloodsG);
+        profileEmail = getView().findViewById(R.id.profileEmail);
+    }
+
+    /**********************************
+     *   intent: สร้าง popup ระบบกำลังประมวลผล  *
+     **********************************/
+    private void deley() {
+
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        final Handler handle = new Handler() {
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                progressDialog.incrementProgressBy(2); // Incremented By Value 2
+            }
+        };
+        // Progress Dialog Max Value
+        progressDialog.setMax(100);
+        progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
+        progressDialog.setMessage("กรุณารอสักครู่...");
+        // Progress Dialog Style Horizontal
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        // Display Progress Dialog
+        progressDialog.show();
+        // Cannot Cancel Progress Dialog
+        progressDialog.setCancelable(false);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while (progressDialog.getProgress() <= progressDialog.getMax()) {
+                        Thread.sleep(100);
+                        handle.sendMessage(handle.obtainMessage());
+                        if (progressDialog.getProgress() == progressDialog.getMax()) {
+                            progressDialog.dismiss();
+                        }
+                    }
+
+                }catch (Exception e){
+                    e.getStackTrace();
+                }
+            }
+        }).start();
     }
 
     //menu
@@ -182,9 +219,14 @@ public class DonatorProfileFragment extends Fragment {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.donator_view, new notifyFragment())
+                        .addToBackStack(null)
                         .commit();
-                System.out.println("CLICK NOTIFY BELL");
-                un.setCount(0);
+                Log.d("USER ", "CLICK NOTIFY BELL");
+
+                SharedPreferences.Editor prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE).edit();
+                prefs.putInt(uid+"_countNotify",0);
+                prefs.apply();
+
                 setupBadge();
                 return true;
             }

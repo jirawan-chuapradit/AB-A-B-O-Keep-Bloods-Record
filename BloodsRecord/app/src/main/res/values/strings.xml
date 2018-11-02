@@ -25,4 +25,14 @@
         completions."
     </string>
 
+
+    <!--drop down list blood group-->
+    <string name="bloods_groups">กรุณาเลือกกรุ๊ปเลือด</string>
+
+    <string-array name="blood_arrays">
+        <item>AB</item>
+        <item>A</item>
+        <item>B</item>
+        <item>O</item>
+    </string-array>
 </resources>

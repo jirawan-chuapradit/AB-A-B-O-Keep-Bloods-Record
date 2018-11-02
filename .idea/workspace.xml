@@ -6,7 +6,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="409b8471-c19b-43d9-b867-3183a73b706b" name="Default" comment="" />
+    <list default="true" id="409b8471-c19b-43d9-b867-3183a73b706b" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/BloodsRecord/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/BloodsRecord/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BloodsRecord/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/BloodsRecord/.idea/misc.xml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -29,10 +32,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
-      <pane id="ProjectPane" />
       <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="AndroidView" />
+      <pane id="ProjectPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">

@@ -2,33 +2,29 @@ package com.example.suttidasat.bloodsrecord.model;
 
 public class DonatorProfile {
 
-    private String birth;
     private String fName;
     private String lName;
     private String nationalID;
     private String email;
     private String bloodGroup;
+    private String password;
 
-    public DonatorProfile() {
+    // Singleton
+    private static DonatorProfile donatorProfileInsatance;
+
+    public static DonatorProfile getDonatorProfileInstance(){
+
+        if (donatorProfileInsatance == null){
+            donatorProfileInsatance = new DonatorProfile();
+        }
+        return donatorProfileInsatance;
     }
 
-    public DonatorProfile(String birth, String fName, String lName, String nationalID, String email, String bloodGroup) {
-        this.birth = birth;
-        this.fName = fName;
-        this.lName = lName;
-        this.nationalID = nationalID;
-        this.email = email;
-        this.bloodGroup = bloodGroup;
+    private DonatorProfile() {
     }
 
-    public String getBirth() {
-        return birth;
-    }
 
-    public void setBirth(String birth) {
-        this.birth = birth;
-    }
-
+    //getter, setter
     public String getfName() {
         return fName;
     }
@@ -67,6 +63,14 @@ public class DonatorProfile {
 
     public void setBloodGroup(String bloodGroup) {
         this.bloodGroup = bloodGroup;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 

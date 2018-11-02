@@ -35,12 +35,20 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.Calendar;
 import java.util.List;
 
+
+/*******************************************************
+ *intent: Show history of donor and plus donation time *
+ *pre-condition: User must login with role Admin and   *
+ *               User must insert national ID of donor *
+ *post-condition: User go to Insert national ID page   *
+ *******************************************************/
+
 public class InsertHistoryFragment extends Fragment {
 
     private ProgressDialog progressDialog;
     FirebaseFirestore firestore;
     DocumentReference donateHistory;
-    private TextView profileName, profileNationalID, profileBirth, profileBlood, profileEmail, currentDate, amount;
+    private TextView profileName, profileNationalID, profileBlood, profileEmail, currentDate, amount;
     Calendar calendar = Calendar.getInstance();
     SimpleDateFormat mdformat = new SimpleDateFormat("dd-MM-yyyy ");
 
@@ -76,7 +84,6 @@ public class InsertHistoryFragment extends Fragment {
 
         profileName = getView().findViewById(R.id.sh_name_donater);
         profileNationalID = getView().findViewById(R.id.sh_nid_donater);
-        profileBirth = getView().findViewById(R.id.sh_birth_donater);
         profileBlood = getView().findViewById(R.id.sh_group_donater);
         profileEmail = getView().findViewById(R.id.sh_email_donater);
         amount = getView().findViewById(R.id.sh_amount);
@@ -107,17 +114,16 @@ public class InsertHistoryFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         List<DocumentSnapshot> doc = task.getResult().getDocuments();
+
+
                         String name = doc.get(0).get("fName").toString() + "" + doc.get(0).get("lName").toString();
 
-
                         String nationalID = doc.get(0).get("nationalID").toString();
-                        String birth = doc.get(0).get("birth").toString();
                         String blood = doc.get(0).get("bloodGroup").toString();
                         String email = doc.get(0).get("email").toString();
 
                         profileName.setText("ชื่อ : " + name);
                         profileNationalID.setText("หมายเลขบัตรประชาชน : " + nationalID);
-                        profileBirth.setText("วันเกิด : " + birth);
                         profileBlood.setText("กรุ๊ปเลือด : " + blood);
                         profileEmail.setText("อีเมล : " + email);
                         currentDate.setText("วันที่ : " + date);
@@ -154,7 +160,9 @@ public class InsertHistoryFragment extends Fragment {
                                                 @Override
                                                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
-                                                    DonatorHistory dh = new DonatorHistory(date);
+                                                    DonatorHistory dh = DonatorHistory.getDonatorHistoryInstance();
+                                                    dh.setDate(date);
+
                                                     String num = Integer.toString(queryDocumentSnapshots.size()+1);
                                                     firestore.collection("donateHistory")
                                                             .document(NationaID.NID)
@@ -171,8 +179,11 @@ public class InsertHistoryFragment extends Fragment {
                                                 }
                                             });
 
-                                } else { // never donate before
-                                    DonatorHistory dh = new DonatorHistory(date);
+                                } else {
+                                    // never donate before
+                                    DonatorHistory dh = DonatorHistory.getDonatorHistoryInstance();
+                                    dh.setDate(date);
+
                                     firestore.collection("donateHistory")
                                             .document(NationaID.NID)
                                             .collection("history")

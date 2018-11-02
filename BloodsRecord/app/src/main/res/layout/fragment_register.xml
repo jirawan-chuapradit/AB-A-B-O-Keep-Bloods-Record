@@ -18,11 +18,12 @@
             android:orientation="vertical"
             android:weightSum="1">
 
+
             <ImageView
                 android:id="@+id/userProfileImage"
-                android:layout_width="match_parent"
-                android:layout_height="175dp"
-                app:srcCompat="@mipmap/ic_launcher" />
+                android:layout_width="315dp"
+                android:layout_height="123dp"
+                app:srcCompat="@drawable/upload_profile" />
 
             <EditText
                 android:id="@+id/registerFirstname"
@@ -47,7 +48,7 @@
                 android:id="@+id/registerNationalID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
+                android:inputType="number"
                 android:drawableLeft="@drawable/card"
                 android:hint="เลขบัตรประชาชน"
                 android:ems="10"
@@ -85,25 +86,12 @@
                 android:ems="10" />
 
 
-            <EditText
-                android:id="@+id/registerBloodsGroup"
+            <Spinner
+                android:id="@+id/spinner1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:hint="กรุ๊ปเลือด"
-                android:drawableLeft="@drawable/ic_blood"
-                android:ems="10"
-                />
-
-            <EditText
-                android:id="@+id/registerBirth"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:hint="วันเกิด"
-                android:drawableLeft="@drawable/ic_gift"
-                android:ems="10"
-                />
+                android:entries="@array/blood_arrays"
+                android:prompt="@string/bloods_groups" />
 
 
             <Button
@@ -115,13 +103,6 @@
                 />
 
 
-            <Button
-                android:id="@+id/login_btn"
-                android:layout_marginTop="10dp"
-                android:text="กลับสู่หน้าเข้าสู่ระบบ"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

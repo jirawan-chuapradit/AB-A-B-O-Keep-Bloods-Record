@@ -1,8 +1,12 @@
 package com.example.suttidasat.bloodsrecord.Interface;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,16 +23,27 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.suttidasat.bloodsrecord.DonatorMainView;
 import com.example.suttidasat.bloodsrecord.MainActivity;
 import com.example.suttidasat.bloodsrecord.R;
+import com.example.suttidasat.bloodsrecord.init.BloodsRecordFirebase;
+import com.example.suttidasat.bloodsrecord.model.DonatorProfile;
 import com.example.suttidasat.bloodsrecord.model.MyService;
-import com.example.suttidasat.bloodsrecord.model.UpdateNotify;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+
+/*************************************************
+ *intent: Update password                        *
+ *pre-condition: User must login with role Donor *
+ *post-condition: User sign out and go to login  *
+ *************************************************/
 
 public class UpdatePasswordFragment extends Fragment {
 
@@ -38,28 +53,42 @@ public class UpdatePasswordFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_update_password,container,false);
     }
 
+    //Firebase
+    private FirebaseAuth fbAuth;
+    private FirebaseFirestore firestore;
+    private DocumentReference documentReference;
     private Button saveBtn;
-    private EditText newPassword, reNewPassword;
+    private EditText newPassword, reNewPassword,oldPassword;
     private FirebaseUser firebaseUser;
-    private String userPasswordNew, userRePasswordNew;
-    private ProgressDialog progressDialog;
+    private String userPasswordNew, userRePasswordNew,uid,userOldPassword,currentPassword;
+
 
     //menu
-    UpdateNotify un = new UpdateNotify();
     private TextView textCartItemCount;
     private int mCartItemCount;
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        //menu
-        mCartItemCount = un.getCount();
+        //Firebase
+        firestore = FirebaseFirestore.getInstance();
+        fbAuth = FirebaseAuth.getInstance();
+
+
+        //GET VALUDE FROM FIREBASE
+        uid = fbAuth.getCurrentUser().getUid();
+        SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
+        mCartItemCount = prefs.getInt(uid+"_countNotify", -1);
+        Log.d("prefs Update", String.valueOf(mCartItemCount));
+
         setHasOptionsMenu(true);
 
         saveBtn = getView().findViewById(R.id.btnUpdatePassword);
-        newPassword = getView().findViewById(R.id.updatePassword);
-        reNewPassword = getView().findViewById(R.id.re_updatePassword);
+        oldPassword = getView().findViewById(R.id.update_oldPassword);
+        newPassword = getView().findViewById(R.id.update_newPassword);
+        reNewPassword = getView().findViewById(R.id.update_re_newPassword);
 
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -67,24 +96,44 @@ public class UpdatePasswordFragment extends Fragment {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Loading data dialog
-                progressDialog = new ProgressDialog(getActivity());
-                progressDialog.setMessage("Please waiting...");
-                progressDialog.show();
-
+                userOldPassword = oldPassword.getText().toString();
                 userPasswordNew = newPassword.getText().toString();
                 userRePasswordNew = reNewPassword.getText().toString();
+
+                //Connect to bloodRecord
+                BloodsRecordFirebase bloodsRecordConnection = new BloodsRecordFirebase(
+                        documentReference, firestore, uid);
+                bloodsRecordConnection.getConnection();
+                bloodsRecordConnection.getDocumentReference().get()
+                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                DonatorProfile dp = documentSnapshot.toObject(DonatorProfile.class);
+                                currentPassword = dp.getPassword();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+
+                            }
+                        });
+
                 if (userPasswordNew.length() <= 5 || userRePasswordNew.length() <= 5){
-                    Log.d("REGISTER", "รหัสผ่านน้อยกว่า 6 ตัว");
+                    Log.d("UPDATE", "PASSWORD LESS THAN 6");
                     Toast.makeText(getActivity(),"กรุณาระบุรหัสผ่านมากกว่า 5 ตัว",Toast.LENGTH_SHORT).show();
                 }else if(userPasswordNew.isEmpty() || userRePasswordNew.isEmpty()){
-                    Log.d("REGISTER", "VALUE IS EMPTY");
-                    Toast.makeText(getActivity(),"กรุณากรอกข้อมูลให้ครบถ้วน",Toast.LENGTH_SHORT).show();
-                }else {
+                    Log.d("UPDATE", "VALUE IS EMPTY");
+                    Toast.makeText(getActivity(),"กรุณาระบุข้อมูลให้ครบถ้วน",Toast.LENGTH_SHORT).show();
+                }else if(!userOldPassword.equals(currentPassword)){
+                    Log.d("UPDATE", "OLD PASSWORD WAS WRONG");
+                    Toast.makeText(getActivity(),"รหัสผ่านไม่ถูกต้อง",Toast.LENGTH_SHORT).show();
+                }
+                else {
                     firebaseUser.updatePassword(userPasswordNew).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            progressDialog.dismiss();
+                            deley();
                             if(task.isSuccessful()){
                                 //FORCE USER SIGGOUT
                                 FirebaseAuth.getInstance().signOut();
@@ -120,6 +169,47 @@ public class UpdatePasswordFragment extends Fragment {
         });
 
     }
+    /**********************************
+     *   intent: สร้าง popup ระบบกำลังประมวลผล  *
+     **********************************/
+    private void deley() {
+
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        final Handler handle = new Handler() {
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                progressDialog.incrementProgressBy(2); // Incremented By Value 2
+            }
+        };
+        // Progress Dialog Max Value
+        progressDialog.setMax(100);
+        progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
+        progressDialog.setMessage("กรุณารอสักครู่...");
+        // Progress Dialog Style Horizontal
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        // Display Progress Dialog
+        progressDialog.show();
+        // Cannot Cancel Progress Dialog
+        progressDialog.setCancelable(false);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while (progressDialog.getProgress() <= progressDialog.getMax()) {
+                        Thread.sleep(100);
+                        handle.sendMessage(handle.obtainMessage());
+                        if (progressDialog.getProgress() == progressDialog.getMax()) {
+                            progressDialog.dismiss();
+                        }
+                    }
+
+                }catch (Exception e){
+                    e.getStackTrace();
+                }
+            }
+        }).start();
+    }
 
     //menu
     @Override
@@ -148,9 +238,16 @@ public class UpdatePasswordFragment extends Fragment {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.donator_view, new notifyFragment())
+                        .addToBackStack(null)
                         .commit();
                 System.out.println("CLICK NOTIFY BELL");
-                un.setCount(0);
+
+                Log.d("USER ", "CLICK NOTIFY BELL");
+
+                SharedPreferences.Editor prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE).edit();
+                prefs.putInt(uid+"_countNotify",0);
+                prefs.apply();
+
                 setupBadge();
                 return true;
             }

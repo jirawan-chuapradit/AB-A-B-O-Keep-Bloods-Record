@@ -9,7 +9,18 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/notify_list"></ListView>
+        android:id="@+id/notify_list">
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/empty_notify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="ยังไม่มีการแจ้งเตือน"/>
 
 
 </RelativeLayout>
