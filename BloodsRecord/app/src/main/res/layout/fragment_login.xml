@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorAccent">>
+    android:background="@color/colorAccent">
 
 
     <ScrollView
@@ -61,7 +61,7 @@
 
             <Button
                 android:id="@+id/login_register_Btn"
-                android:layout_width="284dp"
+                android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/register_btn"

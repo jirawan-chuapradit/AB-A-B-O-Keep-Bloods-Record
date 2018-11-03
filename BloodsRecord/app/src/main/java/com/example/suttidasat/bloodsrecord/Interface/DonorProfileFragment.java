@@ -59,11 +59,12 @@ public class DonorProfileFragment extends Fragment {
 
     //Firebase
     private FirebaseAuth fbAuth;
+    private String uid;
     private FirebaseFirestore firestore;
     private FirebaseStorage firebaseStorage;
     private DocumentReference documentReference;
     private TextView profileName, profileNationalID, profileBlood, profileEmail;
-    private String uid;
+
     private ImageView profileImage;
     //menu
     private TextView textCartItemCount;
@@ -95,6 +96,7 @@ public class DonorProfileFragment extends Fragment {
     }
 
     private void setParameter() {
+        deley();
         getImagePic();
         //Connect to bloodRecord
         BloodsRecordFirebase bloodsRecordConnection = new BloodsRecordFirebase(
@@ -114,9 +116,9 @@ public class DonorProfileFragment extends Fragment {
                         String email = dp.getEmail();
 
                         profileName.setText("ชื่อ : " + name);
-                        profileNationalID.setText("รหัสบัตรประชาชน : " + nationalID);
-                        profileBlood.setText("กรุ๊ปเลือด : " + blood);
-                        profileEmail.setText("อีเมลล์ : " + email);
+                        profileNationalID.setText(nationalID);
+                        profileBlood.setText(blood);
+                        profileEmail.setText(email+"   ");
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -137,7 +139,7 @@ public class DonorProfileFragment extends Fragment {
                         .error(R.mipmap.ic_launcher)
                         .transform((Transformation) new PicassoCircleTransformation())
                         .into(profileImage);
-                deley();
+
             }
         });
     }
