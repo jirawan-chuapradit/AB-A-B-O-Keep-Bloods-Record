@@ -47,7 +47,7 @@ import java.util.List;
 
 public class InsertHistoryFragment extends Fragment {
 
-    private ProgressDialog progressDialog;
+
     FirebaseFirestore firestore;
     DocumentReference donateHistory;
     private TextView profileName, profileNationalID, profileBlood, profileEmail, currentDate, amount;
@@ -67,6 +67,7 @@ public class InsertHistoryFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        deley();
 
         firestore = FirebaseFirestore.getInstance();
 
@@ -78,10 +79,6 @@ public class InsertHistoryFragment extends Fragment {
 
     void insertHistory() {
 
-        // Loading data dialog
-        progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Please waiting...");
-        progressDialog.show();
 
         profileName = getView().findViewById(R.id.sh_name_donater);
         profileNationalID = getView().findViewById(R.id.sh_nid_donater);
@@ -97,7 +94,6 @@ public class InsertHistoryFragment extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        deley();
                         amount.setText("จำนวนการบริจาคทั้งหมด : " + queryDocumentSnapshots.size());
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -115,8 +111,6 @@ public class InsertHistoryFragment extends Fragment {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-                        deley();
                         List<DocumentSnapshot> doc = task.getResult().getDocuments();
 
 
@@ -132,7 +126,7 @@ public class InsertHistoryFragment extends Fragment {
                         profileBlood.setText("กรุ๊ปเลือด : " + blood);
                         profileEmail.setText("อีเมล : " + email);
                         currentDate.setText("วันที่ : " + date);
-                        progressDialog.dismiss();
+
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -149,7 +143,7 @@ public class InsertHistoryFragment extends Fragment {
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                deley();
 
                 firestore.collection("donateHistory")
                         .document(NationaID.NID)
@@ -229,10 +223,9 @@ public class InsertHistoryFragment extends Fragment {
 
                                                                     Toast.makeText(getActivity(), "เพิ่มประวัติการบริจาคสำเร็จ", Toast.LENGTH_SHORT).show();
 
-                                                                    deley();
                                                                     getActivity().getSupportFragmentManager()
                                                                             .beginTransaction()
-                                                                            .replace(R.id.admin_view, new InsertHistoryFragment())
+                                                                            .replace(R.id.admin_view, new SertNationalID())
                                                                             .commit();
 
                                                                 }
@@ -270,6 +263,9 @@ public class InsertHistoryFragment extends Fragment {
         });
     }
 
+    /**********************************
+     *   intent: สร้าง popup ระบบกำลังประมวลผล  *
+     **********************************/
     private void deley() {
 
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
@@ -279,6 +275,33 @@ public class InsertHistoryFragment extends Fragment {
                 progressDialog.incrementProgressBy(2); // Incremented By Value 2
             }
         };
+        // Progress Dialog Max Value
+        progressDialog.setMax(100);
+        progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
+        progressDialog.setMessage("กรุณารอสักครู่...");
+        // Progress Dialog Style Horizontal
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        // Display Progress Dialog
+        progressDialog.show();
+        // Cannot Cancel Progress Dialog
+        progressDialog.setCancelable(false);
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while (progressDialog.getProgress() <= progressDialog.getMax()) {
+                        Thread.sleep(100);
+                        handle.sendMessage(handle.obtainMessage());
+                        if (progressDialog.getProgress() == progressDialog.getMax()) {
+                            progressDialog.dismiss();
+                        }
+                    }
+
+                }catch (Exception e){
+                    e.getStackTrace();
+                }
+            }
+        }).start();
     }
 }

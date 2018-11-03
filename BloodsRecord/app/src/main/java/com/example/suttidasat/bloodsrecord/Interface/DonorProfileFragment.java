@@ -59,11 +59,12 @@ public class DonorProfileFragment extends Fragment {
 
     //Firebase
     private FirebaseAuth fbAuth;
+    private String uid;
     private FirebaseFirestore firestore;
     private FirebaseStorage firebaseStorage;
     private DocumentReference documentReference;
     private TextView profileName, profileNationalID, profileBlood, profileEmail;
-    private String uid;
+
     private ImageView profileImage;
     //menu
     private TextView textCartItemCount;
