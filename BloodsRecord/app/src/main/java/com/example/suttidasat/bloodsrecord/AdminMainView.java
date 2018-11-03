@@ -24,7 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class AdminMainView extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private DrawerLayout drawerLayout;
-
+    NavigationView navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +39,7 @@ public class AdminMainView extends AppCompatActivity implements NavigationView.O
 
         drawerLayout = findViewById(R.id.drawer_layout);
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar
@@ -66,12 +66,14 @@ public class AdminMainView extends AppCompatActivity implements NavigationView.O
                         .beginTransaction()
                         .replace(R.id.admin_view,
                                 new SertNationalID()).commit();
+                navigationView.setCheckedItem(R.id.nav_insert);
                 break;
             } case R.id.nav_manage_news: {
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.admin_view,
                                 new NewsManageFrament()).commit();
+                navigationView.setCheckedItem(R.id.nav_manage_news);
                 break;
             }
             case R.id.nav_sign_out: {
