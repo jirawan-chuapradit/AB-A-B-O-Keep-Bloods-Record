@@ -63,7 +63,7 @@ public class DonorProfileFragment extends Fragment {
     private FirebaseFirestore firestore;
     private FirebaseStorage firebaseStorage;
     private DocumentReference documentReference;
-    private TextView profileName, profileNationalID, profileBlood, profileEmail;
+    private TextView profileName, profileNationalID, profileBlood, profileEmail, profileAddress;
 
     private ImageView profileImage;
     //menu
@@ -114,11 +114,13 @@ public class DonorProfileFragment extends Fragment {
                         String nationalID = dp.getNationalID();
                         String blood = dp.getBloodGroup();
                         String email = dp.getEmail();
+                        String address = dp.getAddress();
 
                         profileName.setText("ชื่อ : " + name);
                         profileNationalID.setText(nationalID);
                         profileBlood.setText(blood);
                         profileEmail.setText(email+"   ");
+                        profileAddress.setText(address+"   ");
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -150,6 +152,7 @@ public class DonorProfileFragment extends Fragment {
         profileNationalID = getView().findViewById(R.id.profileNationalID);
         profileBlood = getView().findViewById(R.id.profileBloodsG);
         profileEmail = getView().findViewById(R.id.profileEmail);
+        profileAddress = getView().findViewById(R.id.profileAddress);
     }
 
     /**********************************
