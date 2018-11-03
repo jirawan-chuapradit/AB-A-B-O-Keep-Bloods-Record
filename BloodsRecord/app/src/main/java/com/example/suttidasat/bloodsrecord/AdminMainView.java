@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.Window;
 
+import com.example.suttidasat.bloodsrecord.Interface.NewsManageFrament;
 import com.example.suttidasat.bloodsrecord.Interface.SertNationalID;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -66,6 +67,12 @@ public class AdminMainView extends AppCompatActivity implements NavigationView.O
                         .replace(R.id.admin_view,
                                 new SertNationalID()).commit();
                 break;
+            } case R.id.nav_manage_news: {
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.admin_view,
+                                new NewsManageFrament()).commit();
+                break;
             }
             case R.id.nav_sign_out: {
                 FirebaseAuth.getInstance().signOut();
@@ -73,6 +80,7 @@ public class AdminMainView extends AppCompatActivity implements NavigationView.O
                 startActivity(loginIntent);
                 break;
             }
+
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);

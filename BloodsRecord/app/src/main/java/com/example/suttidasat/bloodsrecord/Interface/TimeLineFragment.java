@@ -76,6 +76,7 @@ public class TimeLineFragment extends Fragment {
         SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
         mCartItemCount = prefs.getInt(uid+"_countNotify", -1);
 
+
         //delete SharedPreferences
 //        SharedPreferences preferences = getContext().getSharedPreferences("BloodsRecord", 0);
 //        preferences.edit().remove(uid+"_checkFnotify").commit();
