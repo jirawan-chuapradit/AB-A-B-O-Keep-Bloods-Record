@@ -74,7 +74,7 @@ public class TimeLineFragment extends Fragment {
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         //menu
         SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
-        mCartItemCount = prefs.getInt(uid+"_countNotify", -1);
+        mCartItemCount = prefs.getInt(uid+"_countNotify", 0);
 
 
         //delete SharedPreferences
