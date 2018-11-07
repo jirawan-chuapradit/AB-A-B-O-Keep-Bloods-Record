@@ -216,11 +216,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             public void onSuccess(Void aVoid) {
                 Log.d("REGISTER", "VALUE HAS BEEN SAVED IN FIREBASE");
 
-                SharedPreferences.Editor prefs = getContext().getSharedPreferences("BloodsRecord",MODE_PRIVATE).edit();
-                prefs.putInt(uid+"_countNotify",0);
-                prefs.putInt(uid+"_checkFnotify", 0);
-                prefs.apply();
-
                 //FORCE USER SIGGOUT
                 FirebaseAuth.getInstance().signOut();
                 getActivity().getSupportFragmentManager()

@@ -68,7 +68,8 @@ public class notifyFragment extends Fragment {
         uid = auth.getCurrentUser().getUid();
 
         SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
-        mCartItemCount = prefs.getInt(uid+"_countNotify", -1);
+        mCartItemCount = prefs.getInt(uid+"_countNotify", 0);
+        prefs.edit().clear().commit();
         Log.d("prefs Notify", String.valueOf(mCartItemCount));
 
         checkFnofity = prefs.getInt(uid+"_checkFnotify", 2);

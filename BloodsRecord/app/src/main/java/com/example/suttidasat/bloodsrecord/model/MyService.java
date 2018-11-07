@@ -213,8 +213,6 @@ public class MyService extends Service {
                                     prefs.apply();
 
 
-//
-
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
