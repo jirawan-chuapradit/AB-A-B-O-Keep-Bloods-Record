@@ -84,7 +84,6 @@ public class notifyFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
-
         ListView notifyList = getView().findViewById(R.id.notify_list);
         final NotifyAdapter notifyAdapter = new NotifyAdapter(
                getActivity(),
