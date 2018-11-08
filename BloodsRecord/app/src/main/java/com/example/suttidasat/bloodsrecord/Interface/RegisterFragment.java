@@ -83,6 +83,9 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     //a Uri object to store file path
     private Uri filePath;
 
+    ProgressDialog progressDialog;
+
+
 
 
 
@@ -140,7 +143,19 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             Toast.makeText(getActivity(),"รหัสบัตรประชาชนนี้ไม่สามารถลงทะเบียนได้",Toast.LENGTH_SHORT).show();
         }
         else{
-            deley();
+            /**********************************
+             *   intent: สร้าง popup ระบบกำลังประมวลผล  *
+             **********************************/
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
+            progressDialog.setMessage("กรุณารอสักครู่...");
+            // Progress Dialog Style Horizontal
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            // Display Progress Dialog
+            progressDialog.show();
+            // Cannot Cancel Progress Dialog
+            progressDialog.setCancelable(false);
+
             fbAuth.createUserWithEmailAndPassword(emailStr,passwordStr).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -215,7 +230,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.d("REGISTER", "VALUE HAS BEEN SAVED IN FIREBASE");
-
+                progressDialog.dismiss();
                 //FORCE USER SIGGOUT
                 FirebaseAuth.getInstance().signOut();
                 getActivity().getSupportFragmentManager()
@@ -287,44 +302,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     /**********************************
      *   intent: สร้าง popup ระบบกำลังประมวลผล  *
      **********************************/
-    private void deley() {
-
-        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        final Handler handle = new Handler() {
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                progressDialog.incrementProgressBy(2); // Incremented By Value 2
-            }
-        };
-        // Progress Dialog Max Value
-        progressDialog.setMax(100);
-        progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
-        progressDialog.setMessage("กรุณารอสักครู่...");
-        // Progress Dialog Style Horizontal
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        // Display Progress Dialog
-        progressDialog.show();
-        // Cannot Cancel Progress Dialog
-        progressDialog.setCancelable(false);
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    while (progressDialog.getProgress() <= progressDialog.getMax()) {
-                        Thread.sleep(100);
-                        handle.sendMessage(handle.obtainMessage());
-                        if (progressDialog.getProgress() == progressDialog.getMax()) {
-                            progressDialog.dismiss();
-                        }
-                    }
-
-                }catch (Exception e){
-                    e.getStackTrace();
-                }
-            }
-        }).start();
-    }
     @Override
     public void onClick(View v) {
         if(v == userProfileImage){

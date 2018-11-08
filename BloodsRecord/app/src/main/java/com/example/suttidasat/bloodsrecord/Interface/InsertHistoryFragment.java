@@ -56,6 +56,7 @@ public class InsertHistoryFragment extends Fragment {
     SimpleDateFormat mdformat = new SimpleDateFormat("dd-MM-yyyy ");
 
     final String date = mdformat.format(calendar.getTime());
+    ProgressDialog progressDialog;
 
 
     @Nullable
@@ -67,8 +68,6 @@ public class InsertHistoryFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        deley();
 
 //        firestore = FirebaseFirestore.getInstance();
 
@@ -127,7 +126,7 @@ public class InsertHistoryFragment extends Fragment {
                         profileBlood.setText("กรุ๊ปเลือด : " + blood);
                         profileEmail.setText("อีเมล : " + email);
                         currentDate.setText("วันที่ : " + date);
-
+                        progressDialog.dismiss();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -144,7 +143,19 @@ public class InsertHistoryFragment extends Fragment {
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deley();
+
+                /**********************************
+                 *   intent: สร้าง popup ระบบกำลังประมวลผล  *
+                 **********************************/
+                progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
+                progressDialog.setMessage("กรุณารอสักครู่...");
+                // Progress Dialog Style Horizontal
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                // Display Progress Dialog
+                progressDialog.show();
+                // Cannot Cancel Progress Dialog
+                progressDialog.setCancelable(false);
 
                 firestore.collection("donateHistory")
                         .document(NationaID.NID)
@@ -264,45 +275,4 @@ public class InsertHistoryFragment extends Fragment {
         });
     }
 
-    /**********************************
-     *   intent: สร้าง popup ระบบกำลังประมวลผล  *
-     **********************************/
-    private void deley() {
-
-        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        final Handler handle = new Handler() {
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                progressDialog.incrementProgressBy(2); // Incremented By Value 2
-            }
-        };
-        // Progress Dialog Max Value
-        progressDialog.setMax(100);
-        progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
-        progressDialog.setMessage("กรุณารอสักครู่...");
-        // Progress Dialog Style Horizontal
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        // Display Progress Dialog
-        progressDialog.show();
-        // Cannot Cancel Progress Dialog
-        progressDialog.setCancelable(false);
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    while (progressDialog.getProgress() <= progressDialog.getMax()) {
-                        Thread.sleep(100);
-                        handle.sendMessage(handle.obtainMessage());
-                        if (progressDialog.getProgress() == progressDialog.getMax()) {
-                            progressDialog.dismiss();
-                        }
-                    }
-
-                }catch (Exception e){
-                    e.getStackTrace();
-                }
-            }
-        }).start();
-    }
 }

@@ -61,6 +61,7 @@ public class UpdatePasswordFragment extends Fragment {
     private EditText newPassword, reNewPassword,oldPassword;
     private FirebaseUser firebaseUser;
     private String userPasswordNew, userRePasswordNew,uid,userOldPassword,currentPassword;
+    ProgressDialog progressDialog;
 
 
     //menu
@@ -130,11 +131,26 @@ public class UpdatePasswordFragment extends Fragment {
                     Toast.makeText(getActivity(),"รหัสผ่านไม่ถูกต้อง",Toast.LENGTH_SHORT).show();
                 }
                 else {
+                    /**********************************
+                     *   intent: สร้าง popup ระบบกำลังประมวลผล  *
+                     **********************************/
+                    progressDialog = new ProgressDialog(getActivity());
+                    progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
+                    progressDialog.setMessage("กรุณารอสักครู่...");
+                    // Progress Dialog Style Horizontal
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    // Display Progress Dialog
+                    progressDialog.show();
+                    // Cannot Cancel Progress Dialog
+                    progressDialog.setCancelable(false);
+
                     firebaseUser.updatePassword(userPasswordNew).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            deley();
                             if(task.isSuccessful()){
+                                progressDialog.dismiss();
+
+
                                 //FORCE USER SIGGOUT
                                 FirebaseAuth.getInstance().signOut();
 
@@ -154,6 +170,7 @@ public class UpdatePasswordFragment extends Fragment {
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
+                                    progressDialog.dismiss();
                                     Log.d("UPDATEPASSWORD : ", e.getMessage());
                                         Toast.makeText(
                                                 getActivity(),
