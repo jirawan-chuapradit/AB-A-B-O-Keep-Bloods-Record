@@ -47,6 +47,8 @@ public class BloodsRecordFirebase {
     }
 
     public void getConnection(){
-        documentReference = firestore.collection("bloodsRecord").document(uid);
+        documentReference = firestore
+                .collection("bloodsRecord")
+                .document(uid);
     }
 }

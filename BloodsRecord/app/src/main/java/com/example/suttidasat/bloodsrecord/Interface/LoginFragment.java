@@ -42,6 +42,7 @@ public class LoginFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+
             Log.d("USER", "USER ALREADY LOG IN");
             Log.d("USER", "GOTO HomePage");
             Intent myIntent = new Intent(getActivity(), DonorMainView.class);
