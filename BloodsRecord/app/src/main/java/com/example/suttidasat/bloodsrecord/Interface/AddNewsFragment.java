@@ -1,6 +1,5 @@
 package com.example.suttidasat.bloodsrecord.Interface;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.suttidasat.bloodsrecord.MainActivity;
+import com.example.suttidasat.bloodsrecord.Interface.News.NewsManageFrament;
 import com.example.suttidasat.bloodsrecord.R;
 
 public class AddNewsFragment extends Fragment {

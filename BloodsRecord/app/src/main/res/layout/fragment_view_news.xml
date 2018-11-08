@@ -12,7 +12,7 @@
         android:orientation="vertical"
         android:padding="30dp">
     <ListView
-        android:id="@+id/news_list"
+        android:id="@+id/news_list_danate"
         android:layout_width="match_parent"
         android:layout_height="417dp"
         android:layout_marginTop="10dp"></ListView>
