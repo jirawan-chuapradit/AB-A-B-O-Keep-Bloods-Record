@@ -68,7 +68,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
     //Register value
     private String firstnameStr,lastnameStr,nationalIDStr
-            ,bloodsStr,emailStr,passwordStr,rePasswordStr,uid;
+            ,bloodsStr,emailStr,passwordStr,rePasswordStr
+            ,uid,addressStr;
     private boolean nationalIdIsEmpty;
 
     //ImageView
@@ -117,7 +118,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         checkNationIdIsExist();
         //check value is empty
         if(firstnameStr.isEmpty() || lastnameStr.isEmpty()||nationalIDStr.isEmpty()||bloodsStr.isEmpty()
-                || emailStr.isEmpty()|| passwordStr.isEmpty()||rePasswordStr.isEmpty()){
+                || emailStr.isEmpty()|| passwordStr.isEmpty()||rePasswordStr.isEmpty()||addressStr.isEmpty()){
             Log.d("REGISTER", "VALUE IS EMPTY");
             Toast.makeText(getActivity(),"กรุณากรอกข้อมูลให้ครบถ้วน",Toast.LENGTH_SHORT).show();
         }else if(!rePasswordStr.equals(passwordStr)){
@@ -205,6 +206,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         dp.setEmail(emailStr);
         dp.setBloodGroup(bloodsStr);
         dp.setPassword(passwordStr);
+        dp.setAddress(addressStr);
         Log.d("REGISTER", "REGISTER SUCCESS");
 
         firestore.collection("bloodsRecord")
@@ -245,6 +247,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         EditText emailEdt = getView().findViewById(R.id.registerEmail);
         EditText passwordEdt = getView().findViewById(R.id.registerPassword);
         EditText rePasswordEdt = getView().findViewById(R.id.registerRePassword);
+        EditText addressEdt = getView().findViewById(R.id.registerAddress);
         spinner1 = getView().findViewById(R.id.spinner1);
 
 
@@ -257,6 +260,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         emailStr = emailEdt.getText().toString();
         passwordStr = passwordEdt.getText().toString();
         rePasswordStr = rePasswordEdt.getText().toString();
+        addressStr = addressEdt.getText().toString();
+
     }
 
 

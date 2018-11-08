@@ -168,6 +168,32 @@
                         tools:layout_editor_absoluteY="228dp"
                         tools:text="chocolate_nate@natemail.com" />
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="37dp"
+                        android:layout_gravity="center"
+                        android:textStyle="bold"
+                        tools:layout_editor_absoluteX="67dp"
+                        tools:layout_editor_absoluteY="228dp"
+                        android:text="ที่อยู่" />
+                    <TextView
+                        android:id="@+id/profileAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="right"
+
+                        tools:layout_editor_absoluteX="67dp"
+                        tools:layout_editor_absoluteY="228dp"
+                        tools:text="122/ 23 หมู่ 4 เขตลาดกระบัง แขวง ลาดกระบัง กรุงเทพฯ 10520" />
+                </LinearLayout>
             </LinearLayout>
 
 

@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.suttidasat.bloodsrecord.R;
+import com.example.suttidasat.bloodsrecord.model.ConnectDB;
 import com.example.suttidasat.bloodsrecord.model.DonatorHistory;
 import com.example.suttidasat.bloodsrecord.model.NationaID;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -48,7 +49,7 @@ import java.util.List;
 public class InsertHistoryFragment extends Fragment {
 
 
-    FirebaseFirestore firestore;
+    FirebaseFirestore firestore = ConnectDB.getConnect();
     DocumentReference donateHistory;
     private TextView profileName, profileNationalID, profileBlood, profileEmail, currentDate, amount;
     Calendar calendar = Calendar.getInstance();
@@ -69,7 +70,7 @@ public class InsertHistoryFragment extends Fragment {
 
         deley();
 
-        firestore = FirebaseFirestore.getInstance();
+//        firestore = FirebaseFirestore.getInstance();
 
         insertHistory();
         backBtn();

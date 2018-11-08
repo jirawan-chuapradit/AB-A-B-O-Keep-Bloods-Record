@@ -85,16 +85,12 @@
                 android:drawableLeft="@drawable/ic_email"
                 android:ems="10" />
 
-
-
-
-
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
 
-                <EditText
+                <TextView
                     android:layout_width="30sp"
                     android:layout_height="25sp"
                     android:background="@drawable/ic_blood"
@@ -111,6 +107,14 @@
             </LinearLayout>
 
 
+            <EditText
+                android:id="@+id/registerAddress"
+                android:layout_width="321dp"
+                android:layout_height="97dp"
+                android:ems="10"
+                android:hint="ที่อยู่"
+                android:isScrollContainer="true"
+                android:inputType="text" />
 
             <Button
                 android:id="@+id/registerBtn"

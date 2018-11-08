@@ -19,9 +19,11 @@ import android.view.Window;
 
 import com.example.suttidasat.bloodsrecord.Interface.DonorProfileFragment;
 
+import com.example.suttidasat.bloodsrecord.Interface.PrepareDonate;
 import com.example.suttidasat.bloodsrecord.Interface.TimeLineFragment;
 
 import com.example.suttidasat.bloodsrecord.Interface.UpdatePasswordFragment;
+import com.example.suttidasat.bloodsrecord.Interface.ViewNews;
 import com.example.suttidasat.bloodsrecord.model.MyService;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -78,26 +80,40 @@ public class DonorMainView extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = menuItem.getItemId();
         if (id == R.id.nav_home) {
-            navigationView.setCheckedItem(R.id.nav_home);
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.donator_view,
                             new TimeLineFragment()).addToBackStack(null).commit();
+            navigationView.setCheckedItem(R.id.nav_home);
+        }else if (id == R.id.nav_view_news) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.donator_view,
+                            new ViewNews()).addToBackStack(null).commit();
+            navigationView.setCheckedItem(R.id.nav_view_news);
         }
-        if (id == R.id.nav_profile) {
-            navigationView.setCheckedItem(R.id.nav_profile);
+        else if (id == R.id.nav_prepare_donate) {
+            navigationView.setCheckedItem(R.id.nav_prepare_donate);
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.donator_view,
+                            new PrepareDonate()).addToBackStack(null).commit();
+
+        }
+        else if (id == R.id.nav_profile) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.donator_view,
                             new DonorProfileFragment()).addToBackStack(null).commit();
+            navigationView.setCheckedItem(R.id.nav_profile);
         }
-        if (id == R.id.nav_change_password) {
-            navigationView.setCheckedItem(R.id.nav_change_password);
+        else if (id == R.id.nav_change_password) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.donator_view, new UpdatePasswordFragment()).addToBackStack(null).commit();
+            navigationView.setCheckedItem(R.id.nav_change_password);
         }
-        if (id == R.id.nav_sign_out) {
+        else if (id == R.id.nav_sign_out) {
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(DonorMainView.this, MyService.class);
             stopService(intent);
