@@ -69,10 +69,9 @@ public class notifyFragment extends Fragment {
 
         SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
         mCartItemCount = prefs.getInt(uid+"_countNotify", 0);
-        prefs.edit().clear().commit();
         Log.d("prefs Notify", String.valueOf(mCartItemCount));
 
-        checkFnofity = prefs.getInt(uid+"_checkFnotify", 2);
+        checkFnofity = prefs.getInt(uid+"_checkFnotify", 0);
         Log.d("CHECK NOTIFY: " , String.valueOf(checkFnofity));
 
 
@@ -187,7 +186,6 @@ public class notifyFragment extends Fragment {
                 SharedPreferences.Editor prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE).edit();
                 prefs.putInt(uid+"_countNotify",0);
                 prefs.apply();
-
                 setupBadge();
                 return true;
             }

@@ -74,6 +74,7 @@ public class MyService extends Service {
             public void run() {
                 Log.d("MY TASK", "MY TASK HAS BEEN START IN SPRINT");
                 getNationalId();
+                checkNotifyIsEmpty();
                 Log.d("MY TASK", "MY TASK HAS BEEN DONE IN SPRINT");
 
                 try {
@@ -87,6 +88,32 @@ public class MyService extends Service {
         //we have some options for service
         //start sticky means service will be explicity started and stopped
         return START_STICKY;
+    }
+
+    private void checkNotifyIsEmpty() {
+        notificationContentFirebase = new NotificationContentFirebase(
+                collectionReference, firestore, uid);
+        notificationContentFirebase.getConnectionCollection();
+        notificationContentFirebase.getCollectionReference().get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        sizeofContent = queryDocumentSnapshots.size();
+                        Log.d("CHECK NOTIFY EMPTY", "size Of content : " + sizeofContent);
+                        if(sizeofContent!= 0){
+                            SharedPreferences.Editor prefs = getBaseContext().getSharedPreferences("BloodsRecord",MODE_PRIVATE).edit();
+                            prefs.putInt(uid+"_checkFnotify", 1);
+                            prefs.apply();
+                            Log.d("CHECK NOTIFY EMPTY", "working...");
+                        }
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("Show Donator", "ERRROR =" + e.getMessage());
+            }
+        });
     }
 
     private void getNationalId() {
@@ -209,7 +236,6 @@ public class MyService extends Service {
 
                                     SharedPreferences.Editor prefs = getBaseContext().getSharedPreferences("BloodsRecord",MODE_PRIVATE).edit();
                                     prefs.putInt(uid+"_countNotify",1);
-                                    prefs.putInt(uid+"_checkFnotify", 1);
                                     prefs.apply();
 
 
@@ -260,7 +286,7 @@ public class MyService extends Service {
 
 
                                     SharedPreferences prefs = getBaseContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
-                                    mCartItemCount = prefs.getInt(uid+"_countNotify", -1);
+                                    mCartItemCount = prefs.getInt(uid+"_countNotify", 0);
                                     mCartItemCount++;
                                     SharedPreferences.Editor prefs2 = getBaseContext().getSharedPreferences("BloodsRecord",MODE_PRIVATE).edit();
                                     prefs2.putInt(uid+"_countNotify",mCartItemCount);
