@@ -59,6 +59,7 @@ public class InsertHistoryFragment extends Fragment {
     SharedPreferences.Editor sp;
 
     final String date = mdformat.format(calendar.getTime());
+    ProgressDialog progressDialog;
 
 
     @Nullable
@@ -71,8 +72,11 @@ public class InsertHistoryFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+<<<<<<< HEAD
 //        deley();
 
+=======
+>>>>>>> master
 //        firestore = FirebaseFirestore.getInstance();
 
         insertHistory();
@@ -134,7 +138,7 @@ public class InsertHistoryFragment extends Fragment {
                         profileBlood.setText("กรุ๊ปเลือด : " + blood);
                         profileEmail.setText("อีเมล : " + email);
                         currentDate.setText("วันที่ : " + date);
-
+                        progressDialog.dismiss();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -151,7 +155,23 @@ public class InsertHistoryFragment extends Fragment {
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+<<<<<<< HEAD
 //                deley();
+=======
+
+                /**********************************
+                 *   intent: สร้าง popup ระบบกำลังประมวลผล  *
+                 **********************************/
+                progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
+                progressDialog.setMessage("กรุณารอสักครู่...");
+                // Progress Dialog Style Horizontal
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                // Display Progress Dialog
+                progressDialog.show();
+                // Cannot Cancel Progress Dialog
+                progressDialog.setCancelable(false);
+>>>>>>> master
 
                 ConnectDB.getHistoryConnect()
 
@@ -280,6 +300,7 @@ public class InsertHistoryFragment extends Fragment {
         });
     }
 
+<<<<<<< HEAD
     /**********************************
      *   intent: สร้าง popup ระบบกำลังประมวลผล  *
      **********************************/
@@ -321,4 +342,6 @@ public class InsertHistoryFragment extends Fragment {
 //            }
 //        }).start();
 //    }
+=======
+>>>>>>> master
 }

@@ -40,42 +40,53 @@ import java.util.ArrayList;
 
 public class notifyFragment extends Fragment {
 
-    private TextView textCartItemCount;
-    private  int mCartItemCount;
-
     UpdateNotify un = UpdateNotify.getUpdateNotifyInstance();
-
     ArrayList<NotifyManange> notifyMananges = new ArrayList<>();
     String uid;
     FirebaseFirestore firestore;
     FirebaseAuth auth;
+    private TextView textCartItemCount;
+    private int mCartItemCount;
     private int checkFnofity;
+    ProgressDialog progressDialog;
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_notify,container,false);
+        return inflater.inflate(R.layout.fragment_notify, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        deley();
+        /**********************************
+        *   intent: สร้าง popup ระบบกำลังประมวลผล  *
+        **********************************/
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
+        progressDialog.setMessage("กรุณารอสักครู่...");
+        // Progress Dialog Style Horizontal
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        // Display Progress Dialog
+        progressDialog.show();
+        // Cannot Cancel Progress Dialog
+        progressDialog.setCancelable(false);
 
         firestore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
         uid = auth.getCurrentUser().getUid();
 
-        SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
-        mCartItemCount = prefs.getInt(uid+"_countNotify", -1);
+        SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord", Context.MODE_PRIVATE);
+        mCartItemCount = prefs.getInt(uid + "_countNotify", 0);
         Log.d("prefs Notify", String.valueOf(mCartItemCount));
 
-        checkFnofity = prefs.getInt(uid+"_checkFnotify", 2);
-        Log.d("CHECK NOTIFY: " , String.valueOf(checkFnofity));
+        checkFnofity = prefs.getInt(uid + "_checkFnotify", 0);
+        Log.d("CHECK NOTIFY: ", String.valueOf(checkFnofity));
 
 
-        if(checkFnofity == 1){
+        if (checkFnofity == 1) {
             TextView emptyNotify = getView().findViewById(R.id.empty_notify);
             emptyNotify.setText("");
 
@@ -83,12 +94,11 @@ public class notifyFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
-
         ListView notifyList = getView().findViewById(R.id.notify_list);
         final NotifyAdapter notifyAdapter = new NotifyAdapter(
-               getActivity(),
-               R.layout.fragment_notify_item,
-               notifyMananges
+                getActivity(),
+                R.layout.fragment_notify_item,
+                notifyMananges
         );
         notifyList.setAdapter(notifyAdapter);
 
@@ -100,57 +110,17 @@ public class notifyFragment extends Fragment {
                     @Override
                     public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
                         notifyMananges.clear();
-                        for (DocumentSnapshot d:queryDocumentSnapshots.getDocuments()){
+                        for (DocumentSnapshot d : queryDocumentSnapshots.getDocuments()) {
                             notifyMananges.add(d.toObject(NotifyManange.class));
                         }
                         notifyAdapter.notifyDataSetChanged();
+                        progressDialog.dismiss();
 
                     }
                 });
     }
 
 
-    /**********************************
-     *   intent: สร้าง popup ระบบกำลังประมวลผล  *
-     **********************************/
-    private void deley() {
-
-        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        final Handler handle = new Handler() {
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                progressDialog.incrementProgressBy(4); // Incremented By Value 1
-            }
-        };
-        // Progress Dialog Max Value
-        progressDialog.setMax(100);
-        progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
-        progressDialog.setMessage("กรุณารอสักครู่...");
-        // Progress Dialog Style Horizontal
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        // Display Progress Dialog
-        progressDialog.show();
-        // Cannot Cancel Progress Dialog
-        progressDialog.setCancelable(false);
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    while (progressDialog.getProgress() <= progressDialog.getMax()) {
-                        Thread.sleep(100);
-                        handle.sendMessage(handle.obtainMessage());
-                        if (progressDialog.getProgress() == progressDialog.getMax()) {
-                            progressDialog.dismiss();
-                        }
-                    }
-
-                }catch (Exception e){
-                    e.getStackTrace();
-                }
-            }
-        }).start();
-    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -174,7 +144,7 @@ public class notifyFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.nofity_bell: {
                 // Do something
                 getActivity().getSupportFragmentManager()
@@ -184,10 +154,9 @@ public class notifyFragment extends Fragment {
                         .commit();
                 Log.d("USER ", "CLICK NOTIFY BELL");
 
-                SharedPreferences.Editor prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE).edit();
-                prefs.putInt(uid+"_countNotify",0);
+                SharedPreferences.Editor prefs = getContext().getSharedPreferences("BloodsRecord", Context.MODE_PRIVATE).edit();
+                prefs.putInt(uid + "_countNotify", 0);
                 prefs.apply();
-
                 setupBadge();
                 return true;
             }
