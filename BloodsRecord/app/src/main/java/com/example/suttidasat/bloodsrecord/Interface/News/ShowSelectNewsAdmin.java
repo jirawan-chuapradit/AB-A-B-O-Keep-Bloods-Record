@@ -12,9 +12,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import android.support.v4.app.Fragment;
+
 import com.example.suttidasat.bloodsrecord.R;
 
-public class ShowSelectNews extends Fragment {
+public class ShowSelectNewsAdmin extends Fragment {
 
     TextView title,date,detail,link;
     SharedPreferences sp;
@@ -40,8 +42,8 @@ public class ShowSelectNews extends Fragment {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .addToBackStack(null)
-                        .replace(R.id.donator_view,
-                                new ViewNews()).commit();
+                        .replace(R.id.admin_view,
+                                new NewsManageFrament()).commit();
             }
         });
     }

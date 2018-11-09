@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.example.suttidasat.bloodsrecord.Interface.AddNewsFragment;
 import com.example.suttidasat.bloodsrecord.R;
 import com.example.suttidasat.bloodsrecord.adapter.NewsAdapter;
 import com.example.suttidasat.bloodsrecord.model.ConnectDB;

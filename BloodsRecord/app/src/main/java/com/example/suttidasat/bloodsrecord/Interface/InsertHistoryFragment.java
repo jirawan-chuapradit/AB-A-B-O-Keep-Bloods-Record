@@ -72,12 +72,10 @@ public class InsertHistoryFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-<<<<<<< HEAD
+
 //        deley();
 
-=======
->>>>>>> master
-//        firestore = FirebaseFirestore.getInstance();
+
 
         insertHistory();
         backBtn();
@@ -96,10 +94,6 @@ public class InsertHistoryFragment extends Fragment {
         currentDate = getView().findViewById(R.id.sh_date_now);
 
         ConnectDB.getHistoryConnect()
-//        firestore.collection("donateHistory")
-//                .document(NationaID.NID)
-//                .collection("history")
-//                .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -138,7 +132,7 @@ public class InsertHistoryFragment extends Fragment {
                         profileBlood.setText("กรุ๊ปเลือด : " + blood);
                         profileEmail.setText("อีเมล : " + email);
                         currentDate.setText("วันที่ : " + date);
-                        progressDialog.dismiss();
+//                        progressDialog.dismiss();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -155,9 +149,9 @@ public class InsertHistoryFragment extends Fragment {
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-<<<<<<< HEAD
+
 //                deley();
-=======
+
 
                 /**********************************
                  *   intent: สร้าง popup ระบบกำลังประมวลผล  *
@@ -171,14 +165,8 @@ public class InsertHistoryFragment extends Fragment {
                 progressDialog.show();
                 // Cannot Cancel Progress Dialog
                 progressDialog.setCancelable(false);
->>>>>>> master
 
                 ConnectDB.getHistoryConnect()
-
-//                firestore.collection("donateHistory")
-//                        .document(NationaID.NID)
-//                        .collection("history")
-//                        .get()
                         .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                             @Override
                             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -206,11 +194,6 @@ public class InsertHistoryFragment extends Fragment {
 
                                                                     if (documentSnapshot.exists() || size > 0) { //have
                                                                         ConnectDB.getHistoryConnect()
-
-//                                                                        firestore.collection("donateHistory") /// get size (amount of donate)
-//                                                                                .document(NationaID.NID)
-//                                                                                .collection("history")
-//                                                                                .get()
                                                                                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                                                                                     @Override
                                                                                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -300,7 +283,6 @@ public class InsertHistoryFragment extends Fragment {
         });
     }
 
-<<<<<<< HEAD
     /**********************************
      *   intent: สร้าง popup ระบบกำลังประมวลผล  *
      **********************************/
@@ -340,8 +322,9 @@ public class InsertHistoryFragment extends Fragment {
 //                    e.getStackTrace();
 //                }
 //            }
+//
+//
 //        }).start();
 //    }
-=======
->>>>>>> master
+
 }

@@ -1,4 +1,4 @@
-package com.example.suttidasat.bloodsrecord.Interface;
+package com.example.suttidasat.bloodsrecord.Interface.News;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
