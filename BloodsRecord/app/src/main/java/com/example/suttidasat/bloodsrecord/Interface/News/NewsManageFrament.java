@@ -80,6 +80,7 @@ public class NewsManageFrament extends Fragment {
             public void onClick(View v) {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
+                        .addToBackStack(null)
                         .replace(R.id.admin_view,
                                 new AddNewsFragment()).commit();
             }

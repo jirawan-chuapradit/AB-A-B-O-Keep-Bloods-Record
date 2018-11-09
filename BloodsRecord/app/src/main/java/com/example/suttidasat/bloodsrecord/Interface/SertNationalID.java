@@ -81,8 +81,12 @@ public class SertNationalID extends Fragment {
                                             Toast.LENGTH_SHORT
                                     ).show();
                                 }else {
-                                    getActivity().startActivity(new Intent(getActivity(), InsertHistoryActivity.class));
 
+                                    getActivity().getSupportFragmentManager()
+                                            .beginTransaction()
+                                            .addToBackStack(null)
+                                            .replace(R.id.admin_view, new InsertHistoryFragment())
+                                            .commit();
                                 }
                             }
                         });

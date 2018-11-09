@@ -41,6 +41,7 @@ public class ShowSelectNews extends Fragment {
             public void onClick(View v) {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
+                        .addToBackStack(null)
                         .replace(R.id.donator_view,
                                 new ViewNews()).commit();
             }
