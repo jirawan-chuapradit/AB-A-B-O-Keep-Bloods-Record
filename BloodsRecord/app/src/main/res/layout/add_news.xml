@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorAccent">
+
+
+    <ScrollView
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="100dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="50dp">
+
+
+
+            <EditText
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint=" หัวข้อ"
+                android:inputType="text"
+                android:textCursorDrawable="@color/colorPrimary" />
+
+
+            <EditText
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="วันที่"
+                android:inputType="textPassword"
+                android:padding="10dp"
+                android:textCursorDrawable="@color/colorPrimary" />
+
+            <EditText
+                android:id="@+id/detail"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:hint="รายละเอียด"
+                android:inputType="textPassword"
+                android:padding="10dp"
+                android:textCursorDrawable="@color/colorPrimary" />
+            <EditText
+                android:id="@+id/link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="Link"
+                android:inputType="textPassword"
+                android:padding="10dp"
+                android:textCursorDrawable="@color/colorPrimary" />
+
+            <Button
+                android:id="@+id/cf_add_news"
+                android:layout_width="284dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/login"
+                android:text="ยืนยีน"
+                android:textColor="#ffff" />
+            <Button
+                android:id="@+id/back_to_news"
+                android:layout_width="284dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/login"
+                android:text="กลับ"
+                android:textColor="#ffff" />
+
+
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+
+
+
+</android.support.constraint.ConstraintLayout>

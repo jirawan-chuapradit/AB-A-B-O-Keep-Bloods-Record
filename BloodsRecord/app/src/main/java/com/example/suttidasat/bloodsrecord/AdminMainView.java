@@ -14,6 +14,7 @@ import android.view.Window;
 
 import com.example.suttidasat.bloodsrecord.Interface.NewsManageFrament;
 import com.example.suttidasat.bloodsrecord.Interface.SertNationalID;
+import com.example.suttidasat.bloodsrecord.Interface.ViewNews;
 import com.google.firebase.auth.FirebaseAuth;
 
 
@@ -73,6 +74,7 @@ public class AdminMainView extends AppCompatActivity implements NavigationView.O
                         .beginTransaction()
                         .replace(R.id.admin_view,
                                 new NewsManageFrament()).commit();
+
                 navigationView.setCheckedItem(R.id.nav_manage_news);
                 break;
             }

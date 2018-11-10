@@ -74,7 +74,9 @@ public class MyService extends Service {
             public void run() {
                 Log.d("MY TASK", "MY TASK HAS BEEN START IN SPRINT");
                 getNationalId();
-                checkNotifyExist();
+
+                checkNotifyIsEmpty();
+
                 Log.d("MY TASK", "MY TASK HAS BEEN DONE IN SPRINT");
 
                 try {
@@ -90,21 +92,23 @@ public class MyService extends Service {
         return START_STICKY;
     }
 
-    private void checkNotifyExist() {
-        firestore.collection("notificationContent")
-                .document(uid).collection("content").get()
+    private void checkNotifyIsEmpty() {
+        notificationContentFirebase = new NotificationContentFirebase(
+                collectionReference, firestore, uid);
+        notificationContentFirebase.getConnectionCollection();
+        notificationContentFirebase.getCollectionReference().get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         sizeofContent = queryDocumentSnapshots.size();
-                        Log.d("SET NOTIFY FIREBASE", "size Of content : " + sizeofContent);
-
+                        Log.d("CHECK NOTIFY EMPTY", "size Of content : " + sizeofContent);
                         if(sizeofContent!= 0){
                             SharedPreferences.Editor prefs = getBaseContext().getSharedPreferences("BloodsRecord",MODE_PRIVATE).edit();
                             prefs.putInt(uid+"_checkFnotify", 1);
                             prefs.apply();
-                            Log.d("MY TASK", "_checkFnotify working...");
+                            Log.d("CHECK NOTIFY EMPTY", "working...");
                         }
+
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
