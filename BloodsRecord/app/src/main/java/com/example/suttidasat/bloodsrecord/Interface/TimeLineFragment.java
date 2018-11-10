@@ -102,11 +102,7 @@ public class TimeLineFragment extends Fragment {
 
 
     }
-
-
-    /**********************************
-     *   intent: สร้าง popup ระบบกำลังประมวลผล  *
-     **********************************/
+    
 
     void showAmount() {
 
