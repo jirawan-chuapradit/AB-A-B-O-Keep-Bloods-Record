@@ -32,6 +32,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -60,7 +61,7 @@ public class UpdatePasswordFragment extends Fragment {
     private Button saveBtn;
     private EditText newPassword, reNewPassword,oldPassword;
     private FirebaseUser firebaseUser;
-    private String userPasswordNew, userRePasswordNew,uid,userOldPassword,currentPassword;
+    private String userPasswordNew, userRePasswordNew,uid,userOldPassword;
     ProgressDialog progressDialog;
 
 
@@ -101,24 +102,6 @@ public class UpdatePasswordFragment extends Fragment {
                 userPasswordNew = newPassword.getText().toString();
                 userRePasswordNew = reNewPassword.getText().toString();
 
-                //Connect to bloodRecord
-                BloodsRecordFirebase bloodsRecordConnection = new BloodsRecordFirebase(
-                        documentReference, firestore, uid);
-                bloodsRecordConnection.getConnection();
-                bloodsRecordConnection.getDocumentReference().get()
-                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                            @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                DonatorProfile dp = documentSnapshot.toObject(DonatorProfile.class);
-                                currentPassword = dp.getPassword();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-
-                            }
-                        });
 
                 if (userPasswordNew.length() <= 5 || userRePasswordNew.length() <= 5){
                     Log.d("UPDATE", "PASSWORD LESS THAN 6");
@@ -126,66 +109,94 @@ public class UpdatePasswordFragment extends Fragment {
                 }else if(userPasswordNew.isEmpty() || userRePasswordNew.isEmpty()){
                     Log.d("UPDATE", "VALUE IS EMPTY");
                     Toast.makeText(getActivity(),"กรุณาระบุข้อมูลให้ครบถ้วน",Toast.LENGTH_SHORT).show();
-                }else if(!userOldPassword.equals(currentPassword)){
-                    Log.d("UPDATE", "OLD PASSWORD WAS WRONG");
+                }else if(!userPasswordNew.equals(userRePasswordNew)){
+                    Log.d("UPDATE", "PASSWORD NOT EQUALS RE PASSWORD");
                     Toast.makeText(getActivity(),"รหัสผ่านไม่ถูกต้อง",Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    /**********************************
-                     *   intent: สร้าง popup ระบบกำลังประมวลผล  *
-                     **********************************/
-                    progressDialog = new ProgressDialog(getActivity());
-                    progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
-                    progressDialog.setMessage("กรุณารอสักครู่...");
-                    // Progress Dialog Style Horizontal
-                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                    // Display Progress Dialog
-                    progressDialog.show();
-                    // Cannot Cancel Progress Dialog
-                    progressDialog.setCancelable(false);
+                    SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord", Context.MODE_PRIVATE);
+                    String email = prefs.getString(uid + "_userId", "empty email");
+                    Log.d("Email: ", email);
 
-                    firebaseUser.updatePassword(userPasswordNew).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    FirebaseAuth.getInstance().signInWithEmailAndPassword(email,userOldPassword).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                progressDialog.dismiss();
-
-
-                                //FORCE USER SIGGOUT
-                                FirebaseAuth.getInstance().signOut();
-
-                                //starting service
-                                getActivity().stopService(new Intent(getActivity(),MyService.class));
-                                Intent myIntent = new Intent(getActivity(), MainActivity.class);
-                                getActivity().startActivity(myIntent);
-                                Log.d("USER", "GOTO LOGIN");
-                                Toast.makeText(
-                                        getActivity(),
-                                        "Password has been Changed",
-                                        Toast.LENGTH_SHORT
-                                ).show();
-                            }
+                        public void onSuccess(AuthResult authResult) {
+                            updatePassword(userPasswordNew);
                         }
                     })
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
                                     progressDialog.dismiss();
-                                    Log.d("UPDATEPASSWORD : ", e.getMessage());
-                                        Toast.makeText(
-                                                getActivity(),
-                                                "Password Update Failed",
-                                                Toast.LENGTH_SHORT
-                                        ).show();
-                                    }
-
+                                    Log.d("UPDATE", "OLD PASSWORD WAS WRONG");
+                                    Toast.makeText(
+                                            getActivity(),
+                                            "รหัสผ่านไม่ถูกต้อง",
+                                            Toast.LENGTH_SHORT
+                                    ).show();
+                                }
                             });
+
                 }
 
             }
         });
 
     }
+
+    private void updatePassword(String userPasswordNew) {
+        /**********************************
+         *   intent: สร้าง popup ระบบกำลังประมวลผล  *
+         **********************************/
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
+        progressDialog.setMessage("กรุณารอสักครู่...");
+        // Progress Dialog Style Horizontal
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        // Display Progress Dialog
+        progressDialog.show();
+        // Cannot Cancel Progress Dialog
+        progressDialog.setCancelable(false);
+
+        firebaseUser.updatePassword(userPasswordNew).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    progressDialog.dismiss();
+
+
+                    //FORCE USER SIGGOUT
+                    FirebaseAuth.getInstance().signOut();
+
+                    //starting service
+                    getActivity().stopService(new Intent(getActivity(),MyService.class));
+                    Intent myIntent = new Intent(getActivity(), MainActivity.class);
+                    getActivity().startActivity(myIntent);
+                    Log.d("USER", "GOTO LOGIN");
+                    Toast.makeText(
+                            getActivity(),
+                            "Password has been Changed",
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }
+            }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressDialog.dismiss();
+                        Log.d("UPDATEPASSWORD : ", e.getMessage());
+                        Toast.makeText(
+                                getActivity(),
+                                "Password Update Failed",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                    }
+
+                });
+    }
+
+
     /**********************************
      *   intent: สร้าง popup ระบบกำลังประมวลผล  *
      **********************************/
