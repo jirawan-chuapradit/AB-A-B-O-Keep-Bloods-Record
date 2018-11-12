@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.suttidasat.bloodsrecord.R;
@@ -31,7 +32,7 @@ public class NewsAdapter extends ArrayAdapter<News> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-        View newsItem = LayoutInflater.from(context).inflate(R.layout.manage_news_item ,parent,false);
+        View newsItem = LayoutInflater.from(context).inflate(R.layout.view_news_item ,parent,false);
 
         TextView title = newsItem.findViewById(R.id.title);
         TextView date = newsItem.findViewById(R.id.date);
@@ -39,11 +40,12 @@ public class NewsAdapter extends ArrayAdapter<News> {
         TextView detail = newsItem.findViewById(R.id.date);
 
 
+
         News row = news.get(position);
         title.setText(row.getTitle());
         date.setText(row.getDate());
-        link.setText(row.getLink());
-        detail.setText(row.getDetail());
+//        link.setText(row.getLink());
+//        detail.setText(row.getDetail());
 
         return newsItem;
 

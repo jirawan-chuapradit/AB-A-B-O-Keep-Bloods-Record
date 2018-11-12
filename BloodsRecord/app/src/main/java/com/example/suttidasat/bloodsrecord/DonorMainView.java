@@ -1,7 +1,6 @@
 package com.example.suttidasat.bloodsrecord;
 
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 
 import android.support.annotation.NonNull;
@@ -14,8 +13,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import android.view.Window;
-
 
 import com.example.suttidasat.bloodsrecord.Interface.DonorProfileFragment;
 
@@ -23,12 +20,10 @@ import com.example.suttidasat.bloodsrecord.Interface.PrepareDonate;
 import com.example.suttidasat.bloodsrecord.Interface.TimeLineFragment;
 
 import com.example.suttidasat.bloodsrecord.Interface.UpdatePasswordFragment;
-import com.example.suttidasat.bloodsrecord.Interface.ViewNews;
+import com.example.suttidasat.bloodsrecord.Interface.News.ViewNews;
 import com.example.suttidasat.bloodsrecord.model.MyService;
 
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.concurrent.TimeUnit;
 
 
 /***********************************************

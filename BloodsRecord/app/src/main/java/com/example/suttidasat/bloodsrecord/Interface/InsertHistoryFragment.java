@@ -3,6 +3,8 @@ package com.example.suttidasat.bloodsrecord.Interface;
 import java.text.SimpleDateFormat;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -54,8 +56,10 @@ public class InsertHistoryFragment extends Fragment {
     private TextView profileName, profileNationalID, profileBlood, profileEmail, currentDate, amount;
     Calendar calendar = Calendar.getInstance();
     SimpleDateFormat mdformat = new SimpleDateFormat("dd-MM-yyyy ");
+    SharedPreferences.Editor sp;
 
     final String date = mdformat.format(calendar.getTime());
+    ProgressDialog progressDialog;
 
 
     @Nullable
@@ -68,9 +72,10 @@ public class InsertHistoryFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        deley();
 
-//        firestore = FirebaseFirestore.getInstance();
+//        deley();
+
+
 
         insertHistory();
         backBtn();
@@ -88,14 +93,15 @@ public class InsertHistoryFragment extends Fragment {
         amount = getView().findViewById(R.id.sh_amount);
         currentDate = getView().findViewById(R.id.sh_date_now);
 
-        firestore.collection("donateHistory")
-                .document(NationaID.NID)
-                .collection("history")
-                .get()
+        ConnectDB.getHistoryConnect()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        amount.setText("จำนวนการบริจาคทั้งหมด : " + queryDocumentSnapshots.size());
+                        int s = queryDocumentSnapshots.size();
+                        amount.setText("จำนวนการบริจาคทั้งหมด : " + String.valueOf(s));
+                        sp = getContext().getSharedPreferences("select_news", Context.MODE_PRIVATE).edit();
+                        sp.putInt("amount", s).apply();
+                        sp.commit();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -115,7 +121,6 @@ public class InsertHistoryFragment extends Fragment {
                         List<DocumentSnapshot> doc = task.getResult().getDocuments();
 
 
-
                         String name = doc.get(0).get("fName").toString() + " " + doc.get(0).get("lName").toString();
 
                         String nationalID = doc.get(0).get("nationalID").toString();
@@ -127,7 +132,7 @@ public class InsertHistoryFragment extends Fragment {
                         profileBlood.setText("กรุ๊ปเลือด : " + blood);
                         profileEmail.setText("อีเมล : " + email);
                         currentDate.setText("วันที่ : " + date);
-
+//                        progressDialog.dismiss();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -144,12 +149,24 @@ public class InsertHistoryFragment extends Fragment {
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deley();
 
-                firestore.collection("donateHistory")
-                        .document(NationaID.NID)
-                        .collection("history")
-                        .get()
+//                deley();
+
+
+                /**********************************
+                 *   intent: สร้าง popup ระบบกำลังประมวลผล  *
+                 **********************************/
+                progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
+                progressDialog.setMessage("กรุณารอสักครู่...");
+                // Progress Dialog Style Horizontal
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                // Display Progress Dialog
+                progressDialog.show();
+                // Cannot Cancel Progress Dialog
+                progressDialog.setCancelable(false);
+
+                ConnectDB.getHistoryConnect()
                         .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                             @Override
                             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -176,10 +193,7 @@ public class InsertHistoryFragment extends Fragment {
                                                                 public void onSuccess(DocumentSnapshot documentSnapshot) {
 
                                                                     if (documentSnapshot.exists() || size > 0) { //have
-                                                                        firestore.collection("donateHistory") /// get size (amount of donate)
-                                                                                .document(NationaID.NID)
-                                                                                .collection("history")
-                                                                                .get()
+                                                                        ConnectDB.getHistoryConnect()
                                                                                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                                                                                     @Override
                                                                                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -188,6 +202,7 @@ public class InsertHistoryFragment extends Fragment {
                                                                                         dh.setDate(date);
 
                                                                                         String num = Integer.toString(queryDocumentSnapshots.size() + 1);
+
                                                                                         firestore.collection("donateHistory")
                                                                                                 .document(NationaID.NID)
                                                                                                 .collection("history")
@@ -226,7 +241,8 @@ public class InsertHistoryFragment extends Fragment {
 
                                                                     getActivity().getSupportFragmentManager()
                                                                             .beginTransaction()
-                                                                            .replace(R.id.admin_view, new SertNationalID())
+                                                                            .addToBackStack(null)
+                                                                            .replace(R.id.admin_view, new InsertHistoryFragment())
                                                                             .commit();
 
                                                                 }
@@ -237,6 +253,7 @@ public class InsertHistoryFragment extends Fragment {
                                                     Toast.makeText(getActivity(), "เพิ่มการบริจาควันนี้ซ้ำ", Toast.LENGTH_SHORT).show();
                                                     getActivity().getSupportFragmentManager()
                                                             .beginTransaction()
+                                                            .addToBackStack(null)
                                                             .replace(R.id.admin_view, new InsertHistoryFragment())
                                                             .commit();
                                                 }
@@ -257,8 +274,10 @@ public class InsertHistoryFragment extends Fragment {
             public void onClick(View v) {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
+                        .addToBackStack(null)
                         .replace(R.id.admin_view, new SertNationalID())
                         .commit();
+
 
             }
         });
@@ -267,42 +286,45 @@ public class InsertHistoryFragment extends Fragment {
     /**********************************
      *   intent: สร้าง popup ระบบกำลังประมวลผล  *
      **********************************/
-    private void deley() {
+//    private void deley() {
+//
+//        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+//        final Handler handle = new Handler() {
+//            public void handleMessage(Message msg) {
+//                super.handleMessage(msg);
+//                progressDialog.incrementProgressBy(2); // Incremented By Value 2
+//            }
+//        };
+//        // Progress Dialog Max Value
+//        progressDialog.setMax(100);
+//        progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
+//        progressDialog.setMessage("กรุณารอสักครู่...");
+//        // Progress Dialog Style Horizontal
+//        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+//        // Display Progress Dialog
+//        progressDialog.show();
+//        // Cannot Cancel Progress Dialog
+//        progressDialog.setCancelable(false);
+//
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    while (progressDialog.getProgress() <= progressDialog.getMax()) {
+//                        Thread.sleep(100);
+//                        handle.sendMessage(handle.obtainMessage());
+//                        if (progressDialog.getProgress() == progressDialog.getMax()) {
+//                            progressDialog.dismiss();
+//                        }
+//                    }
+//
+//                } catch (Exception e) {
+//                    e.getStackTrace();
+//                }
+//            }
+//
+//
+//        }).start();
+//    }
 
-        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        final Handler handle = new Handler() {
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                progressDialog.incrementProgressBy(2); // Incremented By Value 2
-            }
-        };
-        // Progress Dialog Max Value
-        progressDialog.setMax(100);
-        progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
-        progressDialog.setMessage("กรุณารอสักครู่...");
-        // Progress Dialog Style Horizontal
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        // Display Progress Dialog
-        progressDialog.show();
-        // Cannot Cancel Progress Dialog
-        progressDialog.setCancelable(false);
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    while (progressDialog.getProgress() <= progressDialog.getMax()) {
-                        Thread.sleep(100);
-                        handle.sendMessage(handle.obtainMessage());
-                        if (progressDialog.getProgress() == progressDialog.getMax()) {
-                            progressDialog.dismiss();
-                        }
-                    }
-
-                }catch (Exception e){
-                    e.getStackTrace();
-                }
-            }
-        }).start();
-    }
 }

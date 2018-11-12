@@ -70,6 +70,9 @@ public class DonorProfileFragment extends Fragment {
     private TextView textCartItemCount;
     private int mCartItemCount;
 
+    ProgressDialog progressDialog;
+
+
 
     @SuppressLint("LongLogTag")
     @Override
@@ -96,7 +99,19 @@ public class DonorProfileFragment extends Fragment {
     }
 
     private void setParameter() {
-        deley();
+        /**********************************
+         *   intent: สร้าง popup ระบบกำลังประมวลผล  *
+         **********************************/
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
+        progressDialog.setMessage("กรุณารอสักครู่...");
+        // Progress Dialog Style Horizontal
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        // Display Progress Dialog
+        progressDialog.show();
+        // Cannot Cancel Progress Dialog
+        progressDialog.setCancelable(false);
+
         getImagePic();
         //Connect to bloodRecord
         BloodsRecordFirebase bloodsRecordConnection = new BloodsRecordFirebase(
@@ -141,6 +156,7 @@ public class DonorProfileFragment extends Fragment {
                         .error(R.mipmap.ic_launcher)
                         .transform((Transformation) new PicassoCircleTransformation())
                         .into(profileImage);
+                progressDialog.dismiss();
 
             }
         });
@@ -155,47 +171,7 @@ public class DonorProfileFragment extends Fragment {
         profileAddress = getView().findViewById(R.id.profileAddress);
     }
 
-    /**********************************
-     *   intent: สร้าง popup ระบบกำลังประมวลผล  *
-     **********************************/
-    private void deley() {
 
-        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        final Handler handle = new Handler() {
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                progressDialog.incrementProgressBy(2); // Incremented By Value 2
-            }
-        };
-        // Progress Dialog Max Value
-        progressDialog.setMax(100);
-        progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
-        progressDialog.setMessage("กรุณารอสักครู่...");
-        // Progress Dialog Style Horizontal
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        // Display Progress Dialog
-        progressDialog.show();
-        // Cannot Cancel Progress Dialog
-        progressDialog.setCancelable(false);
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    while (progressDialog.getProgress() <= progressDialog.getMax()) {
-                        Thread.sleep(100);
-                        handle.sendMessage(handle.obtainMessage());
-                        if (progressDialog.getProgress() == progressDialog.getMax()) {
-                            progressDialog.dismiss();
-                        }
-                    }
-
-                }catch (Exception e){
-                    e.getStackTrace();
-                }
-            }
-        }).start();
-    }
 
     //menu
     @Override

@@ -1,4 +1,4 @@
-package com.example.suttidasat.bloodsrecord.Interface;
+package com.example.suttidasat.bloodsrecord.Interface.News;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -19,9 +19,7 @@ import com.example.suttidasat.bloodsrecord.model.ConnectDB;
 import com.example.suttidasat.bloodsrecord.model.News;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -30,7 +28,9 @@ public class NewsManageFrament extends Fragment {
 
     FirebaseFirestore firestore = ConnectDB.getConnect();
     ArrayList<News> news_list = new ArrayList<>();
-    ListView newsList;
+    ListView listView;
+    String title,date,detail,link;
+
 
     @Nullable
     @Override
@@ -42,7 +42,7 @@ public class NewsManageFrament extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        newsList = getView().findViewById(R.id.news_list_admin);
+        listView = getView().findViewById(R.id.news_list_admin);
 
         final NewsAdapter newsAdapter = new NewsAdapter(
                 getActivity(),
@@ -50,7 +50,7 @@ public class NewsManageFrament extends Fragment {
                 news_list
         );
 
-        newsList.setAdapter(newsAdapter);
+        listView.setAdapter(newsAdapter);
 
 
         ConnectDB.getNews().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -68,20 +68,51 @@ public class NewsManageFrament extends Fragment {
 
         });
 
-
-        plusBtn();
-    }
-
-    void plusBtn(){
-        Button add = getView().findViewById(R.id.add_news_btn);
-        add.setOnClickListener(new View.OnClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                News news = new News();
+
+                news = (News) parent.getItemAtPosition(position);
+
+                title = news.getTitle();
+                date = news.getDate();
+                link = news.getLink();
+                detail = news.getDetail();
+
+                SharedPreferences.Editor sp = getContext().getSharedPreferences("select_news", Context.MODE_PRIVATE).edit();
+                sp.putString("date", date).apply();
+                sp.putString("title", title).apply();
+                sp.putString("detail", detail).apply();
+                sp.putString("link", link).apply();
+
+                sp.commit();
+
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.admin_view,
-                                new AddNewsFragment()).commit();
+                        .addToBackStack(null)
+                        .replace(R.id.admin_view, new ShowSelectNewsAdmin())
+                        .commit();
+
+                plusBtn();
             }
         });
     }
+
+            void plusBtn() {
+                Button add = getView().findViewById(R.id.add_news_btn);
+                add.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        getActivity().getSupportFragmentManager()
+                                .beginTransaction()
+                                .addToBackStack(null)
+                                .replace(R.id.admin_view,
+                                        new AddNewsFragment()).commit();
+                    }
+                });
+            }
+
+
 }
