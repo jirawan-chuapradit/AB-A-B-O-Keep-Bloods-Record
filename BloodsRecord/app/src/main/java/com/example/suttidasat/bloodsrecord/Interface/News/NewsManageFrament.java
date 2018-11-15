@@ -47,7 +47,7 @@ public class NewsManageFrament extends Fragment {
 
         final NewsAdapter newsAdapter = new NewsAdapter(
                 getActivity(),
-                R.layout.manage_news_item,
+                R.layout.view_news_item,
                 news_list
         );
 
@@ -107,7 +107,13 @@ public class NewsManageFrament extends Fragment {
                 add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        getActivity().startActivity(new Intent(getActivity(),Dialog_news.class));
+
+                        getActivity().getSupportFragmentManager()
+                                .beginTransaction()
+                                .addToBackStack(null)
+                                .replace(R.id.admin_view, new DialogNewsFragment())
+                                .commit();
+
 
                     }
                 });

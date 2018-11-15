@@ -56,9 +56,9 @@ public class ShowSelectNews extends Fragment {
         link = getView().findViewById(R.id.sh_link);
 
 
-        title.setText(sp.getString("title",""));
-        date.setText(sp.getString("date",""));
-        detail.setText(sp.getString("detail",""));
-        link.setText(sp.getString("link",""));
+        title.setText("เรื่อง  :"  +sp.getString("title",""));
+        date.setText("วันที่ : " +sp.getString("date",""));
+        detail.setText("รายละเอียด : " +sp.getString("detail",""));
+        link.setText("อ่านต่อได้ที่ : " +sp.getString("link",""));
     }
 }

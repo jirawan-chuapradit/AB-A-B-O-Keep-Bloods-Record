@@ -12,9 +12,9 @@ public class News {
 
     public News(){}
 
-    public News(String title, String date_now, String detail, String link) {
+    public News(String title, String date, String detail, String link) {
         this.title = title;
-        date_now = date;
+        this.date = date;
         this.detail = detail;
         this.link = link;
     }
