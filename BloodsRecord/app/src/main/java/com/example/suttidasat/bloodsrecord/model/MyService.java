@@ -74,7 +74,9 @@ public class MyService extends Service {
             public void run() {
                 Log.d("MY TASK", "MY TASK HAS BEEN START IN SPRINT");
                 getNationalId();
+
                 checkNotifyIsEmpty();
+
                 Log.d("MY TASK", "MY TASK HAS BEEN DONE IN SPRINT");
 
                 try {
@@ -207,10 +209,8 @@ public class MyService extends Service {
 
     private void setNotifyToFirebase() {
         Log.d("MY TASK", "SET NOTIFY FIREBASE HAS BEEN START");
-        notificationContentFirebase = new NotificationContentFirebase(
-                collectionReference, firestore, uid);
-        notificationContentFirebase.getConnectionCollection();
-        notificationContentFirebase.getCollectionReference().get()
+        firestore.collection("notificationContent")
+                .document(uid).collection("content").get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {

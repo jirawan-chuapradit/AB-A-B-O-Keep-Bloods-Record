@@ -87,6 +87,7 @@ public class notifyFragment extends Fragment {
 
 
         if (checkFnofity == 1) {
+
             TextView emptyNotify = getView().findViewById(R.id.empty_notify);
             emptyNotify.setText("");
 

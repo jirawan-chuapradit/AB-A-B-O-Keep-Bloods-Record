@@ -26,6 +26,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class LoginFragment extends Fragment {
 
 
@@ -81,7 +83,7 @@ public class LoginFragment extends Fragment {
             public void onClick(View view) {
                 EditText _userId = (EditText) getView().findViewById(R.id.login_userid);
                 EditText _password = (EditText) getView().findViewById(R.id.login_password);
-                String _userIdStr = _userId.getText().toString();
+                final String _userIdStr = _userId.getText().toString();
                 String _passwordStr = _password.getText().toString();
 
 
@@ -103,6 +105,12 @@ public class LoginFragment extends Fragment {
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
+                                    //GET UID of Currnet user
+                                    String uid = FirebaseAuth.getInstance().getUid();
+                                    SharedPreferences.Editor prefs = getContext().getSharedPreferences("BloodsRecord",MODE_PRIVATE).edit();
+                                    prefs.putString(uid+"_userId", _userIdStr);
+                                    prefs.apply();
+                                    Log.d("_UserID: ", _userIdStr);
 
                                     Intent myIntent = new Intent(getActivity(), DonorMainView.class);
                                     getActivity().startActivity(myIntent);
