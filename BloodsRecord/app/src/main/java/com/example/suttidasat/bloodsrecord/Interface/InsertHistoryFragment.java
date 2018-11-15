@@ -249,7 +249,7 @@ public class InsertHistoryFragment extends Fragment {
 
                                                             });
                                                 } else {
-                                                    System.out.println("วันซ้ำๆๆๆๆๆๆ");
+
                                                     Toast.makeText(getActivity(), "เพิ่มการบริจาควันนี้ซ้ำ", Toast.LENGTH_SHORT).show();
                                                     getActivity().getSupportFragmentManager()
                                                             .beginTransaction()

@@ -33,13 +33,12 @@
                 android:textCursorDrawable="@color/colorPrimary" />
 
 
-            <EditText
+            <TextView
                 android:id="@+id/date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:hint="วันที่"
-                android:inputType="textPassword"
                 android:padding="10dp"
                 android:textCursorDrawable="@color/colorPrimary" />
 
@@ -49,7 +48,6 @@
                 android:layout_height="200dp"
                 android:layout_gravity="center"
                 android:hint="รายละเอียด"
-                android:inputType="textPassword"
                 android:padding="10dp"
                 android:textCursorDrawable="@color/colorPrimary" />
             <EditText
@@ -58,7 +56,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:hint="Link"
-                android:inputType="textPassword"
                 android:padding="10dp"
                 android:textCursorDrawable="@color/colorPrimary" />
 
@@ -68,7 +65,7 @@
                 android:layout_height="40dp"
                 android:layout_marginTop="20dp"
                 android:background="@color/login"
-                android:text="ยืนยีน"
+                android:text="ยืนยัน"
                 android:textColor="#ffff" />
             <Button
                 android:id="@+id/back_to_news"

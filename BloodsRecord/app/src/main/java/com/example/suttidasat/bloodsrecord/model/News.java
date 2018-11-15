@@ -1,5 +1,8 @@
 package com.example.suttidasat.bloodsrecord.model;
 
+import android.widget.EditText;
+import android.widget.TextView;
+
 public class News {
 
     private String title;
@@ -7,7 +10,14 @@ public class News {
     private String date;
     private String link;
 
-    public void News(){}
+    public News(){}
+
+    public News(String title, String date_now, String detail, String link) {
+        this.title = title;
+        date_now = date;
+        this.detail = detail;
+        this.link = link;
+    }
 
     public String getTitle() {
         return title;

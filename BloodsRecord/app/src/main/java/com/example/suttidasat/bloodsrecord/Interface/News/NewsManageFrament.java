@@ -1,6 +1,7 @@
 package com.example.suttidasat.bloodsrecord.Interface.News;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -95,9 +96,10 @@ public class NewsManageFrament extends Fragment {
                         .replace(R.id.admin_view, new ShowSelectNewsAdmin())
                         .commit();
 
-                plusBtn();
+
             }
         });
+        plusBtn();
     }
 
             void plusBtn() {
@@ -105,11 +107,8 @@ public class NewsManageFrament extends Fragment {
                 add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        getActivity().getSupportFragmentManager()
-                                .beginTransaction()
-                                .addToBackStack(null)
-                                .replace(R.id.admin_view,
-                                        new AddNewsFragment()).commit();
+                        getActivity().startActivity(new Intent(getActivity(),Dialog_news.class));
+
                     }
                 });
             }
