@@ -38,6 +38,14 @@
                 tools:layout_editor_absoluteY="0dp">
 
 
+                <pl.droidsonroids.gif.GifImageView
+                    android:layout_width="100dp"
+                    android:layout_height="180dp"
+                    android:id="@+id/dancer"
+                    android:elevation="10dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/giphy" />
+
                 <TextView
                     android:layout_width="145dp"
                     android:layout_height="220dp"
