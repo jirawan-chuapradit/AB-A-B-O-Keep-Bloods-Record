@@ -23,7 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class DialogNewsFragment extends Fragment {
+public class AddNewsFragment extends Fragment {
 
     FirebaseFirestore firestore = ConnectDB.getConnect();
 
