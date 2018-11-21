@@ -29,7 +29,7 @@
             />
 
         <EditText
-            android:id="@+id/add_detail"
+            android:id="@+id/place"
             android:layout_marginTop="20dp"
             android:textSize="20dp"
             android:layout_below="@id/cf_date"
@@ -39,24 +39,33 @@
             />
 
         <EditText
-            android:id="@+id/add_link"
+            android:id="@+id/sign"
             android:layout_marginTop="20dp"
             android:textSize="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="ลงชื่อ"
-            android:layout_below="@id/add_detail"
+            android:layout_below="@id/place"
 
             />
 
         <Button
-            android:id="@+id/cf_add_news"
+            android:id="@+id/cf_plus_his"
             android:layout_width="100dp"
             android:layout_height="50dp"
-            android:layout_below="@id/add_link"
+            android:layout_below="@id/sign"
             android:layout_marginTop="30sp"
             android:gravity="center"
             android:text="เพิ่มรายการ"
+            />
+
+        <Button
+            android:id="@+id/back"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/cf_plus_his"
+            android:gravity="center"
+            android:text="กลับ"
             />
 
     </RelativeLayout>

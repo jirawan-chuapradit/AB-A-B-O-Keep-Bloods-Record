@@ -22,11 +22,9 @@ import android.widget.Toast;
 
 import com.example.suttidasat.bloodsrecord.R;
 import com.example.suttidasat.bloodsrecord.adapter.HistoryAdapter;
-import com.example.suttidasat.bloodsrecord.adapter.NewsAdapter;
 import com.example.suttidasat.bloodsrecord.model.ConnectDB;
 import com.example.suttidasat.bloodsrecord.model.History;
 import com.example.suttidasat.bloodsrecord.model.NationaID;
-import com.example.suttidasat.bloodsrecord.model.News;
 import com.google.android.gms.tasks.OnCompleteListener;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -129,8 +127,8 @@ public class InsertHistoryFragment extends Fragment {
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         int s = queryDocumentSnapshots.size();
                         amount.setText("จำนวนการบริจาคทั้งหมด : " + String.valueOf(s));
-                        sp = getContext().getSharedPreferences("select_news", Context.MODE_PRIVATE).edit();
-                        sp.putInt("amount", s).apply();
+                        sp = getContext().getSharedPreferences("donate_amount", Context.MODE_PRIVATE).edit();
+                        sp.putString("amount", String.valueOf(s)).apply();
                         sp.commit();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -162,6 +160,7 @@ public class InsertHistoryFragment extends Fragment {
                         profileBlood.setText("กรุ๊ปเลือด : " + blood);
                         profileEmail.setText("อีเมล : " + email);
                         currentDate.setText("วันที่ : " + c_date);
+
 //                        progressDialog.dismiss();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
