@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.suttidasat.bloodsrecord.Interface.SertNationalID;
 import com.example.suttidasat.bloodsrecord.R;
 import com.example.suttidasat.bloodsrecord.model.ConnectDB;
 import com.example.suttidasat.bloodsrecord.model.News;
@@ -23,13 +24,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class DialogNewsFragment extends Fragment {
+public class AddNewsFragment extends Fragment {
 
     FirebaseFirestore firestore = ConnectDB.getConnect();
 
     TextView date;
     EditText t,l,d;
     String title,link,detail;
+    Button back;
 
     Calendar calendar = Calendar.getInstance();
     SimpleDateFormat mdformat = new SimpleDateFormat("dd-MM-yyyy ");
@@ -50,6 +52,21 @@ public class DialogNewsFragment extends Fragment {
 
 
         cfBtn();
+        backBtn();
+    }
+
+    void backBtn(){
+        back = getView().findViewById(R.id.back_to_news);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .addToBackStack(null)
+                        .replace(R.id.admin_view, new NewsManageFrament())
+                        .commit();
+            }
+        });
     }
 
     void  cfBtn(){
