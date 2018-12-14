@@ -3,35 +3,39 @@ package com.example.suttidasat.bloodsrecord.Interface;
 import java.text.SimpleDateFormat;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.suttidasat.bloodsrecord.R;
-import com.example.suttidasat.bloodsrecord.model.DonatorHistory;
+import com.example.suttidasat.bloodsrecord.adapter.HistoryAdapter;
+import com.example.suttidasat.bloodsrecord.model.ConnectDB;
+import com.example.suttidasat.bloodsrecord.model.History;
 import com.example.suttidasat.bloodsrecord.model.NationaID;
 import com.google.android.gms.tasks.OnCompleteListener;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -45,14 +49,19 @@ import java.util.List;
 
 public class InsertHistoryFragment extends Fragment {
 
-    private ProgressDialog progressDialog;
-    FirebaseFirestore firestore;
+
+    FirebaseFirestore firestore = ConnectDB.getConnect();
     DocumentReference donateHistory;
     private TextView profileName, profileNationalID, profileBlood, profileEmail, currentDate, amount;
     Calendar calendar = Calendar.getInstance();
     SimpleDateFormat mdformat = new SimpleDateFormat("dd-MM-yyyy ");
+    SharedPreferences.Editor sp;
+    ListView listView;
+    ArrayList<History> his_list = new ArrayList<>();
+    String title,date,detail,link;
 
-    final String date = mdformat.format(calendar.getTime());
+    final String c_date = mdformat.format(calendar.getTime());
+    ProgressDialog progressDialog;
 
 
     @Nullable
@@ -66,21 +75,44 @@ public class InsertHistoryFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
 
+//        deley();
 
-        firestore = FirebaseFirestore.getInstance();
 
-        insertHistory();
+
+        profile_danate();
+        history();
         backBtn();
         plusBtn();
 
     }
 
-    void insertHistory() {
+    void history(){
+        listView = getView().findViewById(R.id.his_list);
 
-        // Loading data dialog
-        progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Please waiting...");
-        progressDialog.show();
+        final HistoryAdapter historyAdapter = new HistoryAdapter(
+                getActivity(),
+                R.layout.history_item,
+                his_list
+        );
+
+        ConnectDB.getHistoryConnect()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        his_list.clear();
+                        for (DocumentSnapshot d: queryDocumentSnapshots.getDocuments()){
+                            his_list.add(d.toObject(History.class));
+                        }
+
+                        historyAdapter.notifyDataSetChanged();
+                    }
+                });
+
+        listView.setAdapter(historyAdapter);
+    }
+
+    void profile_danate() {
+
 
         profileName = getView().findViewById(R.id.sh_name_donater);
         profileNationalID = getView().findViewById(R.id.sh_nid_donater);
@@ -89,20 +121,21 @@ public class InsertHistoryFragment extends Fragment {
         amount = getView().findViewById(R.id.sh_amount);
         currentDate = getView().findViewById(R.id.sh_date_now);
 
-        firestore.collection("donateHistory")
-                .document(NationaID.NID)
-                .collection("history")
-                .get()
+        ConnectDB.getHistoryConnect()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        amount.setText("จำนวนการบริจาคทั้งหมด : " + queryDocumentSnapshots.size());
+                        int s = queryDocumentSnapshots.size();
+                        amount.setText("จำนวนการบริจาคทั้งหมด : " + String.valueOf(s));
+                        sp = getContext().getSharedPreferences("donate_amount", Context.MODE_PRIVATE).edit();
+                        sp.putString("amount", String.valueOf(s)).apply();
+                        sp.commit();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.d("Show Donator", "ERRROR =" + e.getMessage());
-                Toast.makeText(getContext(),"ERROR = "+e.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "ERROR = " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -116,7 +149,7 @@ public class InsertHistoryFragment extends Fragment {
                         List<DocumentSnapshot> doc = task.getResult().getDocuments();
 
 
-                        String name = doc.get(0).get("fName").toString() + "" + doc.get(0).get("lName").toString();
+                        String name = doc.get(0).get("fName").toString() + " " + doc.get(0).get("lName").toString();
 
                         String nationalID = doc.get(0).get("nationalID").toString();
                         String blood = doc.get(0).get("bloodGroup").toString();
@@ -126,14 +159,15 @@ public class InsertHistoryFragment extends Fragment {
                         profileNationalID.setText("หมายเลขบัตรประชาชน : " + nationalID);
                         profileBlood.setText("กรุ๊ปเลือด : " + blood);
                         profileEmail.setText("อีเมล : " + email);
-                        currentDate.setText("วันที่ : " + date);
-                        progressDialog.dismiss();
+                        currentDate.setText("วันที่ : " + c_date);
+
+//                        progressDialog.dismiss();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.d("Show Donator", "ERRROR =" + e.getMessage());
-                Toast.makeText(getContext(),"ERROR = "+e.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "ERROR = " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -144,68 +178,10 @@ public class InsertHistoryFragment extends Fragment {
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                donateHistory = firestore.collection("donateHistory")
-                        .document(NationaID.NID);
-                donateHistory.get()
-                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                            @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-
-                                if (documentSnapshot.exists()) { //have
-                                    firestore.collection("donateHistory") /// get size (amount of donate)
-                                            .document(NationaID.NID)
-                                            .collection("history")
-                                            .get()
-                                            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                                @Override
-                                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-
-                                                    DonatorHistory dh = DonatorHistory.getDonatorHistoryInstance();
-                                                    dh.setDate(date);
-
-                                                    String num = Integer.toString(queryDocumentSnapshots.size()+1);
-                                                    firestore.collection("donateHistory")
-                                                            .document(NationaID.NID)
-                                                            .collection("history")
-                                                            .document(num)
-                                                            .set(dh)
-                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                                @Override
-                                                                public void onSuccess(Void aVoid) {
-                                                                    Log.d("Insert", "Insert Success");
-                                                                }
-                                                            });
-
-                                                }
-                                            });
-
-                                } else {
-                                    // never donate before
-                                    DonatorHistory dh = DonatorHistory.getDonatorHistoryInstance();
-                                    dh.setDate(date);
-
-                                    firestore.collection("donateHistory")
-                                            .document(NationaID.NID)
-                                            .collection("history")
-                                            .document("1")
-                                            .set(dh)
-                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
-                                                    Log.d("Insert", "Insert First Time Success");
-                                                }
-                                            });
-
-                                }
-
-                            }
-
-                        });
-
-                Toast.makeText(getActivity(), "Insert History Success", Toast.LENGTH_SHORT).show();
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.admin_view, new SertNationalID())
+                        .addToBackStack(null)
+                        .replace(R.id.admin_view, new ConfirmPlusHistory())
                         .commit();
             }
         });
@@ -218,14 +194,57 @@ public class InsertHistoryFragment extends Fragment {
             public void onClick(View v) {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
+                        .addToBackStack(null)
                         .replace(R.id.admin_view, new SertNationalID())
                         .commit();
+
 
             }
         });
     }
 
-
-
+    /**********************************
+     *   intent: สร้าง popup ระบบกำลังประมวลผล  *
+     **********************************/
+//    private void deley() {
+//
+//        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+//        final Handler handle = new Handler() {
+//            public void handleMessage(Message msg) {
+//                super.handleMessage(msg);
+//                progressDialog.incrementProgressBy(2); // Incremented By Value 2
+//            }
+//        };
+//        // Progress Dialog Max Value
+//        progressDialog.setMax(100);
+//        progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
+//        progressDialog.setMessage("กรุณารอสักครู่...");
+//        // Progress Dialog Style Horizontal
+//        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+//        // Display Progress Dialog
+//        progressDialog.show();
+//        // Cannot Cancel Progress Dialog
+//        progressDialog.setCancelable(false);
+//
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    while (progressDialog.getProgress() <= progressDialog.getMax()) {
+//                        Thread.sleep(100);
+//                        handle.sendMessage(handle.obtainMessage());
+//                        if (progressDialog.getProgress() == progressDialog.getMax()) {
+//                            progressDialog.dismiss();
+//                        }
+//                    }
+//
+//                } catch (Exception e) {
+//                    e.getStackTrace();
+//                }
+//            }
+//
+//
+//        }).start();
+//    }
 
 }

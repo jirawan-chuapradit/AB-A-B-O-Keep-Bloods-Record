@@ -8,6 +8,7 @@ public class DonatorProfile {
     private String email;
     private String bloodGroup;
     private String password;
+    private String Address;
 
     // Singleton
     private static DonatorProfile donatorProfileInsatance;
@@ -73,5 +74,11 @@ public class DonatorProfile {
         this.password = password;
     }
 
+    public String getAddress() {
+        return Address;
+    }
 
+    public void setAddress(String address) {
+        Address = address;
+    }
 }

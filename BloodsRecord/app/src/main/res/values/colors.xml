@@ -8,5 +8,6 @@
     <color name="login">#d40000</color>
     <color name="register">#b9b7b7</color>
     <color name="bg">#FFFAF0</color>
+    <color name="dark_red">#B60B13</color>
 
 </resources>

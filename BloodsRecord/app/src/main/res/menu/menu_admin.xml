@@ -7,12 +7,16 @@
         <item
             android:id="@+id/nav_insert"
             android:icon="@drawable/ic_search"
-            android:title="Insert" />
+            android:title="ประวัติการบริจาคโลหิต" />
+        <item
+            android:id="@+id/nav_manage_news"
+            android:icon="@drawable/ic_manage_news"
+            android:title="จัดการข่าวสารประชาสัมพันธ์" />
 
         <item
             android:id="@+id/nav_sign_out"
             android:icon="@drawable/ic_exit_to_app"
-            android:title="Sign Out" />
+            android:title="ออกจากระบบ" />
     </group>
 
 </menu>

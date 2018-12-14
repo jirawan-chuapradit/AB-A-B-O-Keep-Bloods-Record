@@ -5,30 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/notify_item_text"
-        android:layout_width="125dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/notify_item_date"
-        android:layout_marginTop="35dp"
-        android:hint="text"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
-
-    <TextView
-        android:id="@+id/notify_item_date"
-        android:layout_width="125dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="73dp"
-        android:layout_marginTop="78dp"
-        android:hint="date"
-        android:textColor="@color/whiteColor" />
-
     <ImageView
         android:id="@+id/imageView15"
         android:layout_width="wrap_content"
@@ -36,6 +12,33 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         app:srcCompat="@drawable/tab" />
+
+
+    <TextView
+        android:id="@+id/notify_item_text"
+        android:layout_width="221dp"
+        android:layout_height="45dp"
+        android:layout_alignStart="@+id/notify_item_date"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="25dp"
+        android:text="sssssssss"
+        android:textColor="@color/whiteColor"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/notify_item_date"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="87dp"
+        android:layout_marginEnd="71dp"
+        android:text="daaaaaa"
+        android:textColor="@color/whiteColor" />
+
 
     <ImageView
         android:id="@+id/imageView16"

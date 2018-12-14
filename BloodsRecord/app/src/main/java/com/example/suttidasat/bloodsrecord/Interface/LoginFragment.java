@@ -2,6 +2,7 @@ package com.example.suttidasat.bloodsrecord.Interface;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -25,6 +26,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class LoginFragment extends Fragment {
 
 
@@ -41,6 +44,7 @@ public class LoginFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+
             Log.d("USER", "USER ALREADY LOG IN");
             Log.d("USER", "GOTO HomePage");
             Intent myIntent = new Intent(getActivity(), DonorMainView.class);
@@ -79,7 +83,7 @@ public class LoginFragment extends Fragment {
             public void onClick(View view) {
                 EditText _userId = (EditText) getView().findViewById(R.id.login_userid);
                 EditText _password = (EditText) getView().findViewById(R.id.login_password);
-                String _userIdStr = _userId.getText().toString();
+                final String _userIdStr = _userId.getText().toString();
                 String _passwordStr = _password.getText().toString();
 
 
@@ -101,6 +105,12 @@ public class LoginFragment extends Fragment {
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
+                                    //GET UID of Currnet user
+                                    String uid = FirebaseAuth.getInstance().getUid();
+                                    SharedPreferences.Editor prefs = getContext().getSharedPreferences("BloodsRecord",MODE_PRIVATE).edit();
+                                    prefs.putString(uid+"_userId", _userIdStr);
+                                    prefs.apply();
+                                    Log.d("_UserID: ", _userIdStr);
 
                                     Intent myIntent = new Intent(getActivity(), DonorMainView.class);
                                     getActivity().startActivity(myIntent);
@@ -111,7 +121,7 @@ public class LoginFragment extends Fragment {
                         public void onFailure(@NonNull Exception e) {
 
                             Log.d("USER", "INVALID USER OR PASSWORD");
-                            Toast.makeText(getContext(), "ERROR = " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "อีเมลล์หรือรหัสผ่านไม่ถูกต้อง", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

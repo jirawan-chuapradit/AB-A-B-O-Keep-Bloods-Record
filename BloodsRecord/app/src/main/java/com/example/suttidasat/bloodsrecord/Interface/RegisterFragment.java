@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.example.suttidasat.bloodsrecord.MainActivity;
 import com.example.suttidasat.bloodsrecord.R;
 import com.example.suttidasat.bloodsrecord.model.DonatorProfile;
+import com.example.suttidasat.bloodsrecord.model.NationaID;
 import com.example.suttidasat.bloodsrecord.model.PicassoCircleTransformation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -34,6 +35,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -64,8 +67,10 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
 
     //Register value
-    String firstnameStr,lastnameStr,nationalIDStr
-            ,bloodsStr,emailStr,passwordStr,rePasswordStr,uid;
+    private String firstnameStr,lastnameStr,nationalIDStr
+            ,bloodsStr,emailStr,passwordStr,rePasswordStr
+            ,uid,addressStr;
+    private boolean nationalIdIsEmpty;
 
     //ImageView
     private ImageView userProfileImage;
@@ -77,6 +82,9 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
     //a Uri object to store file path
     private Uri filePath;
+
+    ProgressDialog progressDialog;
+
 
 
 
@@ -93,10 +101,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
 
         //getting views from layout
+
         registerBtn = getView().findViewById(R.id.registerBtn);
         userProfileImage = getView().findViewById(R.id.userProfileImage);
 
         //attaching listener
+
         registerBtn.setOnClickListener(this);
         userProfileImage.setOnClickListener(this);
 
@@ -106,13 +116,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
     private void register() {
 
-
-
         //GET VALUE FROM FRAGMENT
         getRegisterValue();
+        checkNationIdIsExist();
         //check value is empty
         if(firstnameStr.isEmpty() || lastnameStr.isEmpty()||nationalIDStr.isEmpty()||bloodsStr.isEmpty()
-                || emailStr.isEmpty()|| passwordStr.isEmpty()||rePasswordStr.isEmpty()){
+                || emailStr.isEmpty()|| passwordStr.isEmpty()||rePasswordStr.isEmpty()||addressStr.isEmpty()){
             Log.d("REGISTER", "VALUE IS EMPTY");
             Toast.makeText(getActivity(),"กรุณากรอกข้อมูลให้ครบถ้วน",Toast.LENGTH_SHORT).show();
         }else if(!rePasswordStr.equals(passwordStr)){
@@ -129,9 +138,24 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         else if(filePath == null){
             Log.d("REGISTER", "ไม่ได้เลือกรูปภาพ");
             Toast.makeText(getActivity(),"กรุณาใส่รูปภาพ",Toast.LENGTH_SHORT).show();
+        }else if(nationalIdIsEmpty==false){
+            Log.d("REGISTER : ", "NATIONAL ID IS ALREADY EXIST");
+            Toast.makeText(getActivity(),"รหัสบัตรประชาชนนี้ไม่สามารถลงทะเบียนได้",Toast.LENGTH_SHORT).show();
         }
         else{
-            deley();
+            /**********************************
+             *   intent: สร้าง popup ระบบกำลังประมวลผล  *
+             **********************************/
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
+            progressDialog.setMessage("กรุณารอสักครู่...");
+            // Progress Dialog Style Horizontal
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            // Display Progress Dialog
+            progressDialog.show();
+            // Cannot Cancel Progress Dialog
+            progressDialog.setCancelable(false);
+
             fbAuth.createUserWithEmailAndPassword(emailStr,passwordStr).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -141,6 +165,27 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 }
             });
         }
+    }
+
+    private void checkNationIdIsExist() {
+        Query existNationalId;
+        existNationalId = firestore.collection("bloodsRecord")
+                .whereEqualTo("nationalID", nationalIDStr);
+        existNationalId.get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if (queryDocumentSnapshots.isEmpty()) {
+                            Log.d("NATIONAL_ID : ", "CAN RESIST");
+                            nationalIdIsEmpty = true;
+
+                        }else {
+                            Log.d("NATIONAL_ID : ", "IS ALREADY EXIST");
+                            nationalIdIsEmpty = false;
+                        }
+                    }
+                });
+
     }
 
     private void sendUserData() {
@@ -176,6 +221,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         dp.setEmail(emailStr);
         dp.setBloodGroup(bloodsStr);
         dp.setPassword(passwordStr);
+        dp.setAddress(addressStr);
         Log.d("REGISTER", "REGISTER SUCCESS");
 
         firestore.collection("bloodsRecord")
@@ -184,12 +230,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.d("REGISTER", "VALUE HAS BEEN SAVED IN FIREBASE");
-
-                SharedPreferences.Editor prefs = getContext().getSharedPreferences("BloodsRecord",MODE_PRIVATE).edit();
-                prefs.putInt(uid+"_countNotify",0);
-                prefs.putInt(uid+"_checkFnotify", 0);
-                prefs.apply();
-
+                progressDialog.dismiss();
                 //FORCE USER SIGGOUT
                 FirebaseAuth.getInstance().signOut();
                 getActivity().getSupportFragmentManager()
@@ -216,6 +257,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         EditText emailEdt = getView().findViewById(R.id.registerEmail);
         EditText passwordEdt = getView().findViewById(R.id.registerPassword);
         EditText rePasswordEdt = getView().findViewById(R.id.registerRePassword);
+        EditText addressEdt = getView().findViewById(R.id.registerAddress);
         spinner1 = getView().findViewById(R.id.spinner1);
 
 
@@ -228,6 +270,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         emailStr = emailEdt.getText().toString();
         passwordStr = passwordEdt.getText().toString();
         rePasswordStr = rePasswordEdt.getText().toString();
+        addressStr = addressEdt.getText().toString();
+
     }
 
 
@@ -258,44 +302,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     /**********************************
      *   intent: สร้าง popup ระบบกำลังประมวลผล  *
      **********************************/
-    private void deley() {
-
-        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        final Handler handle = new Handler() {
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                progressDialog.incrementProgressBy(2); // Incremented By Value 2
-            }
-        };
-        // Progress Dialog Max Value
-        progressDialog.setMax(100);
-        progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
-        progressDialog.setMessage("กรุณารอสักครู่...");
-        // Progress Dialog Style Horizontal
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        // Display Progress Dialog
-        progressDialog.show();
-        // Cannot Cancel Progress Dialog
-        progressDialog.setCancelable(false);
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    while (progressDialog.getProgress() <= progressDialog.getMax()) {
-                        Thread.sleep(100);
-                        handle.sendMessage(handle.obtainMessage());
-                        if (progressDialog.getProgress() == progressDialog.getMax()) {
-                            progressDialog.dismiss();
-                        }
-                    }
-
-                }catch (Exception e){
-                    e.getStackTrace();
-                }
-            }
-        }).start();
-    }
     @Override
     public void onClick(View v) {
         if(v == userProfileImage){

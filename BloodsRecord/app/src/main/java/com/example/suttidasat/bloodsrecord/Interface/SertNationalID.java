@@ -1,5 +1,6 @@
 package com.example.suttidasat.bloodsrecord.Interface;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -83,6 +84,7 @@ public class SertNationalID extends Fragment {
 
                                     getActivity().getSupportFragmentManager()
                                             .beginTransaction()
+                                            .addToBackStack(null)
                                             .replace(R.id.admin_view, new InsertHistoryFragment())
                                             .commit();
                                 }

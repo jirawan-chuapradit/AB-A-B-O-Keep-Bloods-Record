@@ -21,52 +21,62 @@
             android:orientation="vertical"
             android:padding="50dp">
 
-            <ImageView
-                android:id="@+id/login_logo"
-                android:layout_width="123dp"
-                android:layout_height="118dp"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/logo_app"
-                tools:layout_editor_absoluteX="134dp"
-                tools:layout_editor_absoluteY="104dp" />
+
 
             <EditText
-                android:id="@+id/login_userid"
+                android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:hint=" E-mail"
+                android:hint=" หัวข้อ"
                 android:inputType="text"
                 android:textCursorDrawable="@color/colorPrimary" />
 
 
-            <EditText
-                android:id="@+id/login_password"
+            <TextView
+                android:id="@+id/date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:hint="password"
-                android:inputType="textPassword"
+                android:hint="วันที่"
+                android:padding="10dp"
+                android:textCursorDrawable="@color/colorPrimary" />
+
+            <EditText
+                android:id="@+id/detail"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:hint="รายละเอียด"
+                android:padding="10dp"
+                android:textCursorDrawable="@color/colorPrimary" />
+            <EditText
+                android:id="@+id/link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="Link"
                 android:padding="10dp"
                 android:textCursorDrawable="@color/colorPrimary" />
 
             <Button
-                android:id="@+id/login_btn"
+                android:id="@+id/cf_add_news"
                 android:layout_width="284dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="20dp"
                 android:background="@color/login"
-                android:text="เข้าสู่ระบบ"
+                android:text="ยืนยัน"
+                android:textColor="#ffff" />
+            <Button
+                android:id="@+id/back_to_news"
+                android:layout_width="284dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/login"
+                android:text="กลับ"
                 android:textColor="#ffff" />
 
-            <Button
-                android:id="@+id/login_register_Btn"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/register_btn"
-                android:text="Register"
-                android:textColor="@color/colorPrimary" />
+
 
 
         </LinearLayout>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/cf_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="amount"
+            android:textSize="20dp"
+            />
+
+        <TextView
+            android:id="@+id/cf_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/cf_amount"
+            android:textSize="20dp"
+            android:text="sh_date"
+            />
+
+        <EditText
+            android:id="@+id/place"
+            android:layout_marginTop="20dp"
+            android:textSize="20dp"
+            android:layout_below="@id/cf_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="สถานที่บริจาค"
+            />
+
+        <EditText
+            android:id="@+id/sign"
+            android:layout_marginTop="20dp"
+            android:textSize="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ลงชื่อ"
+            android:layout_below="@id/place"
+
+            />
+
+        <Button
+            android:id="@+id/cf_plus_his"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/sign"
+            android:layout_marginTop="30sp"
+            android:gravity="center"
+            android:text="เพิ่มรายการ"
+            />
+
+        <Button
+            android:id="@+id/back"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/cf_plus_his"
+            android:gravity="center"
+            android:text="กลับ"
+            />
+
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>

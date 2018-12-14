@@ -7,21 +7,39 @@
         <item
         android:id="@+id/nav_home"
         android:icon="@drawable/ic_home"
-        android:title="Home" />
-        <item
-        android:id="@+id/nav_profile"
-        android:icon="@drawable/ic_person"
-        android:title="My Profile" />
+        android:title="หน้าแรก" />
 
         <item
-        android:id="@+id/nav_change_password"
-        android:icon="@drawable/ic_key_password"
-        android:title="Change Password" />
+            android:id="@+id/nav_view_news"
+            android:icon="@drawable/ic_manage_news"
+            android:title="ข่าวสารประชาสัมพันธ์" />
 
         <item
-        android:id="@+id/nav_sign_out"
-        android:icon="@drawable/ic_exit_to_app"
-        android:title="Sign Out" />
+        android:id="@+id/nav_prepare_donate"
+        android:icon="@drawable/ic_prepare"
+        android:title="การเตรียมตัวบริจาคโลหิต" />
+
+        <item android:title="การตั้งค่าบัญชีผู้ใช้ทั่วไป">
+            <menu>
+                <item
+                    android:id="@+id/nav_profile"
+                    android:icon="@drawable/ic_person"
+                    android:title="ข้อมูลส่วนตัว" />
+
+                <item
+                    android:id="@+id/nav_change_password"
+                    android:icon="@drawable/ic_key_password"
+                    android:title="เปลี่ยนแปลงรหัสผ่าน" />
+
+                <item
+                    android:id="@+id/nav_sign_out"
+                    android:icon="@drawable/ic_exit_to_app"
+                    android:title="ออกจากระบบ" />
+            </menu>
+        </item>
     </group>
+
+
+
 
 </menu>

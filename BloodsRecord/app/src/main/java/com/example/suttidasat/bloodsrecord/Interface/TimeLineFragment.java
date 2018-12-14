@@ -60,7 +60,7 @@ public class TimeLineFragment extends Fragment {
     private FirebaseFirestore firestore;
     private String uid;
     private String nid;
-
+    ProgressDialog progressDialog;
 
     @Nullable
     @Override
@@ -71,64 +71,38 @@ public class TimeLineFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        /**********************************
+         *   intent: สร้าง popup ระบบกำลังประมวลผล  *
+         **********************************/
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
+        progressDialog.setMessage("กรุณารอสักครู่...");
+        // Progress Dialog Style Horizontal
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        // Display Progress Dialog
+        progressDialog.show();
+        // Cannot Cancel Progress Dialog
+        progressDialog.setCancelable(false);
+
+
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         //menu
         SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
-        mCartItemCount = prefs.getInt(uid+"_countNotify", -1);
+        mCartItemCount = prefs.getInt(uid+"_countNotify", 0);
+
+
+        //delete SharedPreferences
+//        SharedPreferences preferences = getContext().getSharedPreferences("BloodsRecord", 0);
+//        preferences.edit().remove(uid+"_checkFnotify").commit();
 
         Log.d("prefs Timeline: ", String.valueOf(mCartItemCount));
         setHasOptionsMenu(true);
         firestore = FirebaseFirestore.getInstance();
         showAmount();
 
-        // Loading data dialog
-        deley();
-
 
     }
-
-
-    /**********************************
-     *   intent: สร้าง popup ระบบกำลังประมวลผล  *
-     **********************************/
-    private void deley() {
-
-        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        final Handler handle = new Handler() {
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                progressDialog.incrementProgressBy(2); // Incremented By Value 2
-            }
-        };
-        // Progress Dialog Max Value
-        progressDialog.setMax(100);
-        progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
-        progressDialog.setMessage("กรุณารอสักครู่...");
-        // Progress Dialog Style Horizontal
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        // Display Progress Dialog
-        progressDialog.show();
-        // Cannot Cancel Progress Dialog
-        progressDialog.setCancelable(false);
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    while (progressDialog.getProgress() <= progressDialog.getMax()) {
-                        Thread.sleep(100);
-                        handle.sendMessage(handle.obtainMessage());
-                        if (progressDialog.getProgress() == progressDialog.getMax()) {
-                            progressDialog.dismiss();
-                        }
-                    }
-
-                }catch (Exception e){
-                    e.getStackTrace();
-                }
-            }
-        }).start();
-    }
+    
 
     void showAmount() {
 
@@ -273,6 +247,7 @@ public class TimeLineFragment extends Fragment {
                                             GradientDrawable gdRe = (GradientDrawable) re108.getBackground().mutate();
                                             gdRe.setColor(Color.rgb(249,225,183));
                                         }
+                                        progressDialog.dismiss();
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                             @Override

@@ -85,14 +85,36 @@
                 android:drawableLeft="@drawable/ic_email"
                 android:ems="10" />
 
-
-            <Spinner
-                android:id="@+id/spinner1"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:entries="@array/blood_arrays"
-                android:prompt="@string/bloods_groups" />
+                android:orientation="horizontal" >
 
+                <TextView
+                    android:layout_width="30sp"
+                    android:layout_height="25sp"
+                    android:background="@drawable/ic_blood"
+                    android:layout_gravity="left" />
+
+                <Spinner
+                    android:id="@+id/spinner1"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/blood_arrays"
+                    android:prompt="@string/bloods_groups" />
+
+            </LinearLayout>
+
+
+            <EditText
+                android:id="@+id/registerAddress"
+                android:layout_width="321dp"
+                android:layout_height="97dp"
+                android:ems="10"
+                android:hint="ที่อยู่"
+                android:isScrollContainer="true"
+                android:inputType="text" />
 
             <Button
                 android:id="@+id/registerBtn"
@@ -101,6 +123,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 />
+
 
 
         </LinearLayout>

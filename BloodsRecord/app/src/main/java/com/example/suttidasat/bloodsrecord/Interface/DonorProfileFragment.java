@@ -59,15 +59,19 @@ public class DonorProfileFragment extends Fragment {
 
     //Firebase
     private FirebaseAuth fbAuth;
+    private String uid;
     private FirebaseFirestore firestore;
     private FirebaseStorage firebaseStorage;
     private DocumentReference documentReference;
-    private TextView profileName, profileNationalID, profileBlood, profileEmail;
-    private String uid;
+    private TextView profileName, profileNationalID, profileBlood, profileEmail, profileAddress;
+
     private ImageView profileImage;
     //menu
     private TextView textCartItemCount;
     private int mCartItemCount;
+
+    ProgressDialog progressDialog;
+
 
 
     @SuppressLint("LongLogTag")
@@ -95,6 +99,19 @@ public class DonorProfileFragment extends Fragment {
     }
 
     private void setParameter() {
+        /**********************************
+         *   intent: สร้าง popup ระบบกำลังประมวลผล  *
+         **********************************/
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
+        progressDialog.setMessage("กรุณารอสักครู่...");
+        // Progress Dialog Style Horizontal
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        // Display Progress Dialog
+        progressDialog.show();
+        // Cannot Cancel Progress Dialog
+        progressDialog.setCancelable(false);
+
         getImagePic();
         //Connect to bloodRecord
         BloodsRecordFirebase bloodsRecordConnection = new BloodsRecordFirebase(
@@ -112,11 +129,13 @@ public class DonorProfileFragment extends Fragment {
                         String nationalID = dp.getNationalID();
                         String blood = dp.getBloodGroup();
                         String email = dp.getEmail();
+                        String address = dp.getAddress();
 
                         profileName.setText("ชื่อ : " + name);
-                        profileNationalID.setText("รหัสบัตรประชาชน : " + nationalID);
-                        profileBlood.setText("กรุ๊ปเลือด : " + blood);
-                        profileEmail.setText("อีเมลล์ : " + email);
+                        profileNationalID.setText(nationalID);
+                        profileBlood.setText(blood);
+                        profileEmail.setText(email+"   ");
+                        profileAddress.setText(address+"   ");
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -137,7 +156,8 @@ public class DonorProfileFragment extends Fragment {
                         .error(R.mipmap.ic_launcher)
                         .transform((Transformation) new PicassoCircleTransformation())
                         .into(profileImage);
-                deley();
+                progressDialog.dismiss();
+
             }
         });
     }
@@ -148,49 +168,10 @@ public class DonorProfileFragment extends Fragment {
         profileNationalID = getView().findViewById(R.id.profileNationalID);
         profileBlood = getView().findViewById(R.id.profileBloodsG);
         profileEmail = getView().findViewById(R.id.profileEmail);
+        profileAddress = getView().findViewById(R.id.profileAddress);
     }
 
-    /**********************************
-     *   intent: สร้าง popup ระบบกำลังประมวลผล  *
-     **********************************/
-    private void deley() {
 
-        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        final Handler handle = new Handler() {
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                progressDialog.incrementProgressBy(2); // Incremented By Value 2
-            }
-        };
-        // Progress Dialog Max Value
-        progressDialog.setMax(100);
-        progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
-        progressDialog.setMessage("กรุณารอสักครู่...");
-        // Progress Dialog Style Horizontal
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        // Display Progress Dialog
-        progressDialog.show();
-        // Cannot Cancel Progress Dialog
-        progressDialog.setCancelable(false);
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    while (progressDialog.getProgress() <= progressDialog.getMax()) {
-                        Thread.sleep(100);
-                        handle.sendMessage(handle.obtainMessage());
-                        if (progressDialog.getProgress() == progressDialog.getMax()) {
-                            progressDialog.dismiss();
-                        }
-                    }
-
-                }catch (Exception e){
-                    e.getStackTrace();
-                }
-            }
-        }).start();
-    }
 
     //menu
     @Override
