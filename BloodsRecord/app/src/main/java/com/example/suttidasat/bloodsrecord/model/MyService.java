@@ -104,7 +104,7 @@ public class MyService extends Service {
                         Log.d("CHECK NOTIFY EMPTY", "size Of content : " + sizeofContent);
                         if(sizeofContent!= 0){
                             SharedPreferences.Editor prefs = getBaseContext().getSharedPreferences("BloodsRecord",MODE_PRIVATE).edit();
-                            prefs.putInt(uid+"_checkFnotify", 1);
+                            prefs.putInt("_checkFnotify", 1);
                             prefs.apply();
                             Log.d("CHECK NOTIFY EMPTY", "working...");
                         }
@@ -235,7 +235,7 @@ public class MyService extends Service {
                                     Log.d("FIRST TIME NOTIFY", "Notification has been saved!!!");
 
                                     SharedPreferences.Editor prefs = getBaseContext().getSharedPreferences("BloodsRecord",MODE_PRIVATE).edit();
-                                    prefs.putInt(uid+"_countNotify",1);
+                                    prefs.putInt("_countNotify",1);
                                     prefs.apply();
 
 
@@ -243,7 +243,7 @@ public class MyService extends Service {
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Log.d("REGISTER", "ERRROR =" + e.getMessage());
+                                    Log.d("REGISTER", "ERROR =" + e.getMessage());
                                 }
                             });
                         }
@@ -251,7 +251,7 @@ public class MyService extends Service {
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.d("Show Donator", "ERRROR =" + e.getMessage());
+                Log.d("Show Donator", "ERROR =" + e.getMessage());
             }
         });
     }
@@ -286,17 +286,17 @@ public class MyService extends Service {
 
 
                                     SharedPreferences prefs = getBaseContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
-                                    mCartItemCount = prefs.getInt(uid+"_countNotify", 0);
+                                    mCartItemCount = prefs.getInt("_countNotify", 0);
                                     mCartItemCount++;
                                     SharedPreferences.Editor prefs2 = getBaseContext().getSharedPreferences("BloodsRecord",MODE_PRIVATE).edit();
-                                    prefs2.putInt(uid+"_countNotify",mCartItemCount);
+                                    prefs2.putInt("_countNotify",mCartItemCount);
                                     prefs2.apply();
 
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Log.d("REGISTER", "ERRROR =" + e.getMessage());
+                                    Log.d("REGISTER", "ERROR =" + e.getMessage());
                                 }
                             });
                         }
@@ -305,7 +305,7 @@ public class MyService extends Service {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.d("COUNT NOTIRY ", "ERRROR =" + e.getMessage());
+                        Log.d("COUNT NOTIFY ", "ERROR =" + e.getMessage());
                     }
                 });
     }

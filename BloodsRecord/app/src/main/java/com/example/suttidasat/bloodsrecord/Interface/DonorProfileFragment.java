@@ -56,7 +56,7 @@ public class DonorProfileFragment extends Fragment {
     private FirebaseStorage firebaseStorage;
     private DocumentReference documentReference;
     private TextView profileName, profileNationalID, profileBlood, profileEmail, profileAddress;
-
+    private SharedPreferences prefs;
     private ImageView profileImage;
     //menu
     private TextView textCartItemCount;
@@ -80,7 +80,7 @@ public class DonorProfileFragment extends Fragment {
         uid = fbAuth.getCurrentUser().getUid();
 
         //get Notify count
-        SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
+        prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
         mCartItemCount = prefs.getInt(uid+"_countNotify", -1);
         Log.d("prefs profile", String.valueOf(mCartItemCount));
 
@@ -105,37 +105,13 @@ public class DonorProfileFragment extends Fragment {
         progressDialog.setCancelable(false);
 
         getImagePic();
-        //Connect to bloodRecord
-        BloodsRecordFirebase bloodsRecordConnection = new BloodsRecordFirebase(
-                documentReference, firestore, uid);
-        bloodsRecordConnection.getConnection();
-        bloodsRecordConnection.getDocumentReference().get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                        Log.d("DONATOR PROFILE", "GET DOCUMENT DATA");
 
-                        DonatorProfile dp = documentSnapshot.toObject(DonatorProfile.class);
-                        String name = dp.getfName() + "  " + dp.getlName();
-                        String nationalID = dp.getNationalID();
-                        String blood = dp.getBloodGroup();
-                        String email = dp.getEmail();
-                        String address = dp.getAddress();
-
-                        profileName.setText("ชื่อ : " + name);
-                        profileNationalID.setText(nationalID);
-                        profileBlood.setText(blood);
-                        profileEmail.setText(email+"   ");
-                        profileAddress.setText(address+"   ");
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d("DONATOR PROFILE", "ERROR = " + e.getMessage());
-
-            }
-        });
+        profileName.setText("ชื่อ : " + prefs.getString("fName","null value") +"\t"+ prefs.getString("lName","null value"));
+        profileNationalID.setText(prefs.getString("nationalID","null value"));
+        profileBlood.setText(prefs.getString("blood","null value"));
+        profileEmail.setText(prefs.getString("email","null value"));
+        profileAddress.setText(prefs.getString("address","null value"));
     }
 
     private void getImagePic() {

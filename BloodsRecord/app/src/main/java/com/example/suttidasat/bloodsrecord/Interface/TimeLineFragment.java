@@ -88,12 +88,9 @@ public class TimeLineFragment extends Fragment {
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         //menu
         SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
-        mCartItemCount = prefs.getInt(uid+"_countNotify", 0);
+        mCartItemCount = prefs.getInt("_countNotify", 0);
 
 
-        //delete SharedPreferences
-//        SharedPreferences preferences = getContext().getSharedPreferences("BloodsRecord", 0);
-//        preferences.edit().remove(uid+"_checkFnotify").commit();
 
         Log.d("prefs Timeline: ", String.valueOf(mCartItemCount));
         setHasOptionsMenu(true);
@@ -296,7 +293,7 @@ public class TimeLineFragment extends Fragment {
                 Log.d("USER ", "CLICK NOTIFY BELL");
 
                 SharedPreferences.Editor prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE).edit();
-                prefs.putInt(uid+"_countNotify",0);
+                prefs.putInt("_countNotify",0);
                 prefs.apply();
 
                 return true;

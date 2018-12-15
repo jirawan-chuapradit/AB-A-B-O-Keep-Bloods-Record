@@ -238,7 +238,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.d("REGISTER", "ERRROR =" + e.getMessage());
+                Log.d("REGISTER", "ERROR =" + e.getMessage());
                 Toast.makeText(getContext(),"ERROR = "+e.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
