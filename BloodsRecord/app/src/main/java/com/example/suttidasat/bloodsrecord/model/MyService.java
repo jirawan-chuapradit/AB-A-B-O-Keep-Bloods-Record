@@ -15,8 +15,10 @@ import android.widget.Toast;
 import com.example.suttidasat.bloodsrecord.init.BloodsRecordFirebase;
 import com.example.suttidasat.bloodsrecord.init.DonateHistoryFirebase;
 import com.example.suttidasat.bloodsrecord.init.NotificationContentFirebase;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -24,6 +26,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -44,6 +47,8 @@ public class MyService extends Service {
     private DocumentReference documentReference; // Used below
     private CollectionReference collectionReference; // Used below
     private int size, diffDate, mCartItemCount, sizeofContent;
+    private SharedPreferences prefs;
+
 
     //Check Notification is exist in Fire base
     boolean existNotify = false;
@@ -66,6 +71,8 @@ public class MyService extends Service {
         //GET UID of Currnet user
         uid = fbAuth.getCurrentUser().getUid();
 
+        prefs = getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
+        nationalID = prefs.getString("nationalID","null value");
 
         //loop
         executorService = Executors.newSingleThreadScheduledExecutor();
@@ -73,7 +80,7 @@ public class MyService extends Service {
             @Override
             public void run() {
                 Log.d("MY TASK", "MY TASK HAS BEEN START IN SPRINT");
-                getNationalId();
+                getHistoryDate(nationalID);
 
                 checkNotifyIsEmpty();
 
@@ -118,30 +125,30 @@ public class MyService extends Service {
         });
     }
 
-    private void getNationalId() {
-        //getLastTime Donate
-        //GET DOCUMENT DATA from booldsRecord find National ID
-        //Connect to bloodRecord
-        final BloodsRecordFirebase bloodsRecordConnection = new BloodsRecordFirebase(
-                documentReference, firestore, uid);
-        bloodsRecordConnection.getConnection();
-        bloodsRecordConnection.getDocumentReference().get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        DonatorProfile dp = documentSnapshot.toObject(DonatorProfile.class);
-                        nationalID = dp.getNationalID();
-                        Log.d("MY TASK", "NATIONAL ID : " + nationalID);
-                        getHistoryDate(nationalID);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d("DONATOR PROFILE", "ERROR = " + e.getMessage());
-            }
-        });
-
-    }
+//    private void getNationalId() {
+//        //getLastTime Donate
+//        //GET DOCUMENT DATA from booldsRecord find National ID
+//        //Connect to bloodRecord
+//        final BloodsRecordFirebase bloodsRecordConnection = new BloodsRecordFirebase(
+//                documentReference, firestore, uid);
+//        bloodsRecordConnection.getConnection();
+//        bloodsRecordConnection.getDocumentReference().get()
+//                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+//                    @Override
+//                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+//                        DonatorProfile dp = documentSnapshot.toObject(DonatorProfile.class);
+//                        nationalID = dp.getNationalID();
+//                        Log.d("MY TASK", "NATIONAL ID : " + nationalID);
+//                        getHistoryDate(nationalID);
+//                    }
+//                }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Log.d("DONATOR PROFILE", "ERROR = " + e.getMessage());
+//            }
+//        });
+//
+//    }
 
     private void getHistoryDate(String nationalID) {
         Log.d("MY TASK", "GET HISTORY DONATE HAS BEEN START");
@@ -169,42 +176,63 @@ public class MyService extends Service {
 
     private void calculateDiffDate() {
         Log.d("MY TASK", "CALCULATE DIFFERENT DATE HAS BEEN START");
-        donateHistoryFirebase = new DonateHistoryFirebase(
-                documentReference, firestore, nationalID, String.valueOf(size));
-        donateHistoryFirebase.getConnectionDocument();
-        donateHistoryFirebase.getDocumentReference().get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+
+        String sizeStr = String.valueOf(size);
+
+        firestore.collection("donateHistory")
+                .document(nationalID)
+                .collection("history")
+                .whereEqualTo("num",sizeStr)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        DonatorHistory dh = documentSnapshot.toObject(DonatorHistory.class);
-                        historyDate = dh.getDate();
-                        Log.d("CALCULATE DIFF DATE", "Date : " + historyDate);
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
-                        DateFormatCal df = new DateFormatCal(historyDate);
-                        diffDate = df.getDiffDays();
-                        currentDate = df.getCurrentDate();
-                        Log.d("CALCULATE DIFF DATE", "diffDate : " + diffDate);
 
-                        un.setDate(diffDate);
-                        type = un.countNotify(type);
-                        if (type.equals("7days")) {
-                            msg = "อีก 7 วัน จะถึงรอบบริจาคครั้งถัดไป";
-                        } else if (type.equals("today")) {
-                            msg = "สามารถบริจาคเลือดได้";
-                        }
-                        else if (type.equals("not change")){
-                            return;
-                        }
-                        setNotifyToFirebase();
+                        int date = queryDocumentSnapshots.size();
+                        Log.d("Size DATE", String.valueOf(date));
 
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("Show Donator", "ERRROR =" + e.getMessage());
-                    }
-                });
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("ERROR: ", e.getMessage());
+            }
+        });
+
+//                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+//                    @Override
+//                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+//                        DonatorHistory dh = documentSnapshot.toObject(DonatorHistory.class);
+//                        historyDate = dh.getDate();
+//                        Log.d("CALCULATE DIFF DATE", "Date : " + historyDate);
+//
+//                        DateFormatCal df = new DateFormatCal(historyDate);
+//                        diffDate = df.getDiffDays();
+//                        currentDate = df.getCurrentDate();
+//                        Log.d("CALCULATE DIFF DATE", "diffDate : " + diffDate);
+//
+//                        un.setDate(diffDate);
+//                        type = un.countNotify(type);
+//                        if (type.equals("7days")) {
+//                            msg = "อีก 7 วัน จะถึงรอบบริจาคครั้งถัดไป";
+//                        } else if (type.equals("today")) {
+//                            msg = "สามารถบริจาคเลือดได้";
+//                        }
+//                        else if (type.equals("not change")){
+//                            return;
+//                        }
+//                        setNotifyToFirebase();
+//
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Log.d("Show Donator", "ERRROR =" + e.getMessage());
+//                    }
+//                });
     }
 
     private void setNotifyToFirebase() {

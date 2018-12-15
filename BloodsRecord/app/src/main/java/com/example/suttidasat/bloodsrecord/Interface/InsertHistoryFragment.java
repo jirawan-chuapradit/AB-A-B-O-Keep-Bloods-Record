@@ -74,11 +74,6 @@ public class InsertHistoryFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-
-//        deley();
-
-
-
         profile_danate();
         history();
         backBtn();
@@ -203,48 +198,5 @@ public class InsertHistoryFragment extends Fragment {
         });
     }
 
-    /**********************************
-     *   intent: สร้าง popup ระบบกำลังประมวลผล  *
-     **********************************/
-//    private void deley() {
-//
-//        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-//        final Handler handle = new Handler() {
-//            public void handleMessage(Message msg) {
-//                super.handleMessage(msg);
-//                progressDialog.incrementProgressBy(2); // Incremented By Value 2
-//            }
-//        };
-//        // Progress Dialog Max Value
-//        progressDialog.setMax(100);
-//        progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
-//        progressDialog.setMessage("กรุณารอสักครู่...");
-//        // Progress Dialog Style Horizontal
-//        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-//        // Display Progress Dialog
-//        progressDialog.show();
-//        // Cannot Cancel Progress Dialog
-//        progressDialog.setCancelable(false);
-//
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    while (progressDialog.getProgress() <= progressDialog.getMax()) {
-//                        Thread.sleep(100);
-//                        handle.sendMessage(handle.obtainMessage());
-//                        if (progressDialog.getProgress() == progressDialog.getMax()) {
-//                            progressDialog.dismiss();
-//                        }
-//                    }
-//
-//                } catch (Exception e) {
-//                    e.getStackTrace();
-//                }
-//            }
-//
-//
-//        }).start();
-//    }
 
 }

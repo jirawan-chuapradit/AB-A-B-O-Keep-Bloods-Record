@@ -3,6 +3,7 @@ package com.example.suttidasat.bloodsrecord;
 
 import android.content.Intent;
 
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -109,6 +110,10 @@ public class DonorMainView extends AppCompatActivity
             navigationView.setCheckedItem(R.id.nav_change_password);
         }
         else if (id == R.id.nav_sign_out) {
+            SharedPreferences.Editor prefs = getSharedPreferences("BloodsRecord",MODE_PRIVATE).edit();
+            prefs.clear();
+            prefs.apply();
+
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(DonorMainView.this, MyService.class);
             stopService(intent);
