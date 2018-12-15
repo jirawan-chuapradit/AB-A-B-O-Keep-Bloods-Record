@@ -188,8 +188,11 @@ public class MyService extends Service {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
+                       String date1 = (String) queryDocumentSnapshots.getDocuments()
+                                .get(0).get("date");
 
                         int date = queryDocumentSnapshots.size();
+                        System.out.println(date1);
                         Log.d("Size DATE", String.valueOf(date));
 
                     }
