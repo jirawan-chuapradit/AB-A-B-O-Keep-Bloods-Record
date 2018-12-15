@@ -19,16 +19,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_marginTop="150dp"
             android:padding="50dp">
-
-            <ImageView
-                android:id="@+id/login_logo"
-                android:layout_width="123dp"
-                android:layout_height="118dp"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/logo_app"
-                tools:layout_editor_absoluteX="134dp"
-                tools:layout_editor_absoluteY="104dp" />
 
             <EditText
                 android:id="@+id/login_userid"
@@ -53,9 +45,9 @@
             <Button
                 android:id="@+id/login_btn"
                 android:layout_width="284dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="20dp"
-                android:background="@color/login"
+                android:layout_height="50dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/addbtn_border"
                 android:text="เข้าสู่ระบบ"
                 android:textColor="#ffff" />
 
@@ -64,7 +56,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/register_btn"
                 android:text="Register"
                 android:textColor="@color/colorPrimary" />
 
