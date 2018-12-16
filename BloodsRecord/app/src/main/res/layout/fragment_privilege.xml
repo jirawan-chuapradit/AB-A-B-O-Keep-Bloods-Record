@@ -16,7 +16,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
-            android:hint="content"
+            android:hint="ได้รับเพระราชทานเหรียญกาชาดสมนาคุณ ติดตามรายละเอียดเพิ่มเติมได้ที่ https://blood.redcross.or.th"
             android:textColor="@android:color/black"/>
     </LinearLayout>
 
