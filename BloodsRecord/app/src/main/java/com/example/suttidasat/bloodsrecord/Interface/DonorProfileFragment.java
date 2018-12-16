@@ -3,12 +3,9 @@ package com.example.suttidasat.bloodsrecord.Interface;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,29 +17,20 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.suttidasat.bloodsrecord.R;
-import com.example.suttidasat.bloodsrecord.init.BloodsRecordFirebase;
-import com.example.suttidasat.bloodsrecord.model.CountNotify;
-import com.example.suttidasat.bloodsrecord.model.DonatorProfile;
-import com.example.suttidasat.bloodsrecord.model.MyService;
-import com.example.suttidasat.bloodsrecord.model.PicassoCircleTransformation;
-import com.example.suttidasat.bloodsrecord.model.UpdateNotify;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
-
-import java.util.concurrent.TimeUnit;
 
 /*******************************************************
  *intent: Show User Profile                            *
@@ -64,7 +52,7 @@ public class DonorProfileFragment extends Fragment {
     private FirebaseStorage firebaseStorage;
     private DocumentReference documentReference;
     private TextView profileName, profileNationalID, profileBlood, profileEmail, profileAddress;
-
+    private SharedPreferences prefs;
     private ImageView profileImage;
     //menu
     private TextView textCartItemCount;
@@ -88,8 +76,8 @@ public class DonorProfileFragment extends Fragment {
         uid = fbAuth.getCurrentUser().getUid();
 
         //get Notify count
-        SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
-        mCartItemCount = prefs.getInt(uid+"_countNotify", -1);
+        prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
+        mCartItemCount = prefs.getInt("_countNotify", 0);
         Log.d("prefs profile", String.valueOf(mCartItemCount));
 
         setHasOptionsMenu(true);
@@ -113,37 +101,13 @@ public class DonorProfileFragment extends Fragment {
         progressDialog.setCancelable(false);
 
         getImagePic();
-        //Connect to bloodRecord
-        BloodsRecordFirebase bloodsRecordConnection = new BloodsRecordFirebase(
-                documentReference, firestore, uid);
-        bloodsRecordConnection.getConnection();
-        bloodsRecordConnection.getDocumentReference().get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                        Log.d("DONATOR PROFILE", "GET DOCUMENT DATA");
 
-                        DonatorProfile dp = documentSnapshot.toObject(DonatorProfile.class);
-                        String name = dp.getfName() + "  " + dp.getlName();
-                        String nationalID = dp.getNationalID();
-                        String blood = dp.getBloodGroup();
-                        String email = dp.getEmail();
-                        String address = dp.getAddress();
-
-                        profileName.setText("ชื่อ : " + name);
-                        profileNationalID.setText(nationalID);
-                        profileBlood.setText(blood);
-                        profileEmail.setText(email+"   ");
-                        profileAddress.setText(address+"   ");
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d("DONATOR PROFILE", "ERROR = " + e.getMessage());
-
-            }
-        });
+        profileName.setText("ชื่อ : " + prefs.getString("fName","null value") +"\t"+ prefs.getString("lName","null value"));
+        profileNationalID.setText(prefs.getString("nationalID","null value"));
+        profileBlood.setText(prefs.getString("blood","null value"));
+        profileEmail.setText(prefs.getString("email","null value"));
+        profileAddress.setText(prefs.getString("address","null value"));
     }
 
     private void getImagePic() {
@@ -151,10 +115,16 @@ public class DonorProfileFragment extends Fragment {
         storageReference.child(uid).child("Images/Profile Pic").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).fit().centerCrop()
-                        .placeholder(R.mipmap.ic_launcher)
-                        .error(R.mipmap.ic_launcher)
-                        .transform((Transformation) new PicassoCircleTransformation())
+                Glide.with(getContext()).load(uri)
+                        .apply(new RequestOptions()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .dontAnimate()
+                                .placeholder(R.mipmap.ic_launcher_round)
+                                .error(R.mipmap.ic_launcher_round)
+                                .dontTransform()
+                                .fitCenter()
+                                .override(300,200)
+                                .transform(new CircleCrop()))
                         .into(profileImage);
                 progressDialog.dismiss();
 
@@ -205,7 +175,7 @@ public class DonorProfileFragment extends Fragment {
                 Log.d("USER ", "CLICK NOTIFY BELL");
 
                 SharedPreferences.Editor prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE).edit();
-                prefs.putInt(uid+"_countNotify",0);
+                prefs.putInt("_countNotify",0);
                 prefs.apply();
 
                 setupBadge();

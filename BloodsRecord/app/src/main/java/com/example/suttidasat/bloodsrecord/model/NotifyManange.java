@@ -1,7 +1,10 @@
 package com.example.suttidasat.bloodsrecord.model;
 
 public class NotifyManange {
-    private String date, text;
+    private String date;
+    private String text;
+
+    private String num;
 
     //Singleton
     private static NotifyManange notifyManangeInstance;
@@ -15,8 +18,16 @@ public class NotifyManange {
 
 
 
+    public String getNum() {
+        return num;
+    }
 
-    private NotifyManange() {
+    public void setNum(String num) {
+        this.num = num;
+        System.out.println(num);
+    }
+
+    public NotifyManange() {
     }
 
     public String getDate() {
