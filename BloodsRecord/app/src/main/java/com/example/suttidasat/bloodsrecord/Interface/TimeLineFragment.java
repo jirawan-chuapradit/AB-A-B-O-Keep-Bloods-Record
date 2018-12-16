@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,9 +18,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.suttidasat.bloodsrecord.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -29,6 +35,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -50,6 +58,8 @@ public class TimeLineFragment extends Fragment implements View.OnClickListener {
     private String uid;
     private String nid;
     ProgressDialog progressDialog;
+    private FirebaseStorage firebaseStorage;
+    private ImageView avatarImage;
 
     @Nullable
     @Override
@@ -60,6 +70,9 @@ public class TimeLineFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        avatarImage = getView().findViewById(R.id.avatarImage);
+
         /**********************************
          *   intent: สร้าง popup ระบบกำลังประมวลผล  *
          **********************************/
@@ -73,7 +86,7 @@ public class TimeLineFragment extends Fragment implements View.OnClickListener {
         // Cannot Cancel Progress Dialog
         progressDialog.setCancelable(false);
 
-
+        firebaseStorage = FirebaseStorage.getInstance();
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         //menu
         SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
@@ -85,6 +98,7 @@ public class TimeLineFragment extends Fragment implements View.OnClickListener {
         setHasOptionsMenu(true);
         firestore = FirebaseFirestore.getInstance();
         showAmount();
+
 
         timeline_1 = getView().findViewById(R.id.timeline_1);
         timeline_7 = getView().findViewById(R.id.timeline_7);
@@ -120,7 +134,48 @@ public class TimeLineFragment extends Fragment implements View.OnClickListener {
 
 
     }
-    
+
+    private void getImagePic(int amount) {
+
+        if(amount==0){
+            amount = 0;
+        }else if(amount == 1 && amount <7){
+            amount = 1;
+        }else if(amount >=7 &&amount<16){
+            amount = 7;
+        }else if(amount>=16 && amount<18){
+            amount = 16;
+        }else if(amount>=18&&amount<24){
+            amount=18;
+        }else if(amount>=24&&amount>36){
+            amount=24;
+        }else if(amount>=36&&amount<48){
+            amount=36;
+        }else if(amount>=48&&amount<50){
+            amount=48;
+        }else
+            amount=50;
+
+        String amountStr = String.valueOf(amount);
+
+        StorageReference storageReference = firebaseStorage.getReference();
+        storageReference.child("avatar").child(amountStr+".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(getContext()).load(uri)
+                        .apply(new RequestOptions()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .dontAnimate()
+                                .placeholder(R.mipmap.ic_launcher)
+                                .error(R.mipmap.ic_launcher)
+                                .dontTransform()
+                                .override(150,150)
+                                .transform(new CircleCrop()))
+                        .into(avatarImage);
+                progressDialog.dismiss();
+            }
+        });
+    }
 
     void showAmount() {
 
@@ -149,7 +204,7 @@ public class TimeLineFragment extends Fragment implements View.OnClickListener {
 //                                        donate_amount.setText(queryDocumentSnapshots.size() + " ครั้ง");
                                         int amount = queryDocumentSnapshots.size();
 
-
+                                        getImagePic(amount);
 
                                         /// set color
                                         if (amount >= 1) {
@@ -212,7 +267,7 @@ public class TimeLineFragment extends Fragment implements View.OnClickListener {
                                             GradientDrawable gd = (GradientDrawable) timeline_108.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
                                         }
-                                        progressDialog.dismiss();
+
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                             @Override
