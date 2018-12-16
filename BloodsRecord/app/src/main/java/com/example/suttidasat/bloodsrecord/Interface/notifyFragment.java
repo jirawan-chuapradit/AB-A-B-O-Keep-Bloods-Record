@@ -83,12 +83,6 @@ public class notifyFragment extends Fragment {
         Log.d("CHECK NOTIFY: ", String.valueOf(checkFnofity));
 
 
-//        if (checkFnofity == 1) {
-//
-//            TextView emptyNotify = getView().findViewById(R.id.empty_notify);
-//            emptyNotify.setText("");
-//
-//        }
 
         setHasOptionsMenu(true);
 

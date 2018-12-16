@@ -30,17 +30,22 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /*************************************************
  *intent: As Home show time of donations         *
  *pre-condition: user must login with role Donor *
  *************************************************/
 
-public class TimeLineFragment extends Fragment {
+public class TimeLineFragment extends Fragment implements View.OnClickListener {
 
     //menu
     private TextView textCartItemCount, donate_amount;
     private int mCartItemCount;
-
+    private TextView timeline_1,timeline_7,timeline_16,timeline_18,timeline_24
+            ,timeline_36,timeline_48,timeline_50,timeline_60
+            ,timeline_72,timeline_75,timeline_84,timeline_96
+            ,timeline_100,timeline_108;
     private FirebaseFirestore firestore;
     private String uid;
     private String nid;
@@ -81,6 +86,38 @@ public class TimeLineFragment extends Fragment {
         firestore = FirebaseFirestore.getInstance();
         showAmount();
 
+        timeline_1 = getView().findViewById(R.id.timeline_1);
+        timeline_7 = getView().findViewById(R.id.timeline_7);
+        timeline_16 = getView().findViewById(R.id.timeline_16);
+        timeline_18 = getView().findViewById(R.id.timeline_18);
+        timeline_24 = getView().findViewById(R.id.timeline_24);
+        timeline_36 = getView().findViewById(R.id.timeline_36);
+        timeline_48 = getView().findViewById(R.id.timeline_48);
+        timeline_50 = getView().findViewById(R.id.timeline_50);
+        timeline_60 = getView().findViewById(R.id.timeline_60);
+        timeline_72 = getView().findViewById(R.id.timeline_72);
+        timeline_75 = getView().findViewById(R.id.timeline_75);
+        timeline_84 = getView().findViewById(R.id.timeline_84);
+        timeline_96 = getView().findViewById(R.id.timeline_96);
+        timeline_100 = getView().findViewById(R.id.timeline_100);
+        timeline_108 = getView().findViewById(R.id.timeline_108);
+
+        timeline_1.setOnClickListener(this);
+        timeline_7.setOnClickListener(this);
+        timeline_16.setOnClickListener(this);
+        timeline_18.setOnClickListener(this);
+        timeline_24.setOnClickListener(this);
+        timeline_36.setOnClickListener(this);
+        timeline_48.setOnClickListener(this);
+        timeline_50.setOnClickListener(this);
+        timeline_60.setOnClickListener(this);
+        timeline_72.setOnClickListener(this);
+        timeline_75.setOnClickListener(this);
+        timeline_84.setOnClickListener(this);
+        timeline_96.setOnClickListener(this);
+        timeline_100.setOnClickListener(this);
+        timeline_108.setOnClickListener(this);
+
 
     }
     
@@ -112,21 +149,6 @@ public class TimeLineFragment extends Fragment {
 //                                        donate_amount.setText(queryDocumentSnapshots.size() + " ครั้ง");
                                         int amount = queryDocumentSnapshots.size();
 
-                                        TextView timeline_1 = getView().findViewById(R.id.timeline_1);
-                                        TextView timeline_7 = getView().findViewById(R.id.timeline_7);
-                                        TextView timeline_16 = getView().findViewById(R.id.timeline_16);
-                                        TextView timeline_18 = getView().findViewById(R.id.timeline_18);
-                                        TextView timeline_24 = getView().findViewById(R.id.timeline_24);
-                                        TextView timeline_36 = getView().findViewById(R.id.timeline_36);
-                                        TextView timeline_48 = getView().findViewById(R.id.timeline_48);
-                                        TextView timeline_50 = getView().findViewById(R.id.timeline_50);
-                                        TextView timeline_60 = getView().findViewById(R.id.timeline_60);
-                                        TextView timeline_72 = getView().findViewById(R.id.timeline_72);
-                                        TextView timeline_75 = getView().findViewById(R.id.timeline_75);
-                                        TextView timeline_84 = getView().findViewById(R.id.timeline_84);
-                                        TextView timeline_96 = getView().findViewById(R.id.timeline_96);
-                                        TextView timeline_100 = getView().findViewById(R.id.timeline_100);
-                                        TextView timeline_108 = getView().findViewById(R.id.timeline_108);
 
 
                                         /// set color
@@ -264,4 +286,48 @@ public class TimeLineFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        SharedPreferences.Editor prefs = getContext().getSharedPreferences("BloodsRecord",MODE_PRIVATE).edit();
+        if(v==timeline_1){
+           prefs.putString("content_number", "1");
+        }else if(v==timeline_7){
+            prefs.putString("content_number", "7");
+        }else if(v==timeline_16){
+            prefs.putString("content_number", "16");
+        }else if(v==timeline_18){
+            prefs.putString("content_number", "18");
+        }else if(v==timeline_24){
+            prefs.putString("content_number", "24");
+        }else if(v==timeline_36){
+            prefs.putString("content_number", "36");
+        }else if(v==timeline_48){
+            prefs.putString("content_number", "48");
+        }else if(v==timeline_50){
+            prefs.putString("content_number", "50");
+        }else if(v==timeline_60){
+            prefs.putString("content_number", "60");
+        }else if(v==timeline_72){
+            prefs.putString("content_number", "72");
+        }else if(v==timeline_75){
+            prefs.putString("content_number", "75");
+        }else if(v==timeline_84){
+            prefs.putString("content_number", "84");
+        }else if(v==timeline_96){
+            prefs.putString("content_number", "96");
+        }else if(v==timeline_100){
+            prefs.putString("content_number", "100");
+        }else if(v==timeline_108){
+            prefs.putString("content_number", "108");
+        }
+        prefs.apply();
+
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.donator_view, new PrivilegeFragment())
+                .addToBackStack(null)
+                .commit();
+        Log.d("USER ", "GOTO PRIVILEGE FRAGMENT");
+
+    }
 }
