@@ -39,7 +39,7 @@ public class DateFormatCal {
         this.historyDate = historyDate;
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Date date = new Date();
-        System.out.println(dateFormat.format(date)); //16-11-2018
+        System.out.println(dateFormat.format(date)); //16-12-2018
         setCurrentDate(dateFormat.format(date));
 
         try {

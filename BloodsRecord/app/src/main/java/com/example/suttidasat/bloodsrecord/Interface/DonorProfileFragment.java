@@ -25,13 +25,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.suttidasat.bloodsrecord.R;
-import com.example.suttidasat.bloodsrecord.init.BloodsRecordFirebase;
-import com.example.suttidasat.bloodsrecord.model.DonatorProfile;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -81,7 +77,7 @@ public class DonorProfileFragment extends Fragment {
 
         //get Notify count
         prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
-        mCartItemCount = prefs.getInt(uid+"_countNotify", -1);
+        mCartItemCount = prefs.getInt("_countNotify", 0);
         Log.d("prefs profile", String.valueOf(mCartItemCount));
 
         setHasOptionsMenu(true);
@@ -179,7 +175,7 @@ public class DonorProfileFragment extends Fragment {
                 Log.d("USER ", "CLICK NOTIFY BELL");
 
                 SharedPreferences.Editor prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE).edit();
-                prefs.putInt(uid+"_countNotify",0);
+                prefs.putInt("_countNotify",0);
                 prefs.apply();
 
                 setupBadge();

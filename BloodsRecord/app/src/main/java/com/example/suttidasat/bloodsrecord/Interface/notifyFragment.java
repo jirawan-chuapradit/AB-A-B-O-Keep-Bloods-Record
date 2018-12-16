@@ -4,8 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
@@ -22,7 +20,6 @@ import android.widget.TextView;
 import com.example.suttidasat.bloodsrecord.R;
 import com.example.suttidasat.bloodsrecord.adapter.NotifyAdapter;
 import com.example.suttidasat.bloodsrecord.model.NotifyManange;
-import com.example.suttidasat.bloodsrecord.model.UpdateNotify;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -40,7 +37,7 @@ import java.util.ArrayList;
 
 public class notifyFragment extends Fragment {
 
-    UpdateNotify un = UpdateNotify.getUpdateNotifyInstance();
+
     ArrayList<NotifyManange> notifyMananges = new ArrayList<>();
     String uid;
     FirebaseFirestore firestore;
