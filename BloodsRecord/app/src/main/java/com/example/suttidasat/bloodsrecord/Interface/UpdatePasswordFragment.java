@@ -27,8 +27,6 @@ import android.widget.Toast;
 
 import com.example.suttidasat.bloodsrecord.MainActivity;
 import com.example.suttidasat.bloodsrecord.R;
-import com.example.suttidasat.bloodsrecord.init.BloodsRecordFirebase;
-import com.example.suttidasat.bloodsrecord.model.DonatorProfile;
 import com.example.suttidasat.bloodsrecord.model.MyService;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;

@@ -83,12 +83,12 @@ public class notifyFragment extends Fragment {
         Log.d("CHECK NOTIFY: ", String.valueOf(checkFnofity));
 
 
-        if (checkFnofity == 1) {
-
-            TextView emptyNotify = getView().findViewById(R.id.empty_notify);
-            emptyNotify.setText("");
-
-        }
+//        if (checkFnofity == 1) {
+//
+//            TextView emptyNotify = getView().findViewById(R.id.empty_notify);
+//            emptyNotify.setText("");
+//
+//        }
 
         setHasOptionsMenu(true);
 
@@ -108,6 +108,10 @@ public class notifyFragment extends Fragment {
                     @Override
                     public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
                         notifyMananges.clear();
+                        if(queryDocumentSnapshots.size() != 0){
+                            TextView emptyNotify = getView().findViewById(R.id.empty_notify);
+                            emptyNotify.setText("");
+                        }
                         for (DocumentSnapshot d : queryDocumentSnapshots.getDocuments()) {
                             notifyMananges.add(d.toObject(NotifyManange.class));
                         }
