@@ -29,7 +29,6 @@
             android:layout_marginEnd="8dp"
             android:text="วันทั้"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/num"
             />
 
         <TextView
