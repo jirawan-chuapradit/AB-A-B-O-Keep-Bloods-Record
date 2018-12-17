@@ -5,39 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splashbg_gradient">
+    android:background="@drawable/splashbggradient"
+    >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:layout_width="190dp"
-            android:layout_height="193dp"
-            android:layout_gravity="center"
-            android:layout_margin="120dp"
-            android:background="@drawable/logo_app"
-            tools:layout_editor_absoluteX="106dp"
-            tools:layout_editor_absoluteY="169dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="26dp"
-            android:layout_gravity="center"
-            android:layout_margin="15dp"
-            android:text="By.Sanamdeklen"
-            android:textAlignment="center"
-            android:textColor="#b42222"
-            android:textSize="14dp"
-            android:textStyle="bold"
-            tools:layout_editor_absoluteX="138dp"
-            tools:layout_editor_absoluteY="511dp" />
-
-    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
