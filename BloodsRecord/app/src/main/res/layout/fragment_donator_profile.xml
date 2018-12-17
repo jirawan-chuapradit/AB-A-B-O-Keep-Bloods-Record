@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#f6f6f6">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,7 +25,7 @@
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="0dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -36,14 +37,18 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="@color/dark_red"
+                android:layout_height="300dp"
+                android:background="@color/colorPrimary"
                 android:gravity="center">
 
+
+
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/rectangle"
                     android:orientation="vertical">
+
 
                     <ImageView
                         android:id="@+id/profilePic"
@@ -51,8 +56,8 @@
                         android:layout_height="137dp"
                         android:layout_gravity="center"
                         android:cropToPadding="true"
-                        app:srcCompat="@mipmap/people"
                         android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/profile2"
                         tools:layout_editor_absoluteX="176dp"
                         tools:layout_editor_absoluteY="68dp" />
 
@@ -70,55 +75,28 @@
                         tools:layout_editor_absoluteY="407dp"
                         tools:text="ชื่อ - นามสกุล" />
 
-                    <android.support.v7.widget.CardView
-                        android:layout_width="300dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center">
-                        <TextView
 
-                            android:layout_width="241dp"
-                            android:layout_height="35dp"
-                            android:layout_gravity="center"
-                            android:textAlignment="center"
-                            android:textColor="@color/dark_red"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            tools:layout_editor_absoluteX="127dp"
-                            tools:layout_editor_absoluteY="407dp"
-                            android:text="หมู่โลหิต" />
-                    </android.support.v7.widget.CardView>
                 </LinearLayout>
 
 
-
-
             </LinearLayout>
-            <android.support.v7.widget.CardView
+
+            <ImageView
+                android:id="@+id/imageView"
                 android:layout_width="300dp"
                 android:layout_height="100dp"
-                android:layout_gravity="center">
+                android:layout_marginTop="-50dp"
+                android:background="@drawable/rec"
+                android:padding="50dp" />
 
-                <TextView
-                    android:id="@+id/profileBloodsG"
-                    android:layout_width="241dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textAlignment="center"
-                    android:textColor="@color/dark_red"
-                    android:textSize="60sp"
-                    android:textStyle="bold"
-                    tools:layout_editor_absoluteX="67dp"
-                    tools:layout_editor_absoluteY="351dp"
-                    tools:text="A" />
-
-            </android.support.v7.widget.CardView>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
                 android:layout_height="150dp"
-                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:layout_marginTop="80dp"
                 android:gravity="center"
-                android:layout_gravity="center">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -129,15 +107,18 @@
                         android:layout_width="120dp"
                         android:layout_height="37dp"
                         android:layout_gravity="center"
+                        android:text="รหัสบัตรประชาชน"
                         android:textStyle="bold"
+                        android:textColor="#ff215d"
                         tools:layout_editor_absoluteX="67dp"
-                        tools:layout_editor_absoluteY="228dp"
-                        android:text="รหัสบัตรประชาชน" />
+                        tools:layout_editor_absoluteY="228dp" />
+
                     <TextView
                         android:id="@+id/profileNationalID"
                         android:layout_width="wrap_content"
                         android:layout_height="37dp"
                         android:layout_gravity="center"
+                        android:textColor="#a2a2a2"
                         tools:layout_editor_absoluteX="67dp"
                         tools:layout_editor_absoluteY="228dp"
                         tools:text="1000000000000" />
@@ -146,24 +127,26 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:layout_gravity="center"
                     android:gravity="center"
-                    android:layout_gravity="center">
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="50dp"
                         android:layout_height="37dp"
                         android:layout_gravity="center"
+                        android:text="E-mail"
                         android:textStyle="bold"
+                        android:textColor="#ff215d"
                         tools:layout_editor_absoluteX="67dp"
-                        tools:layout_editor_absoluteY="228dp"
-                        android:text="E-mail" />
+                        tools:layout_editor_absoluteY="228dp" />
+
                     <TextView
                         android:id="@+id/profileEmail"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="right"
-
+                        android:textColor="#a2a2a2"
                         tools:layout_editor_absoluteX="67dp"
                         tools:layout_editor_absoluteY="228dp"
                         tools:text="chocolate_nate@natemail.com" />
@@ -172,24 +155,26 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:layout_gravity="center"
                     android:gravity="center"
-                    android:layout_gravity="center">
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="50dp"
                         android:layout_height="37dp"
                         android:layout_gravity="center"
+                        android:text="ที่อยู่"
+                        android:textColor="#ff215d"
                         android:textStyle="bold"
                         tools:layout_editor_absoluteX="67dp"
-                        tools:layout_editor_absoluteY="228dp"
-                        android:text="ที่อยู่" />
+                        tools:layout_editor_absoluteY="228dp" />
+
                     <TextView
                         android:id="@+id/profileAddress"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="right"
-
+                        android:textColor="#a2a2a2"
                         tools:layout_editor_absoluteX="67dp"
                         tools:layout_editor_absoluteY="228dp"
                         tools:text="122/ 23 หมู่ 4 เขตลาดกระบัง แขวง ลาดกระบัง กรุงเทพฯ 10520" />

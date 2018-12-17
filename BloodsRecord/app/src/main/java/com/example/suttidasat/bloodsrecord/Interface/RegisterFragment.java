@@ -253,7 +253,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         EditText passwordEdt = getView().findViewById(R.id.registerPassword);
         EditText rePasswordEdt = getView().findViewById(R.id.registerRePassword);
         EditText addressEdt = getView().findViewById(R.id.registerAddress);
-        spinner1 = getView().findViewById(R.id.spinner1);
+//        spinner1 = getView().findViewById(R.id.spinner1);
 
 
 
