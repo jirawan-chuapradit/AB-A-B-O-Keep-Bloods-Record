@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -50,6 +51,7 @@ public class LoginFragment extends Fragment {
     //Check Notification is exist in Fire base
     boolean existNotify = false;
 
+
     @Override
     public View onCreateView
             (@NonNull LayoutInflater inflater,
@@ -60,7 +62,9 @@ public class LoginFragment extends Fragment {
     }
 
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+
         super.onActivityCreated(savedInstanceState);
+
         firestore = FirebaseFirestore.getInstance();
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
