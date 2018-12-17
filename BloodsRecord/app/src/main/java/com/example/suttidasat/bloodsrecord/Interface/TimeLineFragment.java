@@ -2,22 +2,14 @@ package com.example.suttidasat.bloodsrecord.Interface;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.VectorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,11 +22,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.suttidasat.bloodsrecord.R;
-import com.example.suttidasat.bloodsrecord.model.CountNotify;
-import com.example.suttidasat.bloodsrecord.model.MyService;
-import com.example.suttidasat.bloodsrecord.model.NationaID;
-import com.example.suttidasat.bloodsrecord.model.UpdateNotify;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -43,24 +35,31 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
-import java.util.List;
+import static android.content.Context.MODE_PRIVATE;
 
 /*************************************************
  *intent: As Home show time of donations         *
  *pre-condition: user must login with role Donor *
  *************************************************/
 
-public class TimeLineFragment extends Fragment {
+public class TimeLineFragment extends Fragment implements View.OnClickListener {
 
     //menu
     private TextView textCartItemCount, donate_amount;
     private int mCartItemCount;
-
+    private TextView timeline_1,timeline_7,timeline_16,timeline_18,timeline_24
+            ,timeline_36,timeline_48,timeline_50,timeline_60
+            ,timeline_72,timeline_75,timeline_84,timeline_96
+            ,timeline_100,timeline_108;
     private FirebaseFirestore firestore;
     private String uid;
     private String nid;
     ProgressDialog progressDialog;
+    private FirebaseStorage firebaseStorage;
+    private ImageView avatarImage;
 
     @Nullable
     @Override
@@ -71,6 +70,9 @@ public class TimeLineFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        avatarImage = getView().findViewById(R.id.avatarImage);
+
         /**********************************
          *   intent: สร้าง popup ระบบกำลังประมวลผล  *
          **********************************/
@@ -84,16 +86,13 @@ public class TimeLineFragment extends Fragment {
         // Cannot Cancel Progress Dialog
         progressDialog.setCancelable(false);
 
-
+        firebaseStorage = FirebaseStorage.getInstance();
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         //menu
         SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
-        mCartItemCount = prefs.getInt(uid+"_countNotify", 0);
+        mCartItemCount = prefs.getInt("_countNotify", 0);
 
 
-        //delete SharedPreferences
-//        SharedPreferences preferences = getContext().getSharedPreferences("BloodsRecord", 0);
-//        preferences.edit().remove(uid+"_checkFnotify").commit();
 
         Log.d("prefs Timeline: ", String.valueOf(mCartItemCount));
         setHasOptionsMenu(true);
@@ -101,13 +100,87 @@ public class TimeLineFragment extends Fragment {
         showAmount();
 
 
+        timeline_1 = getView().findViewById(R.id.timeline_1);
+        timeline_7 = getView().findViewById(R.id.timeline_7);
+        timeline_16 = getView().findViewById(R.id.timeline_16);
+        timeline_18 = getView().findViewById(R.id.timeline_18);
+        timeline_24 = getView().findViewById(R.id.timeline_24);
+        timeline_36 = getView().findViewById(R.id.timeline_36);
+        timeline_48 = getView().findViewById(R.id.timeline_48);
+        timeline_50 = getView().findViewById(R.id.timeline_50);
+        timeline_60 = getView().findViewById(R.id.timeline_60);
+        timeline_72 = getView().findViewById(R.id.timeline_72);
+        timeline_75 = getView().findViewById(R.id.timeline_75);
+        timeline_84 = getView().findViewById(R.id.timeline_84);
+        timeline_96 = getView().findViewById(R.id.timeline_96);
+        timeline_100 = getView().findViewById(R.id.timeline_100);
+        timeline_108 = getView().findViewById(R.id.timeline_108);
+
+        timeline_1.setOnClickListener(this);
+        timeline_7.setOnClickListener(this);
+        timeline_16.setOnClickListener(this);
+        timeline_18.setOnClickListener(this);
+        timeline_24.setOnClickListener(this);
+        timeline_36.setOnClickListener(this);
+        timeline_48.setOnClickListener(this);
+        timeline_50.setOnClickListener(this);
+        timeline_60.setOnClickListener(this);
+        timeline_72.setOnClickListener(this);
+        timeline_75.setOnClickListener(this);
+        timeline_84.setOnClickListener(this);
+        timeline_96.setOnClickListener(this);
+        timeline_100.setOnClickListener(this);
+        timeline_108.setOnClickListener(this);
+
+
     }
-    
+
+    private void getImagePic(int amount) {
+
+        if(amount==0){
+            amount = 0;
+        }else if(amount == 1 && amount <7){
+            amount = 1;
+        }else if(amount >=7 &&amount<16){
+            amount = 7;
+        }else if(amount>=16 && amount<18){
+            amount = 16;
+        }else if(amount>=18&&amount<24){
+            amount=18;
+        }else if(amount>=24&&amount>36){
+            amount=24;
+        }else if(amount>=36&&amount<48){
+            amount=36;
+        }else if(amount>=48&&amount<50){
+            amount=48;
+        }else
+            amount=50;
+
+        String amountStr = String.valueOf(amount);
+
+        StorageReference storageReference = firebaseStorage.getReference();
+        storageReference.child("avatar").child(amountStr+".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(getContext()).load(uri)
+                        .apply(new RequestOptions()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .dontAnimate()
+                                .placeholder(R.mipmap.ic_launcher)
+                                .error(R.mipmap.ic_launcher)
+                                .dontTransform()
+                                .override(150,150)
+                                .transform(new CircleCrop()))
+                        .into(avatarImage);
+                progressDialog.dismiss();
+            }
+        });
+    }
 
     void showAmount() {
 
 
-        donate_amount = getView().findViewById(R.id.donate_amount);
+//        donate_amount = getView().findViewById(R.id.donate_amount);
 
 
         /// get national ID
@@ -128,126 +201,73 @@ public class TimeLineFragment extends Fragment {
                                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                                     @Override
                                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                        donate_amount.setText(queryDocumentSnapshots.size() + " ครั้ง");
+//                                        donate_amount.setText(queryDocumentSnapshots.size() + " ครั้ง");
                                         int amount = queryDocumentSnapshots.size();
 
-                                        TextView re1 = getView().findViewById(R.id.re1);
-                                        TextView re7 = getView().findViewById(R.id.re7);
-                                        TextView re16 = getView().findViewById(R.id.re16);
-                                        TextView re18 = getView().findViewById(R.id.re18);
-                                        TextView re24 = getView().findViewById(R.id.re24);
-                                        TextView re36 = getView().findViewById(R.id.re36);
-                                        TextView re48 = getView().findViewById(R.id.re48);
-                                        TextView re50 = getView().findViewById(R.id.re50);
-                                        TextView re60 = getView().findViewById(R.id.re60);
-                                        TextView re72 = getView().findViewById(R.id.re72);
-                                        TextView re75 = getView().findViewById(R.id.re75);
-                                        TextView re84 = getView().findViewById(R.id.re84);
-                                        TextView re96 = getView().findViewById(R.id.re96);
-                                        TextView re100 = getView().findViewById(R.id.re100);
-                                        TextView re108 = getView().findViewById(R.id.re108);
-
-                                        TextView timeline_1 = getView().findViewById(R.id.timeline_1);
-                                        TextView timeline_7 = getView().findViewById(R.id.timeline_7);
-                                        TextView timeline_16 = getView().findViewById(R.id.timeline_16);
-                                        TextView timeline_18 = getView().findViewById(R.id.timeline_18);
-                                        TextView timeline_24 = getView().findViewById(R.id.timeline_24);
-                                        TextView timeline_36 = getView().findViewById(R.id.timeline_36);
-                                        TextView timeline_48 = getView().findViewById(R.id.timeline_48);
-                                        TextView timeline_50 = getView().findViewById(R.id.timeline_50);
-                                        TextView timeline_60 = getView().findViewById(R.id.timeline_60);
-                                        TextView timeline_72 = getView().findViewById(R.id.timeline_72);
-                                        TextView timeline_75 = getView().findViewById(R.id.timeline_75);
-                                        TextView timeline_84 = getView().findViewById(R.id.timeline_84);
-                                        TextView timeline_96 = getView().findViewById(R.id.timeline_96);
-                                        TextView timeline_100 = getView().findViewById(R.id.timeline_100);
-                                        TextView timeline_108 = getView().findViewById(R.id.timeline_108);
-
+                                        getImagePic(amount);
 
                                         /// set color
                                         if (amount >= 1) {
 
                                             GradientDrawable gd = (GradientDrawable) timeline_1.getBackground().mutate();
-                                            GradientDrawable gdRe = (GradientDrawable) re1.getBackground().mutate();
-
                                             gd.setColor(Color.rgb(220, 80, 80));
-                                            gdRe.setColor(Color.rgb(249,225,183));
                                         }
                                          if (amount >= 7) {
                                             GradientDrawable gd = (GradientDrawable) timeline_7.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
-                                            GradientDrawable gdRe = (GradientDrawable) re7.getBackground().mutate();
-                                            gdRe.setColor(Color.rgb(249,225,183));
 
                                         }
                                          if (amount >= 16) {
                                             GradientDrawable gd = (GradientDrawable) timeline_16.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
-                                            GradientDrawable gdRe = (GradientDrawable) re16.getBackground().mutate();
-                                            gdRe.setColor(Color.rgb(249,225,183));
 
                                         } if (amount >= 18) {
                                             GradientDrawable gd = (GradientDrawable) timeline_18.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
-                                            GradientDrawable gdRe = (GradientDrawable) re18.getBackground().mutate();
-                                            gdRe.setColor(Color.rgb(249,225,183));
                                         } if (amount >= 24) {
                                             GradientDrawable gd = (GradientDrawable) timeline_24.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
-                                            GradientDrawable gdRe = (GradientDrawable) re24.getBackground().mutate();
-                                            gdRe.setColor(Color.rgb(249,225,183));
+
                                         } if (amount >= 36) {
                                             GradientDrawable gd = (GradientDrawable) timeline_36.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
-                                            GradientDrawable gdRe = (GradientDrawable) re36.getBackground().mutate();
-                                            gdRe.setColor(Color.rgb(249,225,183));
+
                                         } if (amount >= 48) {
                                             GradientDrawable gd = (GradientDrawable) timeline_48.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
-                                            GradientDrawable gdRe = (GradientDrawable) re48.getBackground().mutate();
-                                            gdRe.setColor(Color.rgb(249,225,183));
+
                                         } if (amount >= 50) {
                                             GradientDrawable gd = (GradientDrawable) timeline_50.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
-                                            GradientDrawable gdRe = (GradientDrawable) re50.getBackground().mutate();
-                                            gdRe.setColor(Color.rgb(249,225,183));
+
                                         } if (amount >= 60) {
                                             GradientDrawable gd = (GradientDrawable) timeline_60.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
-                                            GradientDrawable gdRe = (GradientDrawable) re60.getBackground().mutate();
-                                            gdRe.setColor(Color.rgb(249,225,183));
+
                                         } if (amount >= 72) {
                                             GradientDrawable gd = (GradientDrawable) timeline_72.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
-                                            GradientDrawable gdRe = (GradientDrawable) re72.getBackground().mutate();
-                                            gdRe.setColor(Color.rgb(249,225,183));
+
                                         } if (amount >= 75) {
                                             GradientDrawable gd = (GradientDrawable) timeline_75.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
-                                            GradientDrawable gdRe = (GradientDrawable) re75.getBackground().mutate();
-                                            gdRe.setColor(Color.rgb(249,225,183));
+
                                         } if (amount >= 84) {
                                             GradientDrawable gd = (GradientDrawable) timeline_84.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
-                                            GradientDrawable gdRe = (GradientDrawable) re84.getBackground().mutate();
-                                            gdRe.setColor(Color.rgb(249,225,183));
+
                                         } if (amount >= 96) {
                                             GradientDrawable gd = (GradientDrawable) timeline_96.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
-                                            GradientDrawable gdRe = (GradientDrawable) re96.getBackground().mutate();
-                                            gdRe.setColor(Color.rgb(249,225,183));
+
                                         } if (amount >= 100) {
                                             GradientDrawable gd = (GradientDrawable) timeline_100.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
-                                            GradientDrawable gdRe = (GradientDrawable) re100.getBackground().mutate();
-                                            gdRe.setColor(Color.rgb(249,225,183));
                                         } if (amount >= 108) {
                                             GradientDrawable gd = (GradientDrawable) timeline_108.getBackground().mutate();
                                             gd.setColor(Color.rgb(220, 80, 80));
-                                            GradientDrawable gdRe = (GradientDrawable) re108.getBackground().mutate();
-                                            gdRe.setColor(Color.rgb(249,225,183));
                                         }
-                                        progressDialog.dismiss();
+
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -296,7 +316,7 @@ public class TimeLineFragment extends Fragment {
                 Log.d("USER ", "CLICK NOTIFY BELL");
 
                 SharedPreferences.Editor prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE).edit();
-                prefs.putInt(uid+"_countNotify",0);
+                prefs.putInt("_countNotify",0);
                 prefs.apply();
 
                 return true;
@@ -321,4 +341,48 @@ public class TimeLineFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        SharedPreferences.Editor prefs = getContext().getSharedPreferences("BloodsRecord",MODE_PRIVATE).edit();
+        if(v==timeline_1){
+           prefs.putString("content_number", "1");
+        }else if(v==timeline_7){
+            prefs.putString("content_number", "7");
+        }else if(v==timeline_16){
+            prefs.putString("content_number", "16");
+        }else if(v==timeline_18){
+            prefs.putString("content_number", "18");
+        }else if(v==timeline_24){
+            prefs.putString("content_number", "24");
+        }else if(v==timeline_36){
+            prefs.putString("content_number", "36");
+        }else if(v==timeline_48){
+            prefs.putString("content_number", "48");
+        }else if(v==timeline_50){
+            prefs.putString("content_number", "50");
+        }else if(v==timeline_60){
+            prefs.putString("content_number", "60");
+        }else if(v==timeline_72){
+            prefs.putString("content_number", "72");
+        }else if(v==timeline_75){
+            prefs.putString("content_number", "75");
+        }else if(v==timeline_84){
+            prefs.putString("content_number", "84");
+        }else if(v==timeline_96){
+            prefs.putString("content_number", "96");
+        }else if(v==timeline_100){
+            prefs.putString("content_number", "100");
+        }else if(v==timeline_108){
+            prefs.putString("content_number", "108");
+        }
+        prefs.apply();
+
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.donator_view, new PrivilegeFragment())
+                .addToBackStack(null)
+                .commit();
+        Log.d("USER ", "GOTO PRIVILEGE FRAGMENT");
+
+    }
 }

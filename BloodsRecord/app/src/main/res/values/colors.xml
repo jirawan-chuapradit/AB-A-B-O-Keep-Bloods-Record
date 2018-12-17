@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#d40000</color>
+    <color name="colorPrimary">#FF3D5D</color>
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#e4e4e4</color>
     <color name="colorAccentDark">#ffa1a1</color>
@@ -9,5 +9,7 @@
     <color name="register">#b9b7b7</color>
     <color name="bg">#FFFAF0</color>
     <color name="dark_red">#B60B13</color>
+    <color name="bg_timeline">#f6f6f6</color>
+    <color name="line_timeline">#707070</color>
 
 </resources>

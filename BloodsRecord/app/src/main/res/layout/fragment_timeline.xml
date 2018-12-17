@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/bg_donator"
+    android:background="@color/bg_timeline"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -18,10 +18,10 @@
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,460 +32,260 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginBottom="30dp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp">
 
 
-                <TextView
-                    android:layout_width="145dp"
-                    android:layout_height="220dp"
-                    android:layout_centerHorizontal="true"
-                    android:background="@drawable/amount"
-                    android:gravity="center"></TextView>
+                <ImageView
+                    android:id="@+id/avatarImage"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="82dp"
+                    android:layout_marginTop="71dp"
+                    app:srcCompat="@android:drawable/sym_def_app_icon" />
 
-                <TextView
-                    android:id="@+id/donate_amount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="165dp"
-                    android:gravity="center"
-                    android:hint="จำนวนครั้ง"
-                    android:textSize="22dp"
-                    tools:text="จำนวนครั้ง" />
+
+
 
                 <View
                     android:id="@+id/line"
                     android:layout_width="11dp"
-                    android:layout_height="1686dp"
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginTop="300dp"
-                    android:layout_marginBottom="30dp"
-                    android:background="@color/colorPrimaryDark" />
+                    android:layout_height="1650dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="230dp"
+                    android:layout_marginEnd="70dp"
+                    android:background="@color/line_timeline" />
 
 
                 <RelativeLayout
                     android:layout_width="103dp"
-                    android:layout_height="1918dp"
+                    android:layout_height="1700dp"
                     android:layout_alignParentStart="true"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginTop="120dp"
+                    android:layout_marginStart="255dp"
+                    android:layout_marginTop="200dp"
+                    android:layout_marginBottom="30dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/timeline_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
                         android:layout_marginLeft="28dp"
-                        android:layout_marginTop="170dp"
+                        android:layout_marginTop="20dp"
                         android:background="@drawable/timeline_shape"
                         android:gravity="center"
                         android:padding="5dp"
                         android:shape="ring"
                         android:text="1"
-                        android:textColor="@color/whiteColor"
+                        android:textColor="@color/colorPrimaryDark"
                         android:textSize="20dp" />
 
                     <TextView
                         android:id="@+id/timeline_7"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:layout_below="@+id/timeline_1"
                         android:layout_marginLeft="28dp"
-                        android:layout_marginTop="290dp"
+                        android:layout_marginTop="60dp"
                         android:background="@drawable/timeline_shape"
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="7"
-                        android:textColor="@color/whiteColor"
+                        android:textColor="@color/colorPrimaryDark"
                         android:textSize="20dp" />
 
                     <TextView
                         android:id="@+id/timeline_16"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:layout_below="@+id/timeline_7"
                         android:layout_marginLeft="28dp"
-                        android:layout_marginTop="400dp"
+                        android:layout_marginTop="60dp"
                         android:background="@drawable/timeline_shape"
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="16"
-                        android:textColor="@color/whiteColor"
+                        android:textColor="@color/colorPrimaryDark"
                         android:textSize="20dp" />
 
                     <TextView
                         android:id="@+id/timeline_18"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:layout_below="@+id/timeline_16"
                         android:layout_marginLeft="28dp"
-                        android:layout_marginTop="500dp"
+                        android:layout_marginTop="60dp"
                         android:background="@drawable/timeline_shape"
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="18"
-                        android:textColor="@color/whiteColor"
+                        android:textColor="@color/colorPrimaryDark"
                         android:textSize="20dp" />
 
                     <TextView
                         android:id="@+id/timeline_24"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:layout_below="@+id/timeline_18"
                         android:layout_marginLeft="28dp"
-                        android:layout_marginTop="620dp"
+                        android:layout_marginTop="60dp"
                         android:background="@drawable/timeline_shape"
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="24"
-                        android:textColor="@color/whiteColor"
+                        android:textColor="@color/colorPrimaryDark"
                         android:textSize="20dp" />
 
                     <TextView
                         android:id="@+id/timeline_36"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:layout_below="@+id/timeline_24"
                         android:layout_marginLeft="28dp"
-                        android:layout_marginTop="740dp"
+                        android:layout_marginTop="60dp"
                         android:background="@drawable/timeline_shape"
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="36"
-                        android:textColor="@color/whiteColor"
+                        android:textColor="@color/colorPrimaryDark"
                         android:textSize="20dp" />
 
                     <TextView
                         android:id="@+id/timeline_48"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:layout_below="@+id/timeline_36"
                         android:layout_marginLeft="28dp"
-                        android:layout_marginTop="850dp"
+                        android:layout_marginTop="60dp"
                         android:background="@drawable/timeline_shape"
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="48"
-                        android:textColor="@color/whiteColor"
+                        android:textColor="@color/colorPrimaryDark"
                         android:textSize="20dp" />
 
                     <TextView
                         android:id="@+id/timeline_50"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:layout_below="@+id/timeline_48"
                         android:layout_marginLeft="28dp"
-                        android:layout_marginTop="990dp"
+                        android:layout_marginTop="60dp"
                         android:background="@drawable/timeline_shape"
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="50"
-                        android:textColor="@color/whiteColor"
+                        android:textColor="@color/colorPrimaryDark"
                         android:textSize="20dp" />
 
                     <TextView
                         android:id="@+id/timeline_60"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:layout_below="@+id/timeline_50"
                         android:layout_marginLeft="28dp"
-                        android:layout_marginTop="1100dp"
+                        android:layout_marginTop="60dp"
                         android:background="@drawable/timeline_shape"
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="60"
-                        android:textColor="@color/whiteColor"
+                        android:textColor="@color/colorPrimaryDark"
                         android:textSize="20dp" />
 
                     <TextView
                         android:id="@+id/timeline_72"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:layout_below="@+id/timeline_60"
                         android:layout_marginLeft="28dp"
-                        android:layout_marginTop="1220dp"
+                        android:layout_marginTop="60dp"
                         android:background="@drawable/timeline_shape"
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="72"
-                        android:textColor="@color/whiteColor"
+                        android:textColor="@color/colorPrimaryDark"
                         android:textSize="20dp" />
 
                     <TextView
                         android:id="@+id/timeline_75"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:layout_below="@+id/timeline_72"
                         android:layout_marginLeft="28dp"
-                        android:layout_marginTop="1350dp"
+                        android:layout_marginTop="60dp"
                         android:background="@drawable/timeline_shape"
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="75"
-                        android:textColor="@color/whiteColor"
+                        android:textColor="@color/colorPrimaryDark"
                         android:textSize="20dp" />
 
                     <TextView
                         android:id="@+id/timeline_84"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:layout_below="@+id/timeline_75"
                         android:layout_marginLeft="28dp"
-                        android:layout_marginTop="1460dp"
+                        android:layout_marginTop="60dp"
                         android:background="@drawable/timeline_shape"
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="84"
-                        android:textColor="@color/whiteColor"
+                        android:textColor="@color/colorPrimaryDark"
                         android:textSize="20dp" />
 
                     <TextView
                         android:id="@+id/timeline_96"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:layout_below="@+id/timeline_84"
                         android:layout_marginLeft="28dp"
-                        android:layout_marginTop="1580dp"
+                        android:layout_marginTop="60dp"
                         android:background="@drawable/timeline_shape"
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="96"
-                        android:textColor="@color/whiteColor"
+                        android:textColor="@color/colorPrimaryDark"
                         android:textSize="20dp" />
 
                     <TextView
                         android:id="@+id/timeline_100"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:layout_below="@+id/timeline_96"
                         android:layout_marginLeft="28dp"
-                        android:layout_marginTop="1700dp"
+                        android:layout_marginTop="60dp"
                         android:background="@drawable/timeline_shape"
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="100"
-                        android:textColor="@color/whiteColor"
+                        android:textColor="@color/colorPrimaryDark"
                         android:textSize="20dp" />
 
                     <TextView
                         android:id="@+id/timeline_108"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:layout_below="@+id/timeline_100"
                         android:layout_marginLeft="28dp"
-                        android:layout_marginTop="1820dp"
+                        android:layout_marginTop="60dp"
                         android:background="@drawable/timeline_shape"
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="108"
-                        android:textColor="@color/whiteColor"
+                        android:textColor="@color/colorPrimaryDark"
                         android:textSize="20dp" />
                 </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/re1"
-                    android:layout_width="220dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="280dp"
-                    android:layout_marginEnd="60dp"
-                    android:background="@drawable/text_reward"
-                    android:padding="10dp"
-                    android:text="✔ ได้รับเข็มที่ระลึก
-                    ✔ สิทธิค่ารักษาพยาบาล"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/re7"
-                    android:layout_width="220dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="400dp"
-                    android:layout_marginEnd="60dp"
-                    android:background="@drawable/text_reward"
-                    android:padding="10dp"
-                    android:text="✔ ได้รับเข็มที่ระลึก
-                    ✔ สิทธิรักษาพยาบาล"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/re16"
-                    android:layout_width="220dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="520dp"
-                    android:layout_marginEnd="60dp"
-                    android:background="@drawable/text_reward"
-                    android:padding="10dp"
-                    android:text="✔ ได้รับเข็มที่ระลึก"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/re18"
-                    android:layout_width="220dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="620dp"
-                    android:layout_marginEnd="60dp"
-                    android:background="@drawable/text_reward"
-                    android:padding="10dp"
-                    android:text="✔ สิทธิค่ารักษาพยาบาล"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/re24"
-                    android:layout_width="220dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="720dp"
-                    android:layout_marginEnd="60dp"
-                    android:background="@drawable/text_reward"
-                    android:padding="10dp"
-                    android:text="✔ ได้รับเข็มที่ระลึก
-                    ✔ สิทธิรักษาพยาบาล"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/re36"
-                    android:layout_width="220dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="860dp"
-                    android:layout_marginEnd="60dp"
-                    android:background="@drawable/text_reward"
-                    android:padding="10dp"
-                    android:text="✔ ได้รับเข็มที่ระลึก"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/re48"
-                    android:layout_width="220dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="980dp"
-                    android:layout_marginEnd="60dp"
-                    android:background="@drawable/text_reward"
-                    android:padding="10dp"
-                    android:text="✔ ได้รับเข็มที่ระลึก"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:id="@+id/re50"
-                    android:layout_width="220dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="1100dp"
-                    android:layout_marginEnd="60dp"
-                    android:background="@drawable/text_reward"
-                    android:padding="10dp"
-                    android:text="✔ ได้รับพระราชทานเหรียญกาชาดสมนาคุณ"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:id="@+id/re60"
-                    android:layout_width="220dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="1220dp"
-                    android:layout_marginEnd="60dp"
-                    android:background="@drawable/text_reward"
-                    android:padding="10dp"
-                    android:text="✔ ได้รับเข็มที่ระลึก"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:id="@+id/re72"
-                    android:layout_width="220dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="1340dp"
-                    android:layout_marginEnd="60dp"
-                    android:background="@drawable/text_reward"
-                    android:padding="10dp"
-                    android:text="✔ ได้รับเข็มที่ระลึก"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:id="@+id/re75"
-                    android:layout_width="220dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="1460dp"
-                    android:layout_marginEnd="60dp"
-                    android:background="@drawable/text_reward"
-                    android:padding="10dp"
-                    android:text="✔ ได้รับเพระราชทานเหรียญกาชาดสมนาคุณ"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/re84"
-                    android:layout_width="220dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="1580dp"
-                    android:layout_marginEnd="60dp"
-                    android:background="@drawable/text_reward"
-                    android:padding="10dp"
-                    android:text="✔ ได้รับเข็มที่ระลึก"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:id="@+id/re96"
-                    android:layout_width="220dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="1700dp"
-                    android:layout_marginEnd="60dp"
-                    android:background="@drawable/text_reward"
-                    android:padding="10dp"
-                    android:text="✔ ได้รับเข็มที่ระลึก"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:id="@+id/re100"
-                    android:layout_width="220dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="1820dp"
-                    android:layout_marginEnd="60dp"
-                    android:background="@drawable/text_reward"
-                    android:padding="10dp"
-                    android:text="✔ ได้รับเพระราชทานเหรียญกาชาดสมนาคุณ"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:id="@+id/re108"
-                    android:layout_width="220dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="1940dp"
-                    android:layout_marginEnd="60dp"
-                    android:background="@drawable/text_reward"
-                    android:padding="10dp"
-                    android:text="✔ ได้รับเข็มที่ระลึก"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="16sp" />
 
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>
+
 
 </android.support.constraint.ConstraintLayout>

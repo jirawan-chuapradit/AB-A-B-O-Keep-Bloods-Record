@@ -1,7 +1,9 @@
 package com.example.suttidasat.bloodsrecord.Interface;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -25,8 +27,6 @@ import android.widget.Toast;
 
 import com.example.suttidasat.bloodsrecord.MainActivity;
 import com.example.suttidasat.bloodsrecord.R;
-import com.example.suttidasat.bloodsrecord.init.BloodsRecordFirebase;
-import com.example.suttidasat.bloodsrecord.model.DonatorProfile;
 import com.example.suttidasat.bloodsrecord.model.MyService;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -82,7 +82,7 @@ public class UpdatePasswordFragment extends Fragment {
         //GET VALUDE FROM FIREBASE
         uid = fbAuth.getCurrentUser().getUid();
         SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
-        mCartItemCount = prefs.getInt(uid+"_countNotify", -1);
+        mCartItemCount = prefs.getInt("_countNotify", 0);
         Log.d("prefs Update", String.valueOf(mCartItemCount));
 
         setHasOptionsMenu(true);
@@ -115,19 +115,18 @@ public class UpdatePasswordFragment extends Fragment {
                 }
                 else {
                     SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord", Context.MODE_PRIVATE);
-                    String email = prefs.getString(uid + "_userId", "empty email");
+                    String email = prefs.getString("email", "empty email");
                     Log.d("Email: ", email);
 
                     FirebaseAuth.getInstance().signInWithEmailAndPassword(email,userOldPassword).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
                         public void onSuccess(AuthResult authResult) {
-                            updatePassword(userPasswordNew);
+                            confirmDialog();
                         }
                     })
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    progressDialog.dismiss();
                                     Log.d("UPDATE", "OLD PASSWORD WAS WRONG");
                                     Toast.makeText(
                                             getActivity(),
@@ -143,6 +142,27 @@ public class UpdatePasswordFragment extends Fragment {
         });
 
     }
+
+    private void confirmDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        builder
+                .setMessage("ยืนยันที่จะเปลี่ยนรหัสผ่าน ใช่ หรือ ไม่")
+                .setPositiveButton("ใช่",  new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        updatePassword(userPasswordNew);
+                    }
+                })
+                .setNegativeButton("ไม่", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog,int id) {
+                        dialog.cancel();
+                    }
+                })
+                .show();
+    }
+
 
     private void updatePassword(String userPasswordNew) {
         /**********************************
@@ -185,7 +205,7 @@ public class UpdatePasswordFragment extends Fragment {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         progressDialog.dismiss();
-                        Log.d("UPDATEPASSWORD : ", e.getMessage());
+                        Log.d("UPDATE PASSWORD : ", e.getMessage());
                         Toast.makeText(
                                 getActivity(),
                                 "Password Update Failed",
@@ -200,44 +220,6 @@ public class UpdatePasswordFragment extends Fragment {
     /**********************************
      *   intent: สร้าง popup ระบบกำลังประมวลผล  *
      **********************************/
-    private void deley() {
-
-        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        final Handler handle = new Handler() {
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                progressDialog.incrementProgressBy(2); // Incremented By Value 2
-            }
-        };
-        // Progress Dialog Max Value
-        progressDialog.setMax(100);
-        progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
-        progressDialog.setMessage("กรุณารอสักครู่...");
-        // Progress Dialog Style Horizontal
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        // Display Progress Dialog
-        progressDialog.show();
-        // Cannot Cancel Progress Dialog
-        progressDialog.setCancelable(false);
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    while (progressDialog.getProgress() <= progressDialog.getMax()) {
-                        Thread.sleep(100);
-                        handle.sendMessage(handle.obtainMessage());
-                        if (progressDialog.getProgress() == progressDialog.getMax()) {
-                            progressDialog.dismiss();
-                        }
-                    }
-
-                }catch (Exception e){
-                    e.getStackTrace();
-                }
-            }
-        }).start();
-    }
 
     //menu
     @Override
@@ -273,7 +255,7 @@ public class UpdatePasswordFragment extends Fragment {
                 Log.d("USER ", "CLICK NOTIFY BELL");
 
                 SharedPreferences.Editor prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE).edit();
-                prefs.putInt(uid+"_countNotify",0);
+                prefs.putInt("_countNotify",0);
                 prefs.apply();
 
                 setupBadge();
