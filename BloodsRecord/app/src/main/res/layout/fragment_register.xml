@@ -2,128 +2,252 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="10dp"
+        >
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/arrow"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="  ลงทะเบียน"
+            android:textColor="#000"
+            android:textSize="25dp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:padding="35dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:padding="35dp"
             android:weightSum="1">
+
 
 
             <ImageView
                 android:id="@+id/userProfileImage"
                 android:layout_width="315dp"
                 android:layout_height="123dp"
-                app:srcCompat="@drawable/upload_profile" />
+                android:layout_marginBottom="10dp"
+                app:srcCompat="@drawable/profile" />
 
             <EditText
                 android:id="@+id/registerFirstname"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/edit"
-                android:ems="10"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:background="@drawable/register_shape"
                 android:hint="ชื่อ"
-                android:inputType="text" />
+                android:inputType="text"
+                android:padding="10dp"
+                android:textColor="#a2a2a2"
+                android:textCursorDrawable="@color/colorPrimary" />
 
             <EditText
                 android:id="@+id/registerLastname"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:drawableLeft="@drawable/edit"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/register_shape"
                 android:hint="นามสกุล"
-                android:ems="10"
-                />
+                android:inputType="text"
+                android:padding="10dp"
+                android:textColor="#a2a2a2"
+                android:textCursorDrawable="@color/colorPrimary" />
 
             <EditText
                 android:id="@+id/registerNationalID"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:drawableLeft="@drawable/card"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/register_shape"
                 android:hint="เลขบัตรประชาชน"
-                android:ems="10"
-                />
+                android:inputType="number"
+                android:padding="10dp"
+                android:textColor="#a2a2a2"
+                android:textCursorDrawable="@color/colorPrimary" />
 
 
             <EditText
                 android:id="@+id/registerPassword"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/register_shape"
                 android:hint="รหัสผ่าน"
-                android:drawableLeft="@drawable/ic_locked"
-                android:ems="10" />
-
+                android:inputType="textPassword"
+                android:padding="10dp"
+                android:textColor="#a2a2a2"
+                android:textCursorDrawable="@color/colorPrimary" />
 
 
             <EditText
                 android:id="@+id/registerRePassword"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/register_shape"
                 android:hint="ยืนยันรหัสผ่าน"
-                android:drawableLeft="@drawable/ic_locked"
-                android:ems="10" />
+                android:inputType="textPassword"
+                android:padding="10dp"
+                android:textColor="#a2a2a2"
+                android:textCursorDrawable="@color/colorPrimary" />
 
 
             <EditText
                 android:id="@+id/registerEmail"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/register_shape"
                 android:hint="อีเมล"
-                android:drawableLeft="@drawable/ic_email"
-                android:ems="10" />
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:layout_width="30sp"
-                    android:layout_height="25sp"
-                    android:background="@drawable/ic_blood"
-                    android:layout_gravity="left" />
-
-                <Spinner
-                    android:id="@+id/spinner1"
-                    android:layout_marginLeft="20dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/blood_arrays"
-                    android:prompt="@string/bloods_groups" />
-
-            </LinearLayout>
-
+                android:inputType="text"
+                android:padding="10dp"
+                android:textColor="#a2a2a2"
+                android:textCursorDrawable="@color/colorPrimary" />
 
             <EditText
                 android:id="@+id/registerAddress"
-                android:layout_width="321dp"
+                android:layout_width="350dp"
                 android:layout_height="97dp"
                 android:ems="10"
                 android:hint="ที่อยู่"
-                android:isScrollContainer="true"
-                android:inputType="text" />
+                android:inputType="text"
+                android:layout_marginTop="10dp"
+                android:padding="10dp"
+                android:background="@drawable/register_shape2"
+                android:isScrollContainer="true" />
+
+
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="horizontal">-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="30sp"-->
+                    <!--android:layout_height="25sp"-->
+                    <!--android:layout_gravity="left" />-->
+
+                <!--<Spinner-->
+                    <!--android:id="@+id/spinner1"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="20dp"-->
+                <!--android:entries="@array/blood_arrays"-->
+                <!--android:prompt="@string/bloods_groups" />-->
+
+            <!--</LinearLayout>-->
+
+
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="start"
+                    android:text="หมู่โลหิต"
+                    android:textColor="#000"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/a"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/timeline_shape"
+                    android:gravity="center"
+                    android:text="A"
+                    android:textColor="#c9c9c9" />
+
+                <TextView
+                    android:id="@+id/b"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/timeline_shape"
+                    android:gravity="center"
+                    android:text="B"
+                    android:textColor="#c9c9c9" />
+
+                <TextView
+                    android:id="@+id/o"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/timeline_shape"
+                    android:gravity="center"
+                    android:text="O"
+                    android:textColor="#c9c9c9" />
+
+                <TextView
+                    android:id="@+id/ab"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/timeline_shape"
+                    android:gravity="center"
+                    android:text="AB"
+                    android:textColor="#c9c9c9" />
+            </LinearLayout>
+
 
             <Button
                 android:id="@+id/registerBtn"
-                android:layout_marginTop="10dp"
-                android:text="ลงทะเบียน"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
-
+                android:layout_width="284dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/addbtn_border"
+                android:text="REGISTER"
+                android:textColor="#ffff"
+                android:textSize="20dp" />
 
 
         </LinearLayout>

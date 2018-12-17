@@ -4,30 +4,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorAccent">
+    android:background="@drawable/login">
 
 
     <ScrollView
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="100dp">
+        android:layout_marginTop="0dp"
+        tools:ignore="MissingConstraints">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="150dp"
-            android:padding="50dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="300dp"
+                android:layout_marginBottom="25dp"
+                android:layout_gravity="center"
+                android:fontFamily="@font/font"
+                android:text="LOGIN REGISTER"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="279dp" />
 
             <EditText
                 android:id="@+id/login_userid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:hint=" E-mail"
+                android:padding="10dp"
+                android:background="@drawable/logon_user"
+                android:hint="E-mail"
                 android:inputType="text"
                 android:textCursorDrawable="@color/colorPrimary" />
 
@@ -37,8 +53,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:hint="password"
-                android:inputType="textPassword"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/logon_user"
+                android:hint="Password"
+                android:inputType="text"
                 android:padding="10dp"
                 android:textCursorDrawable="@color/colorPrimary" />
 
@@ -47,26 +65,28 @@
                 android:layout_width="284dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="25dp"
+                android:layout_gravity="center"
                 android:background="@drawable/addbtn_border"
-                android:text="เข้าสู่ระบบ"
+                android:text="login"
+                android:textSize="20dp"
                 android:textColor="#ffff" />
 
-            <Button
-                android:id="@+id/login_register_Btn"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="10dp"
-                android:text="Register"
-                android:textColor="@color/colorPrimary" />
 
+            <TextView
+                android:id="@+id/login_register_Btn"
+                android:layout_width="122dp"
+                android:layout_height="40dp"
+                android:layout_gravity="right"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Register >>"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20dp" />
 
         </LinearLayout>
 
 
+
     </ScrollView>
-
-
-
-
 
 </android.support.constraint.ConstraintLayout>
