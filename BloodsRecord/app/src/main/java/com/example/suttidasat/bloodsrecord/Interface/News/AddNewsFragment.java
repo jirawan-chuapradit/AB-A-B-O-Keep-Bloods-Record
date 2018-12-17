@@ -48,7 +48,7 @@ public class AddNewsFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         date = getView().findViewById(R.id.date);
-        date.setText(date_now);
+        date.setText("วันที่ : "+date_now);
 
 
         cfBtn();

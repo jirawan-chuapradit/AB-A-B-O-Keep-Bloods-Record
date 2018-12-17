@@ -95,7 +95,7 @@ public class TimeLineFragment extends Fragment implements View.OnClickListener {
         mCartItemCount = prefs.getInt("_countNotify", 0);
 
 
-
+        donate_amount = getView().findViewById(R.id.donate_amount);
         Log.d("prefs Timeline: ", String.valueOf(mCartItemCount));
         setHasOptionsMenu(true);
         firestore = FirebaseFirestore.getInstance();
@@ -160,6 +160,8 @@ public class TimeLineFragment extends Fragment implements View.OnClickListener {
 
         String amountStr = String.valueOf(amount);
 
+
+
         StorageReference storageReference = firebaseStorage.getReference();
         storageReference.child("avatar").child(amountStr+".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -205,7 +207,7 @@ public class TimeLineFragment extends Fragment implements View.OnClickListener {
                                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 //                                        donate_amount.setText(queryDocumentSnapshots.size() + " ครั้ง");
                                         int amount = queryDocumentSnapshots.size();
-
+                                        donate_amount.setText(String.valueOf(amount));
                                         getImagePic(amount);
 
                                         /// set color
