@@ -3,9 +3,9 @@
     <font
         android:fontStyle="normal"
         android:fontWeight="400"
-        android:font="@font/montserratregular" />
+        android:font="@font/FCActiveLight" />
     <font
         android:fontStyle="italic"
         android:fontWeight="400"
-        android:font="@font/montserratbold" />
+        android:font="@font/FCActiveItalic" />
 </font-family>
