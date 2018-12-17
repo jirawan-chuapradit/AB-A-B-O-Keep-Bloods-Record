@@ -7,7 +7,12 @@
     android:background="@drawable/login">
 
 
+    <ScrollView
 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="0dp"
+        tools:ignore="MissingConstraints">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -82,6 +87,6 @@
 
 
 
-
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

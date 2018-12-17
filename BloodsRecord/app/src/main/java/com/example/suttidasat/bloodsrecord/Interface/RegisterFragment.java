@@ -4,6 +4,9 @@ package com.example.suttidasat.bloodsrecord.Interface;
 import android.app.ProgressDialog;
 import android.content.Intent;
 
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.StateListDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -59,6 +63,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     private StorageReference storageReference;
 
     private Spinner spinner1;
+    private TextView a,b,ab,o;
 
 
     //Register value
@@ -104,6 +109,18 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
         registerBtn.setOnClickListener(this);
         userProfileImage.setOnClickListener(this);
+
+        //bloods selector
+        a = getView().findViewById(R.id.a);
+        b = getView().findViewById(R.id.b);
+        ab = getView().findViewById(R.id.ab);
+        o = getView().findViewById(R.id.o);
+
+        a.setOnClickListener(this);
+        b.setOnClickListener(this);
+        ab.setOnClickListener(this);
+        o.setOnClickListener(this);
+
 
 
     }
@@ -261,7 +278,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         firstnameStr = firstnameEdt.getText().toString().toUpperCase();
         lastnameStr = lastnameEdt.getText().toString().toUpperCase();
         nationalIDStr = nationalIDEdt.getText().toString();
-        bloodsStr = (String) spinner1.getSelectedItem();
+//        bloodsStr = (String) spinner1.getSelectedItem();
         emailStr = emailEdt.getText().toString();
         passwordStr = passwordEdt.getText().toString();
         rePasswordStr = rePasswordEdt.getText().toString();
@@ -304,6 +321,11 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
      **********************************/
     @Override
     public void onClick(View v) {
+
+        GradientDrawable gd_a = (GradientDrawable) a.getBackground().mutate();
+        GradientDrawable gd_b = (GradientDrawable) b.getBackground().mutate();
+        GradientDrawable gd_o = (GradientDrawable) o.getBackground().mutate();
+        GradientDrawable gd_ab = (GradientDrawable) ab.getBackground().mutate();
         if(v == userProfileImage){
             //open file chooser
             Log.d("REGISTER", "CLICK = USER_PROFIRE_IMAGE");
@@ -313,6 +335,39 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             //register
             Log.d("REGISTER", "CLICK = REGISTER");
             register();
+        }
+        else if(v==a){
+
+            bloodsStr = "A";
+
+            gd_a.setColor(Color.rgb(255, 33, 93));
+            gd_b.setColor(Color.rgb(255, 255, 255));
+            gd_o.setColor(Color.rgb(255, 255, 255));
+            gd_ab.setColor(Color.rgb(255, 255, 255));
+        }
+ else if(v==b){
+
+            bloodsStr = "B";
+
+            gd_b.setColor(Color.rgb(255, 33, 93));
+            gd_a.setColor(Color.rgb(255, 255, 255));
+            gd_o.setColor(Color.rgb(255, 255, 255));
+            gd_ab.setColor(Color.rgb(255, 255, 255));
+        }
+ else if(v==ab){
+
+            bloodsStr = "AB";
+            gd_ab.setColor(Color.rgb(255, 33, 93));
+            gd_a.setColor(Color.rgb(255, 255, 255));
+            gd_o.setColor(Color.rgb(255, 255, 255));
+            gd_o.setColor(Color.rgb(255, 255, 255));
+        }else if(v==o){
+
+            bloodsStr = "O";
+            gd_o.setColor(Color.rgb(255, 33, 93));
+            gd_a.setColor(Color.rgb(255, 255, 255));
+            gd_b.setColor(Color.rgb(255, 255, 255));
+            gd_ab.setColor(Color.rgb(255, 255, 255));
         }
     }
 

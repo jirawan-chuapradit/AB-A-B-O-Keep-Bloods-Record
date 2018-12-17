@@ -175,7 +175,7 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="10dp">
 
 
                 <TextView
@@ -183,41 +183,57 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:gravity="start"
                     android:text="หมู่โลหิต"
                     android:textColor="#000"
                     android:textSize="20dp"
                     android:textStyle="bold" />
 
-                <Button
+                <TextView
+                    android:id="@+id/a"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
                     android:layout_marginRight="8dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/timeline_shape"
+                    android:gravity="center"
                     android:text="A"
-                    android:textColor="#c9c9c9"
-                    android:background="@drawable/circle_gr"/>
+                    android:textColor="#c9c9c9" />
 
-                <Button
+                <TextView
+                    android:id="@+id/b"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/timeline_shape"
+                    android:gravity="center"
                     android:text="B"
-                    android:layout_marginRight="8dp"
-                    android:textColor="#c9c9c9"
-                    android:background="@drawable/circle_gr"/>
-                <Button
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:text="O"
-                    android:layout_marginRight="8dp"
-                    android:textColor="#c9c9c9"
-                    android:background="@drawable/circle_gr"/>
+                    android:textColor="#c9c9c9" />
 
-                <Button
+                <TextView
+                    android:id="@+id/o"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/timeline_shape"
+                    android:gravity="center"
+                    android:text="O"
+                    android:textColor="#c9c9c9" />
+
+                <TextView
+                    android:id="@+id/ab"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/timeline_shape"
+                    android:gravity="center"
                     android:text="AB"
-                    android:textColor="#c9c9c9"
-                    android:background="@drawable/circle_gr"/>
+                    android:textColor="#c9c9c9" />
             </LinearLayout>
 
 
