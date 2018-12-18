@@ -24,12 +24,15 @@ import com.example.suttidasat.bloodsrecord.R;
 import com.example.suttidasat.bloodsrecord.adapter.NewsAdapter;
 import com.example.suttidasat.bloodsrecord.model.ConnectDB;
 import com.example.suttidasat.bloodsrecord.model.News;
+import com.example.suttidasat.bloodsrecord.model.NumSorter;
+import com.example.suttidasat.bloodsrecord.model.SortNews;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ViewNews extends Fragment {
 
@@ -92,6 +95,8 @@ public class ViewNews extends Fragment {
                 for (DocumentSnapshot d: queryDocumentSnapshots.getDocuments()){
                     news_list_arr.add(d.toObject(News.class));
                 }
+
+                Collections.sort(news_list_arr,new SortNews());
 
                 newsAdapter.notifyDataSetChanged();
                 progressDialog.dismiss();
