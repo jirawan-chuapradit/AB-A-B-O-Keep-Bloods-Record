@@ -8,8 +8,9 @@
         android:scaleType="center"
         android:text="กรุณาใส่รหัสผ่าน"
         android:fontFamily="@font/font"
+        android:textColor="#fff"
         android:textStyle="bold"
-        android:textSize="45dp"
+        android:textSize="40dp"
         android:textAlignment="center"
         android:background="#FF215D"
         />
