@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.load.resource.bitmap.FitCenter;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.suttidasat.bloodsrecord.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -95,7 +96,7 @@ public class TimeLineFragment extends Fragment implements View.OnClickListener {
         mCartItemCount = prefs.getInt("_countNotify", 0);
 
 
-
+        donate_amount = getView().findViewById(R.id.donate_amount);
         Log.d("prefs Timeline: ", String.valueOf(mCartItemCount));
         setHasOptionsMenu(true);
         firestore = FirebaseFirestore.getInstance();
@@ -141,24 +142,18 @@ public class TimeLineFragment extends Fragment implements View.OnClickListener {
 
         if(amount==0){
             amount = 0;
-        }else if(amount == 1 && amount <7){
+        }else if(amount >= 1 && amount <7){
             amount = 1;
         }else if(amount >=7 &&amount<16){
             amount = 7;
         }else if(amount>=16 && amount<18){
             amount = 16;
-        }else if(amount>=18&&amount<24){
-            amount=18;
-        }else if(amount>=24&&amount>36){
-            amount=24;
-        }else if(amount>=36&&amount<48){
-            amount=36;
-        }else if(amount>=48&&amount<50){
-            amount=48;
-        }else
-            amount=50;
-
+        }else if(amount>=18) {
+            amount = 72;
+        }
         String amountStr = String.valueOf(amount);
+
+
 
         StorageReference storageReference = firebaseStorage.getReference();
         storageReference.child("avatar").child(amountStr+".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -171,8 +166,8 @@ public class TimeLineFragment extends Fragment implements View.OnClickListener {
                                 .placeholder(R.mipmap.ic_launcher)
                                 .error(R.mipmap.ic_launcher)
                                 .dontTransform()
-                                .override(150,150)
-                                .transform(new CircleCrop()))
+                                .override(250,300)
+                                .transform(new FitCenter()))
                         .into(avatarImage);
                 progressDialog.dismiss();
             }
@@ -205,7 +200,7 @@ public class TimeLineFragment extends Fragment implements View.OnClickListener {
                                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 //                                        donate_amount.setText(queryDocumentSnapshots.size() + " ครั้ง");
                                         int amount = queryDocumentSnapshots.size();
-
+                                        donate_amount.setText(String.valueOf(amount));
                                         getImagePic(amount);
 
                                         /// set color

@@ -49,11 +49,10 @@ import static android.app.Activity.RESULT_OK;
 public class RegisterFragment extends Fragment implements View.OnClickListener {
 
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_register, container,false);
+        return inflater.inflate(R.layout.fragment_register, container, false);
     }
 
     //Firebase
@@ -63,19 +62,18 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     private StorageReference storageReference;
 
     private Spinner spinner1;
-    private TextView a,b,ab,o;
+    private TextView a, b, ab, o;
 
 
     //Register value
-    private String firstnameStr,lastnameStr,nationalIDStr
-            ,bloodsStr,emailStr,passwordStr,rePasswordStr
-            ,uid,addressStr;
+    private String firstnameStr, lastnameStr, nationalIDStr, bloodsStr, emailStr, passwordStr, rePasswordStr, uid, addressStr;
     private boolean nationalIdIsEmpty;
 
     //ImageView
-    private ImageView userProfileImage;
+    private ImageView userProfileImage,backBtn;
     //Buttons
     private Button registerBtn;
+
 
     //a constant to track the file chooser intent
     private static int PICK_IMAGE = 123;
@@ -84,9 +82,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     private Uri filePath;
 
     ProgressDialog progressDialog;
-
-
-
 
 
     @Override
@@ -104,11 +99,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
         registerBtn = getView().findViewById(R.id.registerBtn);
         userProfileImage = getView().findViewById(R.id.userProfileImage);
+        backBtn = getView().findViewById(R.id.backBtn);
 
         //attaching listener
-
         registerBtn.setOnClickListener(this);
         userProfileImage.setOnClickListener(this);
+        backBtn.setOnClickListener(this);
 
         //bloods selector
         a = getView().findViewById(R.id.a);
@@ -122,7 +118,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         o.setOnClickListener(this);
 
 
-
     }
 
 
@@ -132,29 +127,26 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         getRegisterValue();
         checkNationIdIsExist();
         //check value is empty
-        if(firstnameStr.isEmpty() || lastnameStr.isEmpty()||nationalIDStr.isEmpty()||bloodsStr.isEmpty()
-                || emailStr.isEmpty()|| passwordStr.isEmpty()||rePasswordStr.isEmpty()||addressStr.isEmpty()){
+        if (firstnameStr.isEmpty() || lastnameStr.isEmpty() || nationalIDStr.isEmpty() || bloodsStr.isEmpty()
+                || emailStr.isEmpty() || passwordStr.isEmpty() || rePasswordStr.isEmpty() || addressStr.isEmpty()) {
             Log.d("REGISTER", "VALUE IS EMPTY");
-            Toast.makeText(getActivity(),"กรุณากรอกข้อมูลให้ครบถ้วน",Toast.LENGTH_SHORT).show();
-        }else if(!rePasswordStr.equals(passwordStr)){
+            Toast.makeText(getActivity(), "กรุณากรอกข้อมูลให้ครบถ้วน", Toast.LENGTH_SHORT).show();
+        } else if (!rePasswordStr.equals(passwordStr)) {
             Log.d("REGISTER", "PASSWORD IS NOT EQUALS REPASSWORD");
-            Toast.makeText(getActivity(),"รหัสผ่านไม่ถูกต้อง",Toast.LENGTH_SHORT).show();
-        }else if(nationalIDStr.length() != 13){
+            Toast.makeText(getActivity(), "รหัสผ่านไม่ถูกต้อง", Toast.LENGTH_SHORT).show();
+        } else if (nationalIDStr.length() != 13) {
             Log.d("REGISTER", "กรุณาระบุเลขบัตรประชาชนให้ครบ");
-            Toast.makeText(getActivity(),"กรุณาระบุเลขบัตรประชาชนให้ครบ",Toast.LENGTH_SHORT).show();
-        }
-        else if (rePasswordStr.length() <= 5 || passwordStr.length() <= 5){
+            Toast.makeText(getActivity(), "กรุณาระบุเลขบัตรประชาชนให้ครบ", Toast.LENGTH_SHORT).show();
+        } else if (rePasswordStr.length() <= 5 || passwordStr.length() <= 5) {
             Log.d("REGISTER", "รหัสผ่านน้อยกว่า 6 ตัว");
-            Toast.makeText(getActivity(),"กรุณาระบุรหัสผ่านมากกว่า 5 ตัว",Toast.LENGTH_SHORT).show();
-        }
-        else if(filePath == null){
+            Toast.makeText(getActivity(), "กรุณาระบุรหัสผ่านมากกว่า 5 ตัว", Toast.LENGTH_SHORT).show();
+        } else if (filePath == null) {
             Log.d("REGISTER", "ไม่ได้เลือกรูปภาพ");
-            Toast.makeText(getActivity(),"กรุณาใส่รูปภาพ",Toast.LENGTH_SHORT).show();
-        }else if(nationalIdIsEmpty==false){
+            Toast.makeText(getActivity(), "กรุณาใส่รูปภาพ", Toast.LENGTH_SHORT).show();
+        } else if (nationalIdIsEmpty == false) {
             Log.d("REGISTER : ", "NATIONAL ID IS ALREADY EXIST");
-            Toast.makeText(getActivity(),"รหัสบัตรประชาชนนี้ไม่สามารถลงทะเบียนได้",Toast.LENGTH_SHORT).show();
-        }
-        else{
+            Toast.makeText(getActivity(), "รหัสบัตรประชาชนนี้ไม่สามารถลงทะเบียนได้", Toast.LENGTH_SHORT).show();
+        } else {
             /**********************************
              *   intent: สร้าง popup ระบบกำลังประมวลผล  *
              **********************************/
@@ -168,7 +160,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             // Cannot Cancel Progress Dialog
             progressDialog.setCancelable(false);
 
-            fbAuth.createUserWithEmailAndPassword(emailStr,passwordStr).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            fbAuth.createUserWithEmailAndPassword(emailStr, passwordStr).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     uid = fbAuth.getCurrentUser().getUid();
@@ -191,7 +183,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                             Log.d("NATIONAL_ID : ", "CAN RESIST");
                             nationalIdIsEmpty = true;
 
-                        }else {
+                        } else {
                             Log.d("NATIONAL_ID : ", "IS ALREADY EXIST");
                             nationalIdIsEmpty = false;
                         }
@@ -256,7 +248,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.d("REGISTER", "ERROR =" + e.getMessage());
-                Toast.makeText(getContext(),"ERROR = "+e.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "ERROR = " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -273,7 +265,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 //        spinner1 = getView().findViewById(R.id.spinner1);
 
 
-
         //CONVERSE TO STRING
         firstnameStr = firstnameEdt.getText().toString().toUpperCase();
         lastnameStr = lastnameEdt.getText().toString().toUpperCase();
@@ -287,11 +278,10 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     }
 
 
-
     //handling the image chooser activity result
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == PICK_IMAGE && resultCode == RESULT_OK && data.getData() != null){
+        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data.getData() != null) {
             filePath = data.getData();
             Glide.with(getContext()).load(filePath)
                     .apply(new RequestOptions()
@@ -301,7 +291,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                             .dontTransform()
                             .placeholder(R.mipmap.ic_launcher_round)
                             .error(R.mipmap.ic_launcher_round)
-                            .override(300,200)
+                            .override(300, 200)
                             .transform(new CircleCrop()))
                     .into(userProfileImage);
         }
@@ -309,7 +299,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     }
 
     //method to show file chooser
-    private void showFileChooser(){
+    private void showFileChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -326,17 +316,16 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         GradientDrawable gd_b = (GradientDrawable) b.getBackground().mutate();
         GradientDrawable gd_o = (GradientDrawable) o.getBackground().mutate();
         GradientDrawable gd_ab = (GradientDrawable) ab.getBackground().mutate();
-        if(v == userProfileImage){
+        if (v == userProfileImage) {
             //open file chooser
             Log.d("REGISTER", "CLICK = USER_PROFIRE_IMAGE");
             showFileChooser();
 
-        }else if(v == registerBtn){
+        } else if (v == registerBtn) {
             //register
             Log.d("REGISTER", "CLICK = REGISTER");
             register();
-        }
-        else if(v==a){
+        } else if (v == a) {
 
             bloodsStr = "A";
 
@@ -344,8 +333,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             gd_b.setColor(Color.rgb(255, 255, 255));
             gd_o.setColor(Color.rgb(255, 255, 255));
             gd_ab.setColor(Color.rgb(255, 255, 255));
-        }
- else if(v==b){
+        } else if (v == b) {
 
             bloodsStr = "B";
 
@@ -353,21 +341,28 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             gd_a.setColor(Color.rgb(255, 255, 255));
             gd_o.setColor(Color.rgb(255, 255, 255));
             gd_ab.setColor(Color.rgb(255, 255, 255));
-        }
- else if(v==ab){
+        } else if (v == ab) {
 
             bloodsStr = "AB";
             gd_ab.setColor(Color.rgb(255, 33, 93));
             gd_a.setColor(Color.rgb(255, 255, 255));
             gd_o.setColor(Color.rgb(255, 255, 255));
             gd_o.setColor(Color.rgb(255, 255, 255));
-        }else if(v==o){
+        } else if (v == o) {
 
             bloodsStr = "O";
             gd_o.setColor(Color.rgb(255, 33, 93));
             gd_a.setColor(Color.rgb(255, 255, 255));
             gd_b.setColor(Color.rgb(255, 255, 255));
             gd_ab.setColor(Color.rgb(255, 255, 255));
+        }
+        else if(v==backBtn){
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_view, new LoginFragment())
+                    .addToBackStack(null)
+                    .commit();
+            Log.d("USER", "GOTO LOGIN FRAGMENT");
         }
     }
 

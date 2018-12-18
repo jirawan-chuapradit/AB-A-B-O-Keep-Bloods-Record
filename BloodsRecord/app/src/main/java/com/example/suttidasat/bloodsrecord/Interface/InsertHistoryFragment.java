@@ -25,6 +25,7 @@ import com.example.suttidasat.bloodsrecord.adapter.HistoryAdapter;
 import com.example.suttidasat.bloodsrecord.model.ConnectDB;
 import com.example.suttidasat.bloodsrecord.model.History;
 import com.example.suttidasat.bloodsrecord.model.NationaID;
+import com.example.suttidasat.bloodsrecord.model.NumSorter;
 import com.google.android.gms.tasks.OnCompleteListener;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -37,6 +38,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -90,6 +92,8 @@ public class InsertHistoryFragment extends Fragment {
                 his_list
         );
 
+
+
         ConnectDB.getHistoryConnect()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -99,9 +103,12 @@ public class InsertHistoryFragment extends Fragment {
                             his_list.add(d.toObject(History.class));
                         }
 
+                        Collections.sort(his_list,new NumSorter());
+
                         historyAdapter.notifyDataSetChanged();
                     }
                 });
+
 
         listView.setAdapter(historyAdapter);
     }
