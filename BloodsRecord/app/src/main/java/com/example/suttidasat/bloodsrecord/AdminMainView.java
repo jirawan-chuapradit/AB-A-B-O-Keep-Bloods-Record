@@ -1,5 +1,7 @@
 package com.example.suttidasat.bloodsrecord;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -78,16 +80,40 @@ public class AdminMainView extends AppCompatActivity implements NavigationView.O
                 break;
             }
             case R.id.nav_sign_out: {
-                FirebaseAuth.getInstance().signOut();
-                Intent loginIntent = new Intent(AdminMainView.this, MainActivity.class);
-                startActivity(loginIntent);
-                break;
+                confirmDialog();
+
             }
 
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return false;
+    }
+
+    private void confirmDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(AdminMainView.this);
+
+        builder
+                .setMessage("ท่านต้องการออกจากระบบ ใช่ หรือ ไม่")
+                .setPositiveButton("ใช่",  new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        sigOut();
+                    }
+                })
+                .setNegativeButton("ไม่", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog,int id) {
+                        dialog.cancel();
+                    }
+                })
+                .show();
+    }
+
+    private void sigOut() {
+        FirebaseAuth.getInstance().signOut();
+        Intent loginIntent = new Intent(AdminMainView.this, MainActivity.class);
+        startActivity(loginIntent);
     }
 
     @Override

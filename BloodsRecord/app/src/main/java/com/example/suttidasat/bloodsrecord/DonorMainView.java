@@ -1,6 +1,8 @@
 package com.example.suttidasat.bloodsrecord;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 
 import android.content.SharedPreferences;
@@ -110,15 +112,7 @@ public class DonorMainView extends AppCompatActivity
             navigationView.setCheckedItem(R.id.nav_change_password);
         }
         else if (id == R.id.nav_sign_out) {
-            SharedPreferences.Editor prefs = getSharedPreferences("BloodsRecord",MODE_PRIVATE).edit();
-            prefs.clear();
-            prefs.apply();
-
-            FirebaseAuth.getInstance().signOut();
-            Intent intent = new Intent(DonorMainView.this, MyService.class);
-            stopService(intent);
-            Intent loginIntent = new Intent(DonorMainView.this, MainActivity.class);
-            startActivity(loginIntent);
+            confirmDialog();
 
         }
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -126,6 +120,37 @@ public class DonorMainView extends AppCompatActivity
         return false;
     }
 
+    private void confirmDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(DonorMainView.this);
+
+        builder
+                .setMessage("ท่านต้องการออกจากระบบ ใช่ หรือ ไม่")
+                .setPositiveButton("ใช่",  new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        sigOut();
+                    }
+                })
+                .setNegativeButton("ไม่", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog,int id) {
+                        dialog.cancel();
+                    }
+                })
+                .show();
+    }
+
+    private void sigOut() {
+        SharedPreferences.Editor prefs = getSharedPreferences("BloodsRecord",MODE_PRIVATE).edit();
+        prefs.clear();
+        prefs.apply();
+
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(DonorMainView.this, MyService.class);
+        stopService(intent);
+        Intent loginIntent = new Intent(DonorMainView.this, MainActivity.class);
+        startActivity(loginIntent);
+    }
 
     @Override
     public void onBackPressed() {

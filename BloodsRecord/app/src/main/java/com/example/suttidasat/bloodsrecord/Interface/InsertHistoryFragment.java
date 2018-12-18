@@ -76,6 +76,16 @@ public class InsertHistoryFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
+        progressDialog.setMessage("กรุณารอสักครู่...");
+        // Progress Dialog Style Horizontal
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        // Display Progress Dialog
+        progressDialog.show();
+        // Cannot Cancel Progress Dialog
+        progressDialog.setCancelable(false);
+
         profile_danate();
         history();
         backBtn();
@@ -111,6 +121,7 @@ public class InsertHistoryFragment extends Fragment {
 
 
         listView.setAdapter(historyAdapter);
+
     }
 
     void profile_danate() {
@@ -162,7 +173,7 @@ public class InsertHistoryFragment extends Fragment {
                         profileEmail.setText("อีเมล : " + email);
 
 
-//                        progressDialog.dismiss();
+                        progressDialog.dismiss();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
