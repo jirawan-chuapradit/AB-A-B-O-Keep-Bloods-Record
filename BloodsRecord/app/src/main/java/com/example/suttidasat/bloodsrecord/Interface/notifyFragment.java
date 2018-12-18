@@ -19,7 +19,10 @@ import android.widget.TextView;
 
 import com.example.suttidasat.bloodsrecord.R;
 import com.example.suttidasat.bloodsrecord.adapter.NotifyAdapter;
+import com.example.suttidasat.bloodsrecord.model.DateFormatCal;
 import com.example.suttidasat.bloodsrecord.model.NotifyManange;
+import com.example.suttidasat.bloodsrecord.model.NumSorter;
+import com.example.suttidasat.bloodsrecord.model.SortNotify;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -28,6 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /*******************************************************
  *intent: Show notification                            *
@@ -92,6 +96,8 @@ public class notifyFragment extends Fragment {
                 R.layout.fragment_notify_item,
                 notifyMananges
         );
+
+
         notifyList.setAdapter(notifyAdapter);
 
         //GET VALUDE FROM FIREBASE
@@ -108,7 +114,13 @@ public class notifyFragment extends Fragment {
                         }
                         for (DocumentSnapshot d : queryDocumentSnapshots.getDocuments()) {
                             notifyMananges.add(d.toObject(NotifyManange.class));
+
                         }
+
+
+                        Collections.sort(notifyMananges,new SortNotify());
+
+
                         notifyAdapter.notifyDataSetChanged();
                         progressDialog.dismiss();
 
