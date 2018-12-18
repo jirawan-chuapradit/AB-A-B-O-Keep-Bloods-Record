@@ -52,22 +52,22 @@ public class AddNewsFragment extends Fragment {
 
 
         cfBtn();
-        backBtn();
+//        backBtn();
     }
 
-    void backBtn(){
-        back = getView().findViewById(R.id.back_to_news);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .addToBackStack(null)
-                        .replace(R.id.admin_view, new NewsManageFrament())
-                        .commit();
-            }
-        });
-    }
+//    void backBtn(){
+//        back = getView().findViewById(R.id.back_to_news);
+//        back.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                getActivity().getSupportFragmentManager()
+//                        .beginTransaction()
+//                        .addToBackStack(null)
+//                        .replace(R.id.admin_view, new NewsManageFrament())
+//                        .commit();
+//            }
+//        });
+//    }
 
     void  cfBtn(){
 
