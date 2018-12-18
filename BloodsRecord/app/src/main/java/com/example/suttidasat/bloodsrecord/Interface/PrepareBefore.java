@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.example.suttidasat.bloodsrecord.R;
 
-public class PrepareDonate extends Fragment implements View.OnClickListener {
+public class PrepareBefore extends Fragment implements View.OnClickListener {
 
     private TextView textCartItemCount;
     private int mCartItemCount;
@@ -29,7 +29,7 @@ public class PrepareDonate extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_prepare_donate,container,false);
+        return inflater.inflate(R.layout.fragment_prepare_before_donate,container,false);
     }
 
     @Override
@@ -48,6 +48,26 @@ public class PrepareDonate extends Fragment implements View.OnClickListener {
         after.setOnClickListener(this);
 
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v==before){
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.donator_view, new PrepareBefore())
+                    .addToBackStack(null)
+                    .commit();
+            Log.d("PREPARE ", "GOTO BEFORE DONATE");
+
+        }else if(v==after){
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.donator_view, new PrepareAfter())
+                    .addToBackStack(null)
+                    .commit();
+            Log.d("PREPARE ", "GOTO AFTER DONATE");
+        }
     }
 
     //menu
@@ -107,23 +127,4 @@ public class PrepareDonate extends Fragment implements View.OnClickListener {
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        if(v==before){
-            getActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.donator_view, new PrepareBefore())
-                    .addToBackStack(null)
-                    .commit();
-            Log.d("PREPARE ", "GOTO BEFORE DONATE");
-
-        }else if(v==after){
-            getActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.donator_view, new PrepareAfter())
-                    .addToBackStack(null)
-                    .commit();
-            Log.d("PREPARE ", "GOTO AFTER DONATE");
-        }
-    }
 }

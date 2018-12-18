@@ -19,17 +19,18 @@ import android.widget.TextView;
 
 import com.example.suttidasat.bloodsrecord.R;
 
-public class PrepareDonate extends Fragment implements View.OnClickListener {
+public class PrepareAfter extends Fragment implements View.OnClickListener {
 
     private TextView textCartItemCount;
     private int mCartItemCount;
     private SharedPreferences prefs;
     private Button before,after;
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_prepare_donate,container,false);
+        return inflater.inflate(R.layout.fragment_prepare_after_donate,container,false);
     }
 
     @Override
@@ -49,6 +50,7 @@ public class PrepareDonate extends Fragment implements View.OnClickListener {
 
         setHasOptionsMenu(true);
     }
+
 
     //menu
     @Override
