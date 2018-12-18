@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,12 +40,10 @@ import java.util.Calendar;
 public class ConfirmPlusHistory extends Fragment {
 
     FirebaseFirestore firestore = ConnectDB.getConnect();
-    DocumentReference donateHistory;
     Calendar calendar = Calendar.getInstance();
     SimpleDateFormat mdformat = new SimpleDateFormat("dd-MM-yyyy ");
     final String c_date = mdformat.format(calendar.getTime());
     String place,sign;
-    String date_last;
     EditText p,s;
     TextView date,amount;
     int intAmount;
@@ -170,7 +169,7 @@ public class ConfirmPlusHistory extends Fragment {
     }
 
     void backBtn() {
-        Button back = getView().findViewById(R.id.back);
+        ImageView back = getView().findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

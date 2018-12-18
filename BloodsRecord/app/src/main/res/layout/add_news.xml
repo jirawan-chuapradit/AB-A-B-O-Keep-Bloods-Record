@@ -74,6 +74,8 @@
                 android:textCursorDrawable="@color/colorPrimary" />
 
             <EditText
+                android:singleLine="false"
+                android:gravity="start"
                 android:id="@+id/detail"
                 android:layout_width="310dp"
                 android:layout_height="300dp"

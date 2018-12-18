@@ -68,8 +68,9 @@
                         android:layout_marginTop="20dp"
                         android:textAlignment="center"
                         android:textColor="@color/whiteColor"
-                        android:textSize="18sp"
+                        android:textSize="20dp"
                         android:textStyle="bold"
+                        android:fontFamily="@font/font"
                         tools:layout_editor_absoluteX="127dp"
                         tools:layout_editor_absoluteY="407dp"
                         tools:text="ชื่อ - นามสกุล" />
@@ -97,6 +98,7 @@
                 android:text="หมู่โลหิต"
                 android:textColor="#696969"
                 android:textSize="20dp"
+                android:fontFamily="@font/font"
                 android:textStyle="bold" />
 
             <TextView
@@ -106,6 +108,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="-10dp"
                 android:text="A"
+                android:fontFamily="@font/font"
                 android:textColor="#FF215d"
                 android:textSize="75dp"
                 android:textStyle="bold" />
@@ -131,18 +134,22 @@
                         android:text="รหัสบัตรประชาชน"
                         android:textColor="#ff215d"
                         android:textStyle="bold"
+                        android:textSize="16dp"
+                        android:fontFamily="@font/font"
                         tools:layout_editor_absoluteX="67dp"
                         tools:layout_editor_absoluteY="228dp" />
 
                     <TextView
                         android:id="@+id/profileNationalID"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="37dp"
                         android:layout_gravity="center"
                         android:textColor="#a2a2a2"
+                        android:textSize="16dp"
                         tools:layout_editor_absoluteX="67dp"
                         tools:layout_editor_absoluteY="228dp"
-                        tools:text="1000000000000" />
+                        tools:text="1000000000000"
+                        android:fontFamily="@font/font"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -157,6 +164,8 @@
                         android:layout_height="37dp"
                         android:layout_gravity="center"
                         android:text="E-mail"
+                        android:textSize="16dp"
+                        android:fontFamily="@font/font"
                         android:textColor="#ff215d"
                         android:textStyle="bold"
                         tools:layout_editor_absoluteX="67dp"
@@ -168,6 +177,8 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="right"
                         android:textColor="#a2a2a2"
+                        android:fontFamily="@font/font"
+                        android:textSize="16dp"
                         tools:layout_editor_absoluteX="67dp"
                         tools:layout_editor_absoluteY="228dp"
                         tools:text="chocolate_nate@natemail.com" />
@@ -187,6 +198,8 @@
                         android:text="ที่อยู่"
                         android:textColor="#ff215d"
                         android:textStyle="bold"
+                        android:textSize="16dp"
+                        android:fontFamily="@font/font"
                         tools:layout_editor_absoluteX="67dp"
                         tools:layout_editor_absoluteY="228dp" />
 
@@ -196,6 +209,8 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="right"
                         android:textColor="#a2a2a2"
+                        android:fontFamily="@font/font"
+                        android:textSize="16dp"
                         tools:layout_editor_absoluteX="67dp"
                         tools:layout_editor_absoluteY="228dp"
                         tools:text="122/ 23 หมู่ 4 เขตลาดกระบัง แขวง ลาดกระบัง กรุงเทพฯ 10520" />

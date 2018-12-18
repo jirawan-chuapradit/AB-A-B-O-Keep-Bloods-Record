@@ -5,16 +5,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
-        android:id="@+id/linearLayout"
+
+    <TextView
+        android:text="ข่าวประชาสัมพันธ์"
+        android:gravity="center"
+        android:textColor="#FF215D"
+        android:textStyle="bold"
+        android:textSize="40dp"
+        android:fontFamily="@font/font"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="30dp">
-    <ListView
-        android:id="@+id/news_list_danate"
-        android:layout_width="match_parent"
-        android:layout_height="417dp"
-        android:layout_marginTop="10dp"></ListView>
-    </LinearLayout>
+        android:layout_height="wrap_content" />
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:padding="30dp">
+            <ListView
+                android:paddingTop="10dp"
+                android:id="@+id/news_list_danate"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:layout_marginTop="10dp"></ListView>
+        </LinearLayout>
+    </ScrollView>
+
 </android.support.constraint.ConstraintLayout>

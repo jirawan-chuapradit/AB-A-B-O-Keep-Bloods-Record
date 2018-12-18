@@ -15,8 +15,9 @@
            android:id="@+id/donate_amount"
            android:layout_width="110dp"
            android:layout_height="140dp"
-           android:textSize="45dp"
-             android:textColor="@android:color/white"
+           android:textSize="50dp"
+           android:fontFamily="@font/font"
+           android:textColor="@android:color/white"
            android:layout_marginTop="60dp"
            android:layout_marginLeft="260dp"
            android:gravity="center"
@@ -54,7 +55,8 @@
             android:layout_width="250dp"
             android:layout_height="300dp"
             android:layout_marginTop="290dp"
-            android:src="@drawable/main"></ImageView>
+            android:src="@drawable/main">
+        </ImageView>
 
     </LinearLayout>
 
@@ -107,9 +109,10 @@
                             android:gravity="center"
                             android:padding="5dp"
                             android:shape="ring"
+                            android:fontFamily="@font/font"
                             android:text="1"
                             android:textColor="@color/colorPrimaryDark"
-                            android:textSize="20dp" />
+                            android:textSize="30dp" />
 
                         <TextView
                             android:id="@+id/timeline_7"
@@ -121,8 +124,9 @@
                             android:gravity="center"
                             android:padding="5dp"
                             android:text="7"
+                            android:fontFamily="@font/font"
                             android:textColor="@color/colorPrimaryDark"
-                            android:textSize="20dp" />
+                            android:textSize="30dp" />
 
                         <TextView
                             android:id="@+id/timeline_16"
@@ -135,7 +139,8 @@
                             android:padding="5dp"
                             android:text="16"
                             android:textColor="@color/colorPrimaryDark"
-                            android:textSize="20dp" />
+                            android:fontFamily="@font/font"
+                            android:textSize="30dp" />
 
                         <TextView
                             android:id="@+id/timeline_18"
@@ -148,7 +153,8 @@
                             android:padding="5dp"
                             android:text="18"
                             android:textColor="@color/colorPrimaryDark"
-                            android:textSize="20dp" />
+                            android:fontFamily="@font/font"
+                            android:textSize="30dp" />
 
                         <TextView
                             android:id="@+id/timeline_24"
@@ -161,7 +167,8 @@
                             android:padding="5dp"
                             android:text="24"
                             android:textColor="@color/colorPrimaryDark"
-                            android:textSize="20dp" />
+                            android:fontFamily="@font/font"
+                            android:textSize="30dp" />
 
                         <TextView
                             android:id="@+id/timeline_36"
@@ -174,7 +181,8 @@
                             android:padding="5dp"
                             android:text="36"
                             android:textColor="@color/colorPrimaryDark"
-                            android:textSize="20dp" />
+                            android:fontFamily="@font/font"
+                            android:textSize="30dp" />
 
                         <TextView
                             android:id="@+id/timeline_48"
@@ -187,7 +195,8 @@
                             android:padding="5dp"
                             android:text="48"
                             android:textColor="@color/colorPrimaryDark"
-                            android:textSize="20dp" />
+                            android:fontFamily="@font/font"
+                            android:textSize="30dp" />
 
                         <TextView
                             android:id="@+id/timeline_50"
@@ -200,7 +209,8 @@
                             android:padding="5dp"
                             android:text="50"
                             android:textColor="@color/colorPrimaryDark"
-                            android:textSize="20dp" />
+                            android:fontFamily="@font/font"
+                            android:textSize="30dp" />
 
                         <TextView
                             android:id="@+id/timeline_60"
@@ -213,7 +223,8 @@
                             android:padding="5dp"
                             android:text="60"
                             android:textColor="@color/colorPrimaryDark"
-                            android:textSize="20dp" />
+                            android:fontFamily="@font/font"
+                            android:textSize="30dp" />
 
                         <TextView
                             android:id="@+id/timeline_72"
@@ -226,7 +237,8 @@
                             android:padding="5dp"
                             android:text="72"
                             android:textColor="@color/colorPrimaryDark"
-                            android:textSize="20dp" />
+                            android:fontFamily="@font/font"
+                            android:textSize="30dp" />
 
                         <TextView
                             android:id="@+id/timeline_75"
@@ -239,7 +251,8 @@
                             android:padding="5dp"
                             android:text="75"
                             android:textColor="@color/colorPrimaryDark"
-                            android:textSize="20dp" />
+                            android:fontFamily="@font/font"
+                            android:textSize="30dp" />
 
                         <TextView
                             android:id="@+id/timeline_84"
@@ -252,7 +265,8 @@
                             android:padding="5dp"
                             android:text="84"
                             android:textColor="@color/colorPrimaryDark"
-                            android:textSize="20dp" />
+                            android:fontFamily="@font/font"
+                            android:textSize="30dp"/>
 
                         <TextView
                             android:id="@+id/timeline_96"
@@ -265,7 +279,8 @@
                             android:padding="5dp"
                             android:text="96"
                             android:textColor="@color/colorPrimaryDark"
-                            android:textSize="20dp" />
+                            android:fontFamily="@font/font"
+                            android:textSize="30dp" />
 
                         <TextView
                             android:id="@+id/timeline_100"
@@ -278,7 +293,8 @@
                             android:padding="5dp"
                             android:text="100"
                             android:textColor="@color/colorPrimaryDark"
-                            android:textSize="20dp" />
+                            android:fontFamily="@font/font"
+                            android:textSize="30dp" />
 
                         <TextView
                             android:id="@+id/timeline_108"
@@ -291,12 +307,11 @@
                             android:padding="5dp"
                             android:text="108"
                             android:textColor="@color/colorPrimaryDark"
-                            android:textSize="20dp" />
+                            android:fontFamily="@font/font"
+                            android:textSize="30dp" />
                     </LinearLayout>
 
             </RelativeLayout>
-
-
         </LinearLayout>
     </ScrollView>
 

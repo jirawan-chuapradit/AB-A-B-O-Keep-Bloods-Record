@@ -1,72 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/arrow"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"/>
+            <TextView
+                android:text="เพิ่มข่าวสารประชาสัมพันธ์"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="40dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:textColor="#FF215D"
+                android:fontFamily="@font/font"/>
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/cf_amount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
             android:layout_marginTop="20dp"
             android:text="amount"
             android:textSize="20dp"
-            />
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:background="@drawable/register_shape"
+            android:fontFamily="@font/font"/>
 
         <TextView
             android:id="@+id/cf_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
             android:layout_marginTop="20dp"
             android:layout_below="@id/cf_amount"
             android:textSize="20dp"
             android:text="sh_date"
-            />
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:fontFamily="@font/font"
+            android:background="@drawable/register_shape"/>
 
         <EditText
             android:id="@+id/place"
             android:layout_marginTop="20dp"
             android:textSize="20dp"
             android:layout_below="@id/cf_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
             android:hint="สถานที่บริจาค"
-            />
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:fontFamily="@font/font"
+            android:background="@drawable/register_shape" />
 
         <EditText
             android:id="@+id/sign"
             android:layout_marginTop="20dp"
             android:textSize="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
             android:hint="ลงชื่อ"
             android:layout_below="@id/place"
-
-            />
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:fontFamily="@font/font"
+            android:background="@drawable/register_shape" />
 
         <Button
             android:id="@+id/cf_plus_his"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
             android:layout_below="@id/sign"
-            android:layout_marginTop="30sp"
             android:gravity="center"
             android:text="เพิ่มรายการ"
-            />
+            android:background="@drawable/addbtn_border"
+            android:layout_width="258dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:textColor="#ffff"
+            android:fontFamily="@font/font"
+            android:textSize="20dp" />
 
-        <Button
-            android:id="@+id/back"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_below="@id/cf_plus_his"
-            android:gravity="center"
-            android:text="กลับ"
-            />
 
-    </RelativeLayout>
+    </LinearLayout>
+    </ScrollView>
 </android.support.constraint.ConstraintLayout>

@@ -7,12 +7,6 @@
     android:background="@drawable/login">
 
 
-    <ScrollView
-
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="0dp"
-        tools:ignore="MissingConstraints">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,10 +23,10 @@
                 android:layout_marginBottom="25dp"
                 android:layout_gravity="center"
                 android:fontFamily="@font/font"
-                android:text="LOGIN REGISTER"
+                android:text="เข้าสู่ระบบ"
                 android:textColor="#000"
                 android:textStyle="bold"
-                android:textSize="25dp"
+                android:textSize="35dp"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="279dp" />
 
@@ -42,8 +36,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:padding="10dp"
+                android:fontFamily="@font/font"
                 android:background="@drawable/logon_user"
-                android:hint="E-mail"
+                android:hint="อีเมลล์"
                 android:inputType="text"
                 android:textCursorDrawable="@color/colorPrimary" />
 
@@ -55,7 +50,8 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/logon_user"
-                android:hint="Password"
+                android:hint="รหัสผ่าน"
+                android:fontFamily="@font/font"
                 android:inputType="textPassword"
                 android:padding="10dp"
                 android:textCursorDrawable="@color/colorPrimary" />
@@ -67,7 +63,8 @@
                 android:layout_marginTop="25dp"
                 android:layout_gravity="center"
                 android:background="@drawable/addbtn_border"
-                android:text="login"
+                android:text="เข้าสู่ระบบ"
+                android:fontFamily="@font/font"
                 android:textSize="20dp"
                 android:textColor="#ffff" />
 
@@ -79,14 +76,11 @@
                 android:layout_gravity="right"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:text="Register >>"
+                android:text="ลงะทะเบียน"
                 android:textColor="@color/colorPrimary"
                 android:textSize="20dp" />
 
         </LinearLayout>
 
-
-
-    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
