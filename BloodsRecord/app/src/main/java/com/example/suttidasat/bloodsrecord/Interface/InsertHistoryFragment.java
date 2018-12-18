@@ -52,7 +52,7 @@ public class InsertHistoryFragment extends Fragment {
 
     FirebaseFirestore firestore = ConnectDB.getConnect();
     DocumentReference donateHistory;
-    private TextView profileName, profileNationalID, profileBlood, profileEmail, currentDate, amount;
+    private TextView profileName, profileNationalID, profileBlood, profileEmail, amount;
     Calendar calendar = Calendar.getInstance();
     SimpleDateFormat mdformat = new SimpleDateFormat("dd-MM-yyyy ");
     SharedPreferences.Editor sp;
@@ -114,7 +114,6 @@ public class InsertHistoryFragment extends Fragment {
         profileBlood = getView().findViewById(R.id.sh_group_donater);
         profileEmail = getView().findViewById(R.id.sh_email_donater);
         amount = getView().findViewById(R.id.sh_amount);
-        currentDate = getView().findViewById(R.id.sh_date_now);
 
         ConnectDB.getHistoryConnect()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -154,7 +153,7 @@ public class InsertHistoryFragment extends Fragment {
                         profileNationalID.setText("หมายเลขบัตรประชาชน : " + nationalID);
                         profileBlood.setText("กรุ๊ปเลือด : " + blood);
                         profileEmail.setText("อีเมล : " + email);
-                        currentDate.setText("วันที่ : " + c_date);
+
 
 //                        progressDialog.dismiss();
                     }

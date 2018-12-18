@@ -34,7 +34,8 @@
             android:layout_width="250dp"
             android:layout_height="300dp"
             android:layout_marginTop="290dp"
-            android:src="@drawable/main"></ImageView>
+            android:src="@drawable/main">
+        </ImageView>
 
     </LinearLayout>
 
