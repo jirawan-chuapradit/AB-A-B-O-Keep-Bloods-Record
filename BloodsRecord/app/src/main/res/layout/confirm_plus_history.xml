@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -12,16 +12,32 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <TextView
-            android:text="เพิ่มข่าวสารประชาสัมพันธ์"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="40dp"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:textColor="#FF215D"
-            android:fontFamily="@font/fc_active_regular"/>
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/arrow"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"/>
+            <TextView
+                android:text="เพิ่มข่าวสารประชาสัมพันธ์"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="40dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:textColor="#FF215D"
+                android:fontFamily="@font/font"/>
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/cf_amount"
@@ -32,7 +48,8 @@
             android:textSize="20dp"
             android:layout_gravity="center"
             android:padding="10dp"
-            android:background="@drawable/register_shape"/>
+            android:background="@drawable/register_shape"
+            android:fontFamily="@font/font"/>
 
         <TextView
             android:id="@+id/cf_date"
@@ -44,6 +61,7 @@
             android:text="sh_date"
             android:layout_gravity="center"
             android:padding="10dp"
+            android:fontFamily="@font/font"
             android:background="@drawable/register_shape"/>
 
         <EditText
@@ -56,6 +74,7 @@
             android:hint="สถานที่บริจาค"
             android:layout_gravity="center"
             android:padding="10dp"
+            android:fontFamily="@font/font"
             android:background="@drawable/register_shape" />
 
         <EditText
@@ -68,6 +87,7 @@
             android:layout_below="@id/place"
             android:layout_gravity="center"
             android:padding="10dp"
+            android:fontFamily="@font/font"
             android:background="@drawable/register_shape" />
 
         <Button
@@ -81,20 +101,9 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:textColor="#ffff"
+            android:fontFamily="@font/font"
             android:textSize="20dp" />
 
-        <Button
-            android:id="@+id/back"
-            android:layout_below="@id/cf_plus_his"
-            android:gravity="center"
-            android:text="กลับ"
-            android:background="@drawable/addbtn_border"
-            android:layout_width="258dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:textColor="#ffff"
-            android:textSize="20dp" />
 
     </LinearLayout>
     </ScrollView>

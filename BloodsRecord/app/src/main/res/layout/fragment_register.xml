@@ -28,9 +28,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="  ลงทะเบียน"
+            android:text="ลงทะเบียน"
             android:textColor="#000"
-            android:textSize="25dp"
+            android:fontFamily="@font/font"
+            android:textSize="40dp"
             android:textStyle="bold"/>
 
     </LinearLayout>
@@ -62,6 +63,8 @@
                 android:layout_gravity="center"
                 android:background="@drawable/register_shape"
                 android:hint="ชื่อ"
+                android:fontFamily="@font/font"
+                android:textSize="25dp"
                 android:inputType="text"
                 android:padding="10dp"
                 android:textCursorDrawable="@color/colorPrimary" />
@@ -75,6 +78,8 @@
                 android:background="@drawable/register_shape"
                 android:hint="นามสกุล"
                 android:inputType="text"
+                android:fontFamily="@font/font"
+                android:textSize="25dp"
                 android:padding="10dp"
                 android:textCursorDrawable="@color/colorPrimary" />
 
@@ -86,6 +91,8 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/register_shape"
                 android:hint="เลขบัตรประชาชน"
+                android:fontFamily="@font/font"
+                android:textSize="25dp"
                 android:inputType="number"
                 android:padding="10dp"
                 android:textCursorDrawable="@color/colorPrimary" />
@@ -99,6 +106,8 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/register_shape"
                 android:hint="รหัสผ่าน"
+                android:fontFamily="@font/font"
+                android:textSize="25dp"
                 android:inputType="textPassword"
                 android:padding="10dp"
                 android:textCursorDrawable="@color/colorPrimary" />
@@ -114,6 +123,8 @@
                 android:hint="ยืนยันรหัสผ่าน"
                 android:inputType="textPassword"
                 android:padding="10dp"
+                android:fontFamily="@font/font"
+                android:textSize="25dp"
                 android:textCursorDrawable="@color/colorPrimary" />
 
 
@@ -125,6 +136,8 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/register_shape"
                 android:hint="อีเมล"
+                android:fontFamily="@font/font"
+                android:textSize="25dp"
                 android:inputType="text"
                 android:padding="10dp"
                 android:textCursorDrawable="@color/colorPrimary" />
@@ -139,32 +152,11 @@
                 android:inputType="text"
                 android:layout_marginTop="10dp"
                 android:padding="10dp"
+                android:fontFamily="@font/font"
+                android:gravity="start"
+                android:textSize="25dp"
                 android:background="@drawable/register_shape2"
                 android:isScrollContainer="true" />
-
-
-
-            <!--<LinearLayout-->
-                <!--android:layout_width="fill_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:orientation="horizontal">-->
-
-                <!--<TextView-->
-                    <!--android:layout_width="30sp"-->
-                    <!--android:layout_height="25sp"-->
-                    <!--android:layout_gravity="left" />-->
-
-                <!--<Spinner-->
-                    <!--android:id="@+id/spinner1"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginLeft="20dp"-->
-                <!--android:entries="@array/blood_arrays"-->
-                <!--android:prompt="@string/bloods_groups" />-->
-
-            <!--</LinearLayout>-->
-
-
 
 
             <LinearLayout
@@ -179,12 +171,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:gravity="start"
                     android:text="หมู่โลหิต"
+                    android:fontFamily="@font/font"
+                    android:textSize="25dp"
                     android:textColor="#000"
-                    android:textSize="20dp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -196,6 +188,8 @@
                     android:background="@drawable/timeline_shape"
                     android:gravity="center"
                     android:text="A"
+                    android:fontFamily="@font/font"
+                    android:textSize="25dp"
                     android:textColor="#c9c9c9" />
 
                 <TextView
@@ -207,6 +201,8 @@
                     android:background="@drawable/timeline_shape"
                     android:gravity="center"
                     android:text="B"
+                    android:fontFamily="@font/font"
+                    android:textSize="25dp"
                     android:textColor="#c9c9c9" />
 
                 <TextView
@@ -218,6 +214,8 @@
                     android:background="@drawable/timeline_shape"
                     android:gravity="center"
                     android:text="O"
+                    android:fontFamily="@font/font"
+                    android:textSize="25dp"
                     android:textColor="#c9c9c9" />
 
                 <TextView
@@ -229,6 +227,8 @@
                     android:background="@drawable/timeline_shape"
                     android:gravity="center"
                     android:text="AB"
+                    android:fontFamily="@font/font"
+                    android:textSize="25dp"
                     android:textColor="#c9c9c9" />
             </LinearLayout>
 
@@ -240,11 +240,10 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/addbtn_border"
-                android:text="REGISTER"
+                android:text="ลงทะเบียน"
                 android:textColor="#ffff"
-                android:textSize="20dp" />
-
-
+                android:fontFamily="@font/font"
+                android:textSize="25dp" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
