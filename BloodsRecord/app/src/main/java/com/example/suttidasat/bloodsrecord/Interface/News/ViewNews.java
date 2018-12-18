@@ -1,5 +1,6 @@
 package com.example.suttidasat.bloodsrecord.Interface.News;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -39,6 +40,9 @@ public class ViewNews extends Fragment {
     private TextView textCartItemCount;
     private int mCartItemCount;
     private SharedPreferences prefs;
+    private ProgressDialog progressDialog;
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,6 +54,17 @@ public class ViewNews extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
+        progressDialog.setMessage("กรุณารอสักครู่...");
+        // Progress Dialog Style Horizontal
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        // Display Progress Dialog
+        progressDialog.show();
+        // Cannot Cancel Progress Dialog
+        progressDialog.setCancelable(false);
 
         //get Notify count
         prefs = getContext().getSharedPreferences("BloodsRecord",Context.MODE_PRIVATE);
@@ -79,6 +94,7 @@ public class ViewNews extends Fragment {
                 }
 
                 newsAdapter.notifyDataSetChanged();
+                progressDialog.dismiss();
             }
 
 

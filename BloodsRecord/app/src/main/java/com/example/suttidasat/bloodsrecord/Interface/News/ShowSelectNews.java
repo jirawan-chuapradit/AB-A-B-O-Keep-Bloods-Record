@@ -1,5 +1,6 @@
 package com.example.suttidasat.bloodsrecord.Interface.News;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -25,6 +26,8 @@ public class ShowSelectNews extends Fragment {
 
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+
 
         backBtn();
         show();

@@ -19,7 +19,7 @@
 
        <ImageView
            android:layout_marginTop="10dp"
-           android:layout_width="1440px"
+           android:layout_width="match_parent"
            android:layout_height="650px"
            android:src="@drawable/head"/>
 

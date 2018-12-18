@@ -10,7 +10,8 @@
         android:fontFamily="@font/font"
         android:textColor="#fff"
         android:textStyle="bold"
-        android:textSize="40dp"
+        android:textSize="35dp"
+        android:padding="10dp"
         android:textAlignment="center"
         android:background="#FF215D"
         />

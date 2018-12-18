@@ -1,5 +1,6 @@
 package com.example.suttidasat.bloodsrecord.Interface.News;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -30,7 +31,7 @@ public class NewsManageFrament extends Fragment {
     ArrayList<News> news_list = new ArrayList<>();
     ListView listView;
     String title,date,detail,link;
-
+    private ProgressDialog progressDialog;
 
     @Nullable
     @Override
@@ -41,6 +42,16 @@ public class NewsManageFrament extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle("ระบบกำลังประมวลผล"); // Setting Title
+        progressDialog.setMessage("กรุณารอสักครู่...");
+        // Progress Dialog Style Horizontal
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        // Display Progress Dialog
+        progressDialog.show();
+        // Cannot Cancel Progress Dialog
+        progressDialog.setCancelable(false);
 
         listView = getView().findViewById(R.id.news_list_admin);
 
@@ -63,6 +74,7 @@ public class NewsManageFrament extends Fragment {
                 }
 
                 newsAdapter.notifyDataSetChanged();
+                progressDialog.dismiss();
             }
 
 

@@ -19,7 +19,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:layout_marginTop="300dp"
+                android:layout_marginTop="350dp"
                 android:layout_marginBottom="25dp"
                 android:layout_gravity="center"
                 android:fontFamily="@font/font"
@@ -37,7 +37,7 @@
                 android:layout_gravity="center"
                 android:padding="10dp"
                 android:fontFamily="@font/font"
-                android:background="@drawable/logon_user"
+                android:background="@drawable/register_shape"
                 android:hint="อีเมลล์"
                 android:inputType="text"
                 android:textCursorDrawable="@color/colorPrimary" />
@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/logon_user"
+                android:background="@drawable/register_shape"
                 android:hint="รหัสผ่าน"
                 android:fontFamily="@font/font"
                 android:inputType="textPassword"
@@ -79,7 +79,7 @@
                 android:text="ลงทะเบียน"
                 android:fontFamily="@font/font"
                 android:textColor="@color/colorPrimary"
-                android:textSize="20dp" />
+                android:textSize="25dp" />
 
         </LinearLayout>
 

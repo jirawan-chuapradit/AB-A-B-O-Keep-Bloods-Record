@@ -6,12 +6,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/login">
 
-    <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="match_parent"
-        android:layout_height="654dp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="5dp">
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -54,7 +48,7 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 android:paddingLeft="20dp"
-                android:background="@drawable/seachborder"
+                android:background="@drawable/register_shape"
                 android:drawableLeft="@drawable/pic_seach"
                 android:hint="เลขบัตรประชาชนผู้บริจาคโลหิต"
                 android:inputType="number"
@@ -70,10 +64,10 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="25dp"
                 android:background="@drawable/addbtn_border"
-                android:text="login"
+                android:text="ค้นหา"
+                android:fontFamily="@font/font"
                 android:textColor="#ffff"
-                android:textSize="20dp" />
+                android:textSize="25dp" />
 
         </LinearLayout>
-    </ScrollView>
 </android.support.constraint.ConstraintLayout>
