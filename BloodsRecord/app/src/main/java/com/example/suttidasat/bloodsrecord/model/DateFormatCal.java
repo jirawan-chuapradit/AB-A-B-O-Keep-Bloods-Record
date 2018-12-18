@@ -54,20 +54,6 @@ public class DateFormatCal {
 
     }
 
-//    public String sorter(NotifyManange d1,NotifyManange d2) throws ParseException {
-//        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-//        String d1Str = d1.getDate();
-//        String d2Str = d2.getDate();
-//        Date date1 = dateFormat.parse(d1Str);
-//        Date date2 = dateFormat.parse(d2Str);
-//        long diffInMillies = Math.abs(date1.getTime() - date2.getTime());
-//        if (date1.getTime() - date2.getTime() > 0){
-//            return d1Str;
-//        }else
-//            return d2Str;
-//
-//    }
-
     public void setHistoryDate(String historyDate) {
         this.historyDate = historyDate;
     }

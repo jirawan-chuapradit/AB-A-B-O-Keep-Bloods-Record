@@ -361,9 +361,37 @@ public class LoginFragment extends Fragment {
                                 }
                             });
                         }else {
-                            Intent myIntent = new Intent(getActivity(), DonorMainView.class);
-                            getActivity().startActivity(myIntent);
-                            progressDialog.dismiss();
+                            NotifyManange nm = NotifyManange.getNotifyManangeInstance();
+                            nm.setNum(String.valueOf(sizeofContent + 1));
+                            nm.setDate(currentDate);
+                            nm.setText(msg);
+                            firestore.collection("notificationContent")
+                                    .document(uid)
+                                    .collection("content")
+                                    .document(String.valueOf(sizeofContent + 1))
+                                    .set(nm).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d("FIRST TIME NOTIFY", "Notification has been saved!!!");
+                                    SharedPreferences prefs = getContext().getSharedPreferences("BloodsRecord", Context.MODE_PRIVATE);
+                                    mCartItemCount = prefs.getInt("_countNotify", 0);
+                                    Log.d("mCartItemCount: ", String.valueOf(mCartItemCount));
+                                    mCartItemCount++;
+                                    SharedPreferences.Editor prefs2 = getContext().getSharedPreferences("BloodsRecord", MODE_PRIVATE).edit();
+                                    prefs2.putInt("_countNotify", mCartItemCount);
+                                    prefs2.apply();
+
+                                    Intent myIntent = new Intent(getActivity(), DonorMainView.class);
+                                    getActivity().startActivity(myIntent);
+                                    progressDialog.dismiss();
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d("ERROR: ", "ERROR =" + e.getMessage());
+                                }
+                            });
                         }
 
 

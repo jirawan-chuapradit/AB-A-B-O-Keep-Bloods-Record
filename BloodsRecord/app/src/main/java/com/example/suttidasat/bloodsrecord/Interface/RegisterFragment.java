@@ -194,29 +194,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
     private void sendUserData() {
 
-        //save image to storage
-        StorageReference imageReference = storageReference.child(uid).child("Images").child("Profile Pic");  //User id/Images/Profile Pic.jpg
-        UploadTask uploadTask = imageReference.putFile(filePath);
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(
-                        getActivity(),
-                        "Upload failed!",
-                        Toast.LENGTH_SHORT
-                ).show();
-
-            }
-        }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                Toast.makeText(
-                        getActivity(),
-                        "Upload successful!",
-                        Toast.LENGTH_SHORT
-                ).show();
-            }
-        });
 
         DonatorProfile dp = DonatorProfile.getDonatorProfileInstance();
         dp.setfName(firstnameStr);
@@ -234,15 +211,41 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.d("REGISTER", "VALUE HAS BEEN SAVED IN FIREBASE");
-                progressDialog.dismiss();
-                //FORCE USER SIGGOUT
-                FirebaseAuth.getInstance().signOut();
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_view, new LoginFragment())
-                        .addToBackStack(null)
-                        .commit();
-                Log.d("USER", "GOTO LOGIN");
+
+                //save image to storage
+                StorageReference imageReference = storageReference.child(uid).child("Images").child("Profile Pic");  //User id/Images/Profile Pic.jpg
+                UploadTask uploadTask = imageReference.putFile(filePath);
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(
+                                getActivity(),
+                                "Upload failed!",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                        progressDialog.dismiss();
+
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                        Toast.makeText(
+                                getActivity(),
+                                "Upload successful!",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                        progressDialog.dismiss();
+                        //FORCE USER SIGGOUT
+                        FirebaseAuth.getInstance().signOut();
+                        getActivity().getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.main_view, new LoginFragment())
+                                .addToBackStack(null)
+                                .commit();
+                        Log.d("USER", "GOTO LOGIN");
+                    }
+                });
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -251,6 +254,9 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 Toast.makeText(getContext(), "ERROR = " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+
+
     }
 
     private void getRegisterValue() {
