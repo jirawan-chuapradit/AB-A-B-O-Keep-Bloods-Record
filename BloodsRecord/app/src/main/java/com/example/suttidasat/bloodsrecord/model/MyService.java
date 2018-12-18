@@ -150,61 +150,66 @@ public class MyService extends Service {
                         sizeofContent = queryDocumentSnapshots.size();
                         Log.d("SET NOTIFY FIREBASE", "size Of content : " + sizeofContent);
 
-                        final String sizeOfContentStr = String.valueOf(sizeofContent);
-                        firestore.collection("notificationContent")
-                                .document(uid)
-                                .collection("content")
-                                .whereEqualTo("num", sizeOfContentStr)
-                                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                List<DocumentSnapshot> doc = task.getResult().getDocuments();
-                                String notifyDate = doc.get(0).get("date").toString();
-                                Log.d("notify date: ", notifyDate);
+                        if(sizeofContent != 0){
+                            final String sizeOfContentStr = String.valueOf(sizeofContent);
+                            firestore.collection("notificationContent")
+                                    .document(uid)
+                                    .collection("content")
+                                    .whereEqualTo("num", sizeOfContentStr)
+                                    .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    List<DocumentSnapshot> doc = task.getResult().getDocuments();
+                                    String notifyDate = doc.get(0).get("date").toString();
+                                    Log.d("notify date: ", notifyDate);
 
-                                DateFormatCal df = new DateFormatCal(notifyDate);
-                                diffDate = df.getDiffDays();
-                                Log.d("CAL DIFF DATE Notify", "diffDate : " + diffDate);
+                                    DateFormatCal df = new DateFormatCal(notifyDate);
+                                    diffDate = df.getDiffDays();
+                                    Log.d("CAL DIFF DATE Notify", "diffDate : " + diffDate);
 
-                                if (diffDate > 83) {
-                                    NotifyManange nm = NotifyManange.getNotifyManangeInstance();
-                                    nm.setNum(String.valueOf(sizeofContent + 1));
-                                    nm.setDate(currentDate);
-                                    nm.setText(msg);
-                                    firestore.collection("notificationContent")
-                                            .document(uid)
-                                            .collection("content")
-                                            .document(String.valueOf(sizeofContent + 1))
-                                            .set(nm).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Log.d("FIRST TIME NOTIFY", "Notification has been saved!!!");
-                                            SharedPreferences prefs = getBaseContext().getSharedPreferences("BloodsRecord", Context.MODE_PRIVATE);
-                                            mCartItemCount = prefs.getInt("_countNotify", 0);
-                                            Log.d("mCartItemCount: ", String.valueOf(mCartItemCount));
-                                            mCartItemCount++;
-                                            SharedPreferences.Editor prefs2 = getBaseContext().getSharedPreferences("BloodsRecord", MODE_PRIVATE).edit();
-                                            prefs2.putInt("_countNotify", mCartItemCount);
-                                            prefs2.apply();
+                                    if (diffDate > 83) {
+                                        NotifyManange nm = NotifyManange.getNotifyManangeInstance();
+                                        nm.setNum(String.valueOf(sizeofContent + 1));
+                                        nm.setDate(currentDate);
+                                        nm.setText(msg);
+                                        firestore.collection("notificationContent")
+                                                .document(uid)
+                                                .collection("content")
+                                                .document(String.valueOf(sizeofContent + 1))
+                                                .set(nm).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d("FIRST TIME NOTIFY", "Notification has been saved!!!");
+                                                SharedPreferences prefs = getBaseContext().getSharedPreferences("BloodsRecord", Context.MODE_PRIVATE);
+                                                mCartItemCount = prefs.getInt("_countNotify", 0);
+                                                Log.d("mCartItemCount: ", String.valueOf(mCartItemCount));
+                                                mCartItemCount++;
+                                                SharedPreferences.Editor prefs2 = getBaseContext().getSharedPreferences("BloodsRecord", MODE_PRIVATE).edit();
+                                                prefs2.putInt("_countNotify", mCartItemCount);
+                                                prefs2.apply();
 
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.d("ERROR: ", "ERROR =" + e.getMessage());
-                                        }
-                                    });
-                                } else {
-                                    return;
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.d("ERROR: ", "ERROR =" + e.getMessage());
+                                            }
+                                        });
+                                    } else {
+                                        return;
+                                    }
+
                                 }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d("ERROR: ", e.getMessage());
+                                }
+                            });
+                        }else {
+                            return;
+                        }
 
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.d("ERROR: ", e.getMessage());
-                            }
-                        });
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
