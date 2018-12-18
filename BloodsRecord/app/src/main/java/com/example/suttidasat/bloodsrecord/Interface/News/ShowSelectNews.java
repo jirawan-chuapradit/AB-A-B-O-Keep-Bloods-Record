@@ -20,7 +20,7 @@ public class ShowSelectNews extends Fragment {
     SharedPreferences sp;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.show_select_news, container, false);
+        return inflater.inflate(R.layout.show_select_news_donat, container, false);
     }
 
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -56,9 +56,9 @@ public class ShowSelectNews extends Fragment {
         link = getView().findViewById(R.id.sh_link);
 
 
-        title.setText("เรื่อง  :"  +sp.getString("title",""));
+        title.setText(sp.getString("title",""));
         date.setText("วันที่ : " +sp.getString("date",""));
-        detail.setText("รายละเอียด : " +sp.getString("detail",""));
+        detail.setText(sp.getString("detail",""));
         link.setText("อ่านต่อได้ที่ : " +sp.getString("link",""));
     }
 }
