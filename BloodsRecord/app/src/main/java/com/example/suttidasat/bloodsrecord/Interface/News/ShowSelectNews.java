@@ -29,25 +29,11 @@ public class ShowSelectNews extends Fragment {
 
 
 
-        backBtn();
         show();
 
     }
 
-    void backBtn(){
 
-        Button back = getView().findViewById(R.id.back_to_newsList);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .addToBackStack(null)
-                        .replace(R.id.donator_view,
-                                new ViewNews()).commit();
-            }
-        });
-    }
 
     void  show(){
 

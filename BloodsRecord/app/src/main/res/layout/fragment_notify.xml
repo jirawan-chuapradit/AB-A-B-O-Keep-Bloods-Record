@@ -2,9 +2,21 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-
-
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:text="การแจ้งเตือน"
+        android:textSize="35dp"
+        android:fontFamily="@font/font"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"/>
 
     <ListView
         android:layout_width="match_parent"
@@ -23,6 +35,10 @@
         android:textSize="25dp"
         android:fontFamily="@font/font"
         android:text="ยังไม่มีการแจ้งเตือน"/>
+</LinearLayout>
+
+
+
 
 
 </RelativeLayout>

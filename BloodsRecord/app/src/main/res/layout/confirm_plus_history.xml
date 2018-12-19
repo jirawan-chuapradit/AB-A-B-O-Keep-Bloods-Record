@@ -26,7 +26,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"/>
             <TextView
-                android:text="เพิ่มข่าวสารประชาสัมพันธ์"
+                android:text="เพิ่มประวัติการบริจาค"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="40dp"
