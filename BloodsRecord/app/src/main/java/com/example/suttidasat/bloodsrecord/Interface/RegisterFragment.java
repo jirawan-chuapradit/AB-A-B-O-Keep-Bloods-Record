@@ -218,22 +218,18 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 uploadTask.addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(
-                                getActivity(),
-                                "Upload failed!",
-                                Toast.LENGTH_SHORT
-                        ).show();
+//                        Toast.makeText(
+//                                getActivity(),
+//                                "Upload failed!",
+//                                Toast.LENGTH_SHORT
+//                        ).show();
                         progressDialog.dismiss();
+                        Log.d("USER", "Upload failed!");
 
                     }
                 }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                        Toast.makeText(
-                                getActivity(),
-                                "Upload successful!",
-                                Toast.LENGTH_SHORT
-                        ).show();
                         progressDialog.dismiss();
                         //FORCE USER SIGGOUT
                         FirebaseAuth.getInstance().signOut();

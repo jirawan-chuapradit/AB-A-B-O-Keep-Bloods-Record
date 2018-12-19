@@ -195,7 +195,7 @@ public class UpdatePasswordFragment extends Fragment {
                     Log.d("USER", "GOTO LOGIN");
                     Toast.makeText(
                             getActivity(),
-                            "Password has been Changed",
+                            "คุณได้ทำการเปลี่ยนแปลงรหัสผ่าน",
                             Toast.LENGTH_SHORT
                     ).show();
                 }
